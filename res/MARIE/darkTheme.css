@@ -1,0 +1,38 @@
+.button {
+    -fx-font-size: 12px;
+    -fx-text-fill: #df80ff;
+    -fx-background-color: #222222;
+    -fx-font-family: monospace;
+    -fx-background-radius: 0,0,0;
+}
+.button:hover {
+    -fx-background-color: #2A2A2A;
+    -fx-text-fill: #d24dff;
+}
+#filename.text-input {
+    -fx-text-inner-color: #df80ff;
+    -fx-background-color: #2A2A2A;
+    -fx-background-radius: 0,0,0;
+    -fx-highlight-fill: #333333;
+    -fx-font-family: monospace;
+}
+.text-area .content {
+    -fx-background-color: #2A2A2A;
+    -fx-background-radius: 0,0,0;
+}
+.text-area {
+    -fx-highlight-color = #d24dff;
+    -fx-text-inner-color: #df80ff;
+    -fx-background-radius: 0,0,0;
+    -fx-highlight-fill: #333333;
+    -fx-font-family: monospace;
+}
+
+.text-area:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: #d24dff;
+}
+
+#menu {
+    -fx-background-color: #222222;
+}
