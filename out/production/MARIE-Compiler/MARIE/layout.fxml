@@ -1,0 +1,29 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<VBox fx:controller="MARIE.Controller" xmlns:fx="http://javafx.com/fxml">
+    <HBox fx:id="menu">
+        <Button text="OPEN" onAction="#openFile"/>
+        <Button text="SAVE" onAction="#saveFile"/>
+        <Button text="COMPILE AND RUN" onAction="#runCode"/>
+        <Button text="DEBUG" onAction="#debugCode"/>
+        <Button fx:id="stepper" text="STEP" onAction="#stepCode" disable="true"/>
+    </HBox>
+    <TextField fx:id="filename"/>
+    <HBox maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <TextArea fx:id="codeBox" maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
+        <VBox>
+            <TextArea fx:id="runBox" editable="false" maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
+            <TextArea fx:id="simBox" editable="false" maxHeight="Infinity" maxWidth="Infinity" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
+        </VBox>
+    </HBox>
+</VBox>
+
+
+<!--
+<GridPane fx:controller="MARIE.Controller"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+</GridPane>
+-->

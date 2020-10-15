@@ -1,0 +1,1877 @@
+   0  $accept : program $end
+
+   1  program : decl_list
+
+   2  decl_list : decl_list decl
+   3            |
+
+   4  decl : var_decl
+   5       | fun_decl
+
+   6  var_decl : type_spec IDENT SEMI
+
+   7  type_spec : BOOL
+   8            | INT
+   9            | type_spec LSQUARE RSQUARE
+
+  10  $$1 :
+
+  11  $$2 :
+
+  12  fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY
+
+  13  params : param_list
+  14         |
+
+  15  param_list : param_list COMMA param
+  16             | param
+
+  17  param : type_spec IDENT
+
+  18  stmt_list : stmt_list stmt
+  19            |
+
+  20  stmt : expr_stmt
+  21       | compound_stmt
+  22       | if_stmt
+  23       | while_stmt
+  24       | return_stmt
+  25       | print_stmt
+  26       | SEMI
+
+  27  expr_stmt : IDENT ASSIGN expr_stmt
+  28            | expr SEMI
+  29            | IDENT LSQUARE expr RSQUARE ASSIGN expr_stmt
+
+  30  $$3 :
+
+  31  while_stmt : WHILE LCIRCLE expr RCIRCLE $$3 stmt
+
+  32  $$4 :
+
+  33  compound_stmt : LCURLY $$4 local_decls stmt_list RCURLY
+
+  34  $$5 :
+
+  35  if_stmt : IF LCIRCLE expr $$5 RCIRCLE else_stmt
+
+  36  else_stmt : ELSE stmt
+  37            |
+
+  38  print_stmt : PRINT expr SEMI
+
+  39  return_stmt : RETURN expr SEMI
+
+  40  local_decls : local_decls local_decl
+  41              |
+
+  42  local_decl : type_spec IDENT SEMI
+
+  43  arg_list : arg_list COMMA expr
+  44           | expr
+
+  45  args : arg_list
+  46       |
+
+  47  expr : expr ADD expr
+  48       | expr SUB expr
+  49       | expr MUL expr
+  50       | expr DIV expr
+  51       | expr MOD expr
+  52       | expr OR expr
+  53       | NOT expr
+  54       | expr EQ expr
+  55       | expr NE expr
+  56       | expr LE expr
+  57       | expr LT expr
+  58       | expr GE expr
+  59       | expr GT expr
+  60       | LCIRCLE expr RCIRCLE
+  61       | IDENT
+  62       | IDENT LCIRCLE args RCIRCLE
+  63       | IDENT LSQUARE expr RSQUARE
+  64       | NEW type_spec LSQUARE expr RSQUARE
+  65       | BOOL_LIT
+  66       | INT_LIT
+
+state 0
+	$accept : . program $end  (0)
+	decl_list : .  (3)
+
+	.  reduce 3
+
+	program  goto 1
+	decl_list  goto 2
+
+
+state 1
+	$accept : program . $end  (0)
+
+	$end  accept
+
+
+state 2
+	program : decl_list .  (1)
+	decl_list : decl_list . decl  (2)
+
+	BOOL  shift 3
+	INT  shift 4
+	$end  reduce 1
+
+	decl  goto 5
+	var_decl  goto 6
+	fun_decl  goto 7
+	type_spec  goto 8
+
+
+state 3
+	type_spec : BOOL .  (7)
+
+	.  reduce 7
+
+
+state 4
+	type_spec : INT .  (8)
+
+	.  reduce 8
+
+
+state 5
+	decl_list : decl_list decl .  (2)
+
+	.  reduce 2
+
+
+state 6
+	decl : var_decl .  (4)
+
+	.  reduce 4
+
+
+state 7
+	decl : fun_decl .  (5)
+
+	.  reduce 5
+
+
+state 8
+	var_decl : type_spec . IDENT SEMI  (6)
+	type_spec : type_spec . LSQUARE RSQUARE  (9)
+	fun_decl : type_spec . IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY  (12)
+
+	IDENT  shift 9
+	LSQUARE  shift 10
+	.  error
+
+
+state 9
+	var_decl : type_spec IDENT . SEMI  (6)
+	fun_decl : type_spec IDENT . LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY  (12)
+
+	LCIRCLE  shift 11
+	SEMI  shift 12
+	.  error
+
+
+state 10
+	type_spec : type_spec LSQUARE . RSQUARE  (9)
+
+	RSQUARE  shift 13
+	.  error
+
+
+state 11
+	fun_decl : type_spec IDENT LCIRCLE . params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY  (12)
+	params : .  (14)
+
+	BOOL  shift 3
+	INT  shift 4
+	RCIRCLE  reduce 14
+
+	type_spec  goto 14
+	params  goto 15
+	param_list  goto 16
+	param  goto 17
+
+
+state 12
+	var_decl : type_spec IDENT SEMI .  (6)
+
+	.  reduce 6
+
+
+state 13
+	type_spec : type_spec LSQUARE RSQUARE .  (9)
+
+	.  reduce 9
+
+
+state 14
+	type_spec : type_spec . LSQUARE RSQUARE  (9)
+	param : type_spec . IDENT  (17)
+
+	IDENT  shift 18
+	LSQUARE  shift 10
+	.  error
+
+
+state 15
+	fun_decl : type_spec IDENT LCIRCLE params . RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY  (12)
+
+	RCIRCLE  shift 19
+	.  error
+
+
+state 16
+	params : param_list .  (13)
+	param_list : param_list . COMMA param  (15)
+
+	COMMA  shift 20
+	RCIRCLE  reduce 13
+
+
+state 17
+	param_list : param .  (16)
+
+	.  reduce 16
+
+
+state 18
+	param : type_spec IDENT .  (17)
+
+	.  reduce 17
+
+
+state 19
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE . $$1 LCURLY $$2 local_decls stmt_list RCURLY  (12)
+	$$1 : .  (10)
+
+	.  reduce 10
+
+	$$1  goto 21
+
+
+state 20
+	param_list : param_list COMMA . param  (15)
+
+	BOOL  shift 3
+	INT  shift 4
+	.  error
+
+	type_spec  goto 14
+	param  goto 22
+
+
+state 21
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 . LCURLY $$2 local_decls stmt_list RCURLY  (12)
+
+	LCURLY  shift 23
+	.  error
+
+
+state 22
+	param_list : param_list COMMA param .  (15)
+
+	.  reduce 15
+
+
+state 23
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY . $$2 local_decls stmt_list RCURLY  (12)
+	$$2 : .  (11)
+
+	.  reduce 11
+
+	$$2  goto 24
+
+
+state 24
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 . local_decls stmt_list RCURLY  (12)
+	local_decls : .  (41)
+
+	.  reduce 41
+
+	local_decls  goto 25
+
+
+state 25
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls . stmt_list RCURLY  (12)
+	local_decls : local_decls . local_decl  (40)
+	stmt_list : .  (19)
+
+	BOOL  shift 3
+	INT  shift 4
+	NOT  reduce 19
+	IDENT  reduce 19
+	INT_LIT  reduce 19
+	BOOL_LIT  reduce 19
+	IF  reduce 19
+	NEW  reduce 19
+	PRINT  reduce 19
+	WHILE  reduce 19
+	RETURN  reduce 19
+	LCIRCLE  reduce 19
+	LCURLY  reduce 19
+	RCURLY  reduce 19
+	SEMI  reduce 19
+
+	type_spec  goto 26
+	local_decl  goto 27
+	stmt_list  goto 28
+
+
+state 26
+	type_spec : type_spec . LSQUARE RSQUARE  (9)
+	local_decl : type_spec . IDENT SEMI  (42)
+
+	IDENT  shift 29
+	LSQUARE  shift 10
+	.  error
+
+
+state 27
+	local_decls : local_decls local_decl .  (40)
+
+	.  reduce 40
+
+
+state 28
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list . RCURLY  (12)
+	stmt_list : stmt_list . stmt  (18)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	IF  shift 34
+	NEW  shift 35
+	PRINT  shift 36
+	WHILE  shift 37
+	RETURN  shift 38
+	LCIRCLE  shift 39
+	LCURLY  shift 40
+	RCURLY  shift 41
+	SEMI  shift 42
+	.  error
+
+	while_stmt  goto 43
+	compound_stmt  goto 44
+	if_stmt  goto 45
+	print_stmt  goto 46
+	stmt  goto 47
+	return_stmt  goto 48
+	expr_stmt  goto 49
+	expr  goto 50
+
+
+state 29
+	local_decl : type_spec IDENT . SEMI  (42)
+
+	SEMI  shift 51
+	.  error
+
+
+state 30
+	expr : NOT . expr  (53)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 53
+
+
+state 31
+	expr_stmt : IDENT . ASSIGN expr_stmt  (27)
+	expr_stmt : IDENT . LSQUARE expr RSQUARE ASSIGN expr_stmt  (29)
+	expr : IDENT .  (61)
+	expr : IDENT . LCIRCLE args RCIRCLE  (62)
+	expr : IDENT . LSQUARE expr RSQUARE  (63)
+
+	ASSIGN  shift 54
+	LCIRCLE  shift 55
+	LSQUARE  shift 56
+	OR  reduce 61
+	EQ  reduce 61
+	NE  reduce 61
+	LE  reduce 61
+	LT  reduce 61
+	GE  reduce 61
+	GT  reduce 61
+	ADD  reduce 61
+	SUB  reduce 61
+	MUL  reduce 61
+	DIV  reduce 61
+	MOD  reduce 61
+	SEMI  reduce 61
+
+
+state 32
+	expr : INT_LIT .  (66)
+
+	.  reduce 66
+
+
+state 33
+	expr : BOOL_LIT .  (65)
+
+	.  reduce 65
+
+
+state 34
+	if_stmt : IF . LCIRCLE expr $$5 RCIRCLE else_stmt  (35)
+
+	LCIRCLE  shift 57
+	.  error
+
+
+state 35
+	expr : NEW . type_spec LSQUARE expr RSQUARE  (64)
+
+	BOOL  shift 3
+	INT  shift 4
+	.  error
+
+	type_spec  goto 58
+
+
+state 36
+	print_stmt : PRINT . expr SEMI  (38)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 59
+
+
+state 37
+	while_stmt : WHILE . LCIRCLE expr RCIRCLE $$3 stmt  (31)
+
+	LCIRCLE  shift 60
+	.  error
+
+
+state 38
+	return_stmt : RETURN . expr SEMI  (39)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 61
+
+
+state 39
+	expr : LCIRCLE . expr RCIRCLE  (60)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 62
+
+
+state 40
+	compound_stmt : LCURLY . $$4 local_decls stmt_list RCURLY  (33)
+	$$4 : .  (32)
+
+	.  reduce 32
+
+	$$4  goto 63
+
+
+state 41
+	fun_decl : type_spec IDENT LCIRCLE params RCIRCLE $$1 LCURLY $$2 local_decls stmt_list RCURLY .  (12)
+
+	.  reduce 12
+
+
+state 42
+	stmt : SEMI .  (26)
+
+	.  reduce 26
+
+
+state 43
+	stmt : while_stmt .  (23)
+
+	.  reduce 23
+
+
+state 44
+	stmt : compound_stmt .  (21)
+
+	.  reduce 21
+
+
+state 45
+	stmt : if_stmt .  (22)
+
+	.  reduce 22
+
+
+state 46
+	stmt : print_stmt .  (25)
+
+	.  reduce 25
+
+
+state 47
+	stmt_list : stmt_list stmt .  (18)
+
+	.  reduce 18
+
+
+state 48
+	stmt : return_stmt .  (24)
+
+	.  reduce 24
+
+
+state 49
+	stmt : expr_stmt .  (20)
+
+	.  reduce 20
+
+
+state 50
+	expr_stmt : expr . SEMI  (28)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	SEMI  shift 76
+	.  error
+
+
+state 51
+	local_decl : type_spec IDENT SEMI .  (42)
+
+	.  reduce 42
+
+
+state 52
+	expr : IDENT .  (61)
+	expr : IDENT . LCIRCLE args RCIRCLE  (62)
+	expr : IDENT . LSQUARE expr RSQUARE  (63)
+
+	LCIRCLE  shift 55
+	LSQUARE  shift 77
+	OR  reduce 61
+	EQ  reduce 61
+	NE  reduce 61
+	LE  reduce 61
+	LT  reduce 61
+	GE  reduce 61
+	GT  reduce 61
+	ADD  reduce 61
+	SUB  reduce 61
+	MUL  reduce 61
+	DIV  reduce 61
+	MOD  reduce 61
+	RCIRCLE  reduce 61
+	RSQUARE  reduce 61
+	SEMI  reduce 61
+	COMMA  reduce 61
+
+
+state 53
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : NOT expr .  (53)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	.  reduce 53
+
+
+state 54
+	expr_stmt : IDENT ASSIGN . expr_stmt  (27)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr_stmt  goto 78
+	expr  goto 50
+
+
+state 55
+	expr : IDENT LCIRCLE . args RCIRCLE  (62)
+	args : .  (46)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	RCIRCLE  reduce 46
+
+	args  goto 79
+	arg_list  goto 80
+	expr  goto 81
+
+
+state 56
+	expr_stmt : IDENT LSQUARE . expr RSQUARE ASSIGN expr_stmt  (29)
+	expr : IDENT LSQUARE . expr RSQUARE  (63)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 82
+
+
+state 57
+	if_stmt : IF LCIRCLE . expr $$5 RCIRCLE else_stmt  (35)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 83
+
+
+state 58
+	type_spec : type_spec . LSQUARE RSQUARE  (9)
+	expr : NEW type_spec . LSQUARE expr RSQUARE  (64)
+
+	LSQUARE  shift 84
+	.  error
+
+
+state 59
+	print_stmt : PRINT expr . SEMI  (38)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	SEMI  shift 85
+	.  error
+
+
+state 60
+	while_stmt : WHILE LCIRCLE . expr RCIRCLE $$3 stmt  (31)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 86
+
+
+state 61
+	return_stmt : RETURN expr . SEMI  (39)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	SEMI  shift 87
+	.  error
+
+
+state 62
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	expr : LCIRCLE expr . RCIRCLE  (60)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RCIRCLE  shift 88
+	.  error
+
+
+state 63
+	compound_stmt : LCURLY $$4 . local_decls stmt_list RCURLY  (33)
+	local_decls : .  (41)
+
+	.  reduce 41
+
+	local_decls  goto 89
+
+
+state 64
+	expr : expr OR . expr  (52)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 90
+
+
+state 65
+	expr : expr EQ . expr  (54)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 91
+
+
+state 66
+	expr : expr NE . expr  (55)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 92
+
+
+state 67
+	expr : expr LE . expr  (56)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 93
+
+
+state 68
+	expr : expr LT . expr  (57)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 94
+
+
+state 69
+	expr : expr GE . expr  (58)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 95
+
+
+state 70
+	expr : expr GT . expr  (59)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 96
+
+
+state 71
+	expr : expr ADD . expr  (47)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 97
+
+
+state 72
+	expr : expr SUB . expr  (48)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 98
+
+
+state 73
+	expr : expr MUL . expr  (49)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 99
+
+
+state 74
+	expr : expr DIV . expr  (50)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 100
+
+
+state 75
+	expr : expr MOD . expr  (51)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 101
+
+
+state 76
+	expr_stmt : expr SEMI .  (28)
+
+	.  reduce 28
+
+
+state 77
+	expr : IDENT LSQUARE . expr RSQUARE  (63)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 102
+
+
+state 78
+	expr_stmt : IDENT ASSIGN expr_stmt .  (27)
+
+	.  reduce 27
+
+
+state 79
+	expr : IDENT LCIRCLE args . RCIRCLE  (62)
+
+	RCIRCLE  shift 103
+	.  error
+
+
+state 80
+	arg_list : arg_list . COMMA expr  (43)
+	args : arg_list .  (45)
+
+	COMMA  shift 104
+	RCIRCLE  reduce 45
+
+
+state 81
+	arg_list : expr .  (44)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RCIRCLE  reduce 44
+	COMMA  reduce 44
+
+
+state 82
+	expr_stmt : IDENT LSQUARE expr . RSQUARE ASSIGN expr_stmt  (29)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	expr : IDENT LSQUARE expr . RSQUARE  (63)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RSQUARE  shift 105
+	.  error
+
+
+state 83
+	if_stmt : IF LCIRCLE expr . $$5 RCIRCLE else_stmt  (35)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	$$5 : .  (34)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RCIRCLE  reduce 34
+
+	$$5  goto 106
+
+
+state 84
+	type_spec : type_spec LSQUARE . RSQUARE  (9)
+	expr : NEW type_spec LSQUARE . expr RSQUARE  (64)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	RSQUARE  shift 13
+	.  error
+
+	expr  goto 107
+
+
+state 85
+	print_stmt : PRINT expr SEMI .  (38)
+
+	.  reduce 38
+
+
+state 86
+	while_stmt : WHILE LCIRCLE expr . RCIRCLE $$3 stmt  (31)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RCIRCLE  shift 108
+	.  error
+
+
+state 87
+	return_stmt : RETURN expr SEMI .  (39)
+
+	.  reduce 39
+
+
+state 88
+	expr : LCIRCLE expr RCIRCLE .  (60)
+
+	.  reduce 60
+
+
+state 89
+	compound_stmt : LCURLY $$4 local_decls . stmt_list RCURLY  (33)
+	local_decls : local_decls . local_decl  (40)
+	stmt_list : .  (19)
+
+	BOOL  shift 3
+	INT  shift 4
+	NOT  reduce 19
+	IDENT  reduce 19
+	INT_LIT  reduce 19
+	BOOL_LIT  reduce 19
+	IF  reduce 19
+	NEW  reduce 19
+	PRINT  reduce 19
+	WHILE  reduce 19
+	RETURN  reduce 19
+	LCIRCLE  reduce 19
+	LCURLY  reduce 19
+	RCURLY  reduce 19
+	SEMI  reduce 19
+
+	type_spec  goto 26
+	local_decl  goto 27
+	stmt_list  goto 109
+
+
+state 90
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr OR expr .  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 52
+	RCIRCLE  reduce 52
+	RSQUARE  reduce 52
+	SEMI  reduce 52
+	COMMA  reduce 52
+
+
+state 91
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr EQ expr .  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 54
+	EQ  reduce 54
+	NE  reduce 54
+	RCIRCLE  reduce 54
+	RSQUARE  reduce 54
+	SEMI  reduce 54
+	COMMA  reduce 54
+
+
+state 92
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr NE expr .  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 55
+	EQ  reduce 55
+	NE  reduce 55
+	RCIRCLE  reduce 55
+	RSQUARE  reduce 55
+	SEMI  reduce 55
+	COMMA  reduce 55
+
+
+state 93
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr LE expr .  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 56
+	EQ  reduce 56
+	NE  reduce 56
+	LE  reduce 56
+	LT  reduce 56
+	GE  reduce 56
+	GT  reduce 56
+	RCIRCLE  reduce 56
+	RSQUARE  reduce 56
+	SEMI  reduce 56
+	COMMA  reduce 56
+
+
+state 94
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr LT expr .  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 57
+	EQ  reduce 57
+	NE  reduce 57
+	LE  reduce 57
+	LT  reduce 57
+	GE  reduce 57
+	GT  reduce 57
+	RCIRCLE  reduce 57
+	RSQUARE  reduce 57
+	SEMI  reduce 57
+	COMMA  reduce 57
+
+
+state 95
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr GE expr .  (58)
+	expr : expr . GT expr  (59)
+
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 58
+	EQ  reduce 58
+	NE  reduce 58
+	LE  reduce 58
+	LT  reduce 58
+	GE  reduce 58
+	GT  reduce 58
+	RCIRCLE  reduce 58
+	RSQUARE  reduce 58
+	SEMI  reduce 58
+	COMMA  reduce 58
+
+
+state 96
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	expr : expr GT expr .  (59)
+
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 59
+	EQ  reduce 59
+	NE  reduce 59
+	LE  reduce 59
+	LT  reduce 59
+	GE  reduce 59
+	GT  reduce 59
+	RCIRCLE  reduce 59
+	RSQUARE  reduce 59
+	SEMI  reduce 59
+	COMMA  reduce 59
+
+
+state 97
+	expr : expr . ADD expr  (47)
+	expr : expr ADD expr .  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 47
+	EQ  reduce 47
+	NE  reduce 47
+	LE  reduce 47
+	LT  reduce 47
+	GE  reduce 47
+	GT  reduce 47
+	ADD  reduce 47
+	SUB  reduce 47
+	RCIRCLE  reduce 47
+	RSQUARE  reduce 47
+	SEMI  reduce 47
+	COMMA  reduce 47
+
+
+state 98
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr SUB expr .  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	OR  reduce 48
+	EQ  reduce 48
+	NE  reduce 48
+	LE  reduce 48
+	LT  reduce 48
+	GE  reduce 48
+	GT  reduce 48
+	ADD  reduce 48
+	SUB  reduce 48
+	RCIRCLE  reduce 48
+	RSQUARE  reduce 48
+	SEMI  reduce 48
+	COMMA  reduce 48
+
+
+state 99
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr MUL expr .  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	.  reduce 49
+
+
+state 100
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr DIV expr .  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	.  reduce 50
+
+
+state 101
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr MOD expr .  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	.  reduce 51
+
+
+state 102
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	expr : IDENT LSQUARE expr . RSQUARE  (63)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RSQUARE  shift 110
+	.  error
+
+
+state 103
+	expr : IDENT LCIRCLE args RCIRCLE .  (62)
+
+	.  reduce 62
+
+
+state 104
+	arg_list : arg_list COMMA . expr  (43)
+
+	NOT  shift 30
+	IDENT  shift 52
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr  goto 111
+
+
+state 105
+	expr_stmt : IDENT LSQUARE expr RSQUARE . ASSIGN expr_stmt  (29)
+	expr : IDENT LSQUARE expr RSQUARE .  (63)
+
+	ASSIGN  shift 112
+	OR  reduce 63
+	EQ  reduce 63
+	NE  reduce 63
+	LE  reduce 63
+	LT  reduce 63
+	GE  reduce 63
+	GT  reduce 63
+	ADD  reduce 63
+	SUB  reduce 63
+	MUL  reduce 63
+	DIV  reduce 63
+	MOD  reduce 63
+	SEMI  reduce 63
+
+
+state 106
+	if_stmt : IF LCIRCLE expr $$5 . RCIRCLE else_stmt  (35)
+
+	RCIRCLE  shift 113
+	.  error
+
+
+state 107
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+	expr : NEW type_spec LSQUARE expr . RSQUARE  (64)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RSQUARE  shift 114
+	.  error
+
+
+state 108
+	while_stmt : WHILE LCIRCLE expr RCIRCLE . $$3 stmt  (31)
+	$$3 : .  (30)
+
+	.  reduce 30
+
+	$$3  goto 115
+
+
+state 109
+	stmt_list : stmt_list . stmt  (18)
+	compound_stmt : LCURLY $$4 local_decls stmt_list . RCURLY  (33)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	IF  shift 34
+	NEW  shift 35
+	PRINT  shift 36
+	WHILE  shift 37
+	RETURN  shift 38
+	LCIRCLE  shift 39
+	LCURLY  shift 40
+	RCURLY  shift 116
+	SEMI  shift 42
+	.  error
+
+	while_stmt  goto 43
+	compound_stmt  goto 44
+	if_stmt  goto 45
+	print_stmt  goto 46
+	stmt  goto 47
+	return_stmt  goto 48
+	expr_stmt  goto 49
+	expr  goto 50
+
+
+state 110
+	expr : IDENT LSQUARE expr RSQUARE .  (63)
+
+	.  reduce 63
+
+
+state 111
+	arg_list : arg_list COMMA expr .  (43)
+	expr : expr . ADD expr  (47)
+	expr : expr . SUB expr  (48)
+	expr : expr . MUL expr  (49)
+	expr : expr . DIV expr  (50)
+	expr : expr . MOD expr  (51)
+	expr : expr . OR expr  (52)
+	expr : expr . EQ expr  (54)
+	expr : expr . NE expr  (55)
+	expr : expr . LE expr  (56)
+	expr : expr . LT expr  (57)
+	expr : expr . GE expr  (58)
+	expr : expr . GT expr  (59)
+
+	OR  shift 64
+	EQ  shift 65
+	NE  shift 66
+	LE  shift 67
+	LT  shift 68
+	GE  shift 69
+	GT  shift 70
+	ADD  shift 71
+	SUB  shift 72
+	MUL  shift 73
+	DIV  shift 74
+	MOD  shift 75
+	RCIRCLE  reduce 43
+	COMMA  reduce 43
+
+
+state 112
+	expr_stmt : IDENT LSQUARE expr RSQUARE ASSIGN . expr_stmt  (29)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	NEW  shift 35
+	LCIRCLE  shift 39
+	.  error
+
+	expr_stmt  goto 117
+	expr  goto 50
+
+
+state 113
+	if_stmt : IF LCIRCLE expr $$5 RCIRCLE . else_stmt  (35)
+	else_stmt : .  (37)
+
+	ELSE  shift 118
+	NOT  reduce 37
+	IDENT  reduce 37
+	INT_LIT  reduce 37
+	BOOL_LIT  reduce 37
+	IF  reduce 37
+	NEW  reduce 37
+	PRINT  reduce 37
+	WHILE  reduce 37
+	RETURN  reduce 37
+	LCIRCLE  reduce 37
+	LCURLY  reduce 37
+	RCURLY  reduce 37
+	SEMI  reduce 37
+
+	else_stmt  goto 119
+
+
+state 114
+	expr : NEW type_spec LSQUARE expr RSQUARE .  (64)
+
+	.  reduce 64
+
+
+state 115
+	while_stmt : WHILE LCIRCLE expr RCIRCLE $$3 . stmt  (31)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	IF  shift 34
+	NEW  shift 35
+	PRINT  shift 36
+	WHILE  shift 37
+	RETURN  shift 38
+	LCIRCLE  shift 39
+	LCURLY  shift 40
+	SEMI  shift 42
+	.  error
+
+	while_stmt  goto 43
+	compound_stmt  goto 44
+	if_stmt  goto 45
+	print_stmt  goto 46
+	stmt  goto 120
+	return_stmt  goto 48
+	expr_stmt  goto 49
+	expr  goto 50
+
+
+state 116
+	compound_stmt : LCURLY $$4 local_decls stmt_list RCURLY .  (33)
+
+	.  reduce 33
+
+
+state 117
+	expr_stmt : IDENT LSQUARE expr RSQUARE ASSIGN expr_stmt .  (29)
+
+	.  reduce 29
+
+
+state 118
+	else_stmt : ELSE . stmt  (36)
+
+	NOT  shift 30
+	IDENT  shift 31
+	INT_LIT  shift 32
+	BOOL_LIT  shift 33
+	IF  shift 34
+	NEW  shift 35
+	PRINT  shift 36
+	WHILE  shift 37
+	RETURN  shift 38
+	LCIRCLE  shift 39
+	LCURLY  shift 40
+	SEMI  shift 42
+	.  error
+
+	while_stmt  goto 43
+	compound_stmt  goto 44
+	if_stmt  goto 45
+	print_stmt  goto 46
+	stmt  goto 121
+	return_stmt  goto 48
+	expr_stmt  goto 49
+	expr  goto 50
+
+
+state 119
+	if_stmt : IF LCIRCLE expr $$5 RCIRCLE else_stmt .  (35)
+
+	.  reduce 35
+
+
+state 120
+	while_stmt : WHILE LCIRCLE expr RCIRCLE $$3 stmt .  (31)
+
+	.  reduce 31
+
+
+state 121
+	else_stmt : ELSE stmt .  (36)
+
+	.  reduce 36
+
+
+36 terminals, 29 nonterminals
+67 grammar rules, 122 states

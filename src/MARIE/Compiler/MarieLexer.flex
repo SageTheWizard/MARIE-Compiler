@@ -7,64 +7,66 @@
     public MarieParser parser;
 	public int lineno;
 
-    public MarieLexer(java.io.Reader r, MarieParser) {
+    public MarieLexer(java.io.Reader r, MarieParser parser) {
         this(r);
-        this.parser;
+        this.parser = parser;
 		this.lineno = 1;
     }
 %}
 
-num        = [0-9]
-int_lit    = {num}+
-newline    = \n
-comment    = "//"
-identifier = [a-zA-Z_][a-zA-Z0-9_]*
-whitespace = [ \t\r]+
+NUM        = [0-9]
+INT_LIT    = {NUM}+
+NEWLINE    = \n
+COMMENT    = "//"
+IDENT = [a-zA-Z_][a-zA-Z0-9_]*
+WS = [ \t\r]+
 
 %%
 
 // Keywords
-"print"    {return Parser.PRINT;}
-"bool"     {return Parser.BOOL;}
-"int"      {return Parser.INT;}
-"while"    {return Parser.WHILE;}
-"if"       {return Parser.IF;}
-"else"     {return Parser.ELSE;}
-"return"   {return Parser.RETURN;}
-"true"     {return Parser.TRUE;}
-"false"    {return Parser.FALSE;}
+"print"    {return MarieParser.PRINT;}
+"bool"     {return MarieParser.BOOL;}
+"int"      {return MarieParser.INT;}
+"while"    {return MarieParser.WHILE;}
+"if"       {return MarieParser.IF;}
+"else"     {return MarieParser.ELSE;}
+"return"   {return MarieParser.RETURN;}
+"true"     {return MarieParser.BOOL_LIT;}
+"false"    {return MarieParser.BOOL_LIT;}
+";"        {return MarieParser.SEMI;}
+","        {return MarieParser.COMMA;}
 // Wrappers
-"{"        {return Parser.LCURLY;}
-"}"        {return Parser.RCURLY;}
-"("        {return Parser.LCIRCLE;}
-")"        {return Parser.RCIRCLE;}
-"["        {return Parser.LSQUARE;}
-"]"        {return Parser.RSQUARE;}
+"{"        {return MarieParser.LCURLY;}
+"}"        {return MarieParser.RCURLY;}
+"("        {return MarieParser.LCIRCLE;}
+")"        {return MarieParser.RCIRCLE;}
+"["        {return MarieParser.LSQUARE;}
+"]"        {return MarieParser.RSQUARE;}
 // Int operators
-"="        {return Parser.ASSIGN;}
-"+"        {return Parser.ADD;}
-"-"        {return Parser.MINUS;}
-"*"        {return Parser.MULTI;}
-"/"        {return Parser.DIV;}
-"%"        {return Parser.MOD;}
+"="        {return MarieParser.ASSIGN;}
+"+"        {return MarieParser.ADD;}
+"-"        {return MarieParser.SUB;}
+"*"        {return MarieParser.MUL;}
+"/"        {return MarieParser.DIV;}
+"%"        {return MarieParser.MOD;}
 // Bool Ops
-"=="       {return Parser.EQ;}
-"<"        {return Parser.LT;}
-">"        {return Parser.GT;}
-"<="       {return Parser.LTE;}
-">="       {return Parser.GTE;}
-"!="       {return Parser.NE;}
-"!"        {return Parser.NOT;}
-"&&"       {return Parser.AND;}
-"||"       {return Parser.OR;}
+"=="       {return MarieParser.EQ;}
+"<"        {return MarieParser.LT;}
+">"        {return MarieParser.GT;}
+"<="       {return MarieParser.LE;}
+">="       {return MarieParser.GE;}
+"!="       {return MarieParser.NE;}
+"!"        {return MarieParser.NOT;}
+"&&"       {return MarieParser.AND;}
+"||"       {return MarieParser.OR;}
 // Regex Related code
-{int_lit}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.INT_LIT;}
-{identifier}   {parser.yylval = new ParserVal((Object) yytext()); return Parser.IDENT;}
-{comment}      {System.out.println("Comment Detected: Ignoring");}
-{newline}      {this.lineno++;}
-{whitespace}   {System.out.println("Ignoring Whitespace");}
+{INT_LIT}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.INT_LIT;}
+{IDENT}        {parser.yylval = new ParserVal((Object) yytext()); return Parser.IDENT;}
+{COMMENT}      {System.out.println("Comment Detected: Ignoring");}
+{NEWLINE}      {this.lineno++;}
+{WS}   {System.out.println("Ignoring Whitespace");}
 
 // Error handling
 \b             {System.err.println("BACKSPACE ERROR!");}
-[^]            {System.err.println("Unexpected Character: " + yytext()); return -1}
+[^]            {System.err.println("Unexpected Character: " + yytext()); return -1;}
 

@@ -30,12 +30,13 @@ class MarieLexer {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\10\0\1\45\1\5\1\2\2\0\1\5\22\0\1\5\1\42\3\0"+
-    "\1\37\1\43\1\0\1\27\1\30\1\36\1\34\1\0\1\35\1\0"+
-    "\1\3\12\1\2\0\1\40\1\33\1\41\2\0\32\4\1\31\1\0"+
-    "\1\32\1\0\1\4\1\0\1\24\1\13\2\4\1\20\1\21\1\4"+
-    "\1\17\1\10\2\4\1\15\1\4\1\11\1\14\1\6\1\4\1\7"+
-    "\1\22\1\12\1\23\1\4\1\16\3\4\1\25\1\44\1\26\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff92\0";
+    "\10\0\1\47\1\5\1\2\2\0\1\5\22\0\1\5\1\44\3\0"+
+    "\1\41\1\45\1\0\1\31\1\32\1\40\1\36\1\26\1\37\1\0"+
+    "\1\3\12\1\1\0\1\25\1\42\1\35\1\43\2\0\32\4\1\33"+
+    "\1\0\1\34\1\0\1\4\1\0\1\24\1\13\2\4\1\20\1\21"+
+    "\1\4\1\17\1\10\2\4\1\15\1\4\1\11\1\14\1\6\1\4"+
+    "\1\7\1\22\1\12\1\23\1\4\1\16\3\4\1\27\1\46\1\30"+
+    "\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff92\0";
 
   /** 
    * Translates characters to character classes
@@ -50,13 +51,13 @@ class MarieLexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\10\5"+
     "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
-    "\1\17\1\20\1\21\1\22\1\23\1\24\2\1\1\25"+
-    "\1\26\3\5\1\27\5\5\1\30\1\31\1\32\1\33"+
-    "\1\34\2\5\1\35\7\5\1\36\1\37\1\5\1\40"+
-    "\1\5\1\41\1\5\1\42\1\43\1\44";
+    "\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26"+
+    "\2\1\1\27\1\30\3\5\1\31\5\5\1\32\1\33"+
+    "\1\34\1\35\1\36\1\37\2\5\1\40\7\5\1\41"+
+    "\1\42\1\5\1\43\1\44\1\5\1\45\1\46";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[67];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -81,18 +82,18 @@ class MarieLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\46\0\114\0\46\0\162\0\230\0\276\0\344"+
-    "\0\u010a\0\u0130\0\u0156\0\u017c\0\u01a2\0\u01c8\0\u01ee\0\46"+
-    "\0\46\0\46\0\46\0\46\0\46\0\46\0\46\0\46"+
-    "\0\46\0\46\0\u0214\0\u023a\0\u0260\0\u0286\0\u02ac\0\46"+
-    "\0\46\0\u02d2\0\u02f8\0\u031e\0\230\0\u0344\0\u036a\0\u0390"+
-    "\0\u03b6\0\u03dc\0\46\0\46\0\46\0\46\0\46\0\u0402"+
-    "\0\u0428\0\230\0\u044e\0\u0474\0\u049a\0\u04c0\0\u04e6\0\u050c"+
-    "\0\u0532\0\230\0\230\0\u0558\0\230\0\u057e\0\230\0\u05a4"+
-    "\0\230\0\230\0\230";
+    "\0\0\0\50\0\120\0\50\0\170\0\240\0\310\0\360"+
+    "\0\u0118\0\u0140\0\u0168\0\u0190\0\u01b8\0\u01e0\0\u0208\0\50"+
+    "\0\50\0\50\0\50\0\50\0\50\0\50\0\50\0\u0230"+
+    "\0\50\0\50\0\50\0\50\0\u0258\0\u0280\0\u02a8\0\u02d0"+
+    "\0\u02f8\0\50\0\50\0\u0320\0\u0348\0\u0370\0\240\0\u0398"+
+    "\0\u03c0\0\u03e8\0\u0410\0\u0438\0\50\0\50\0\50\0\50"+
+    "\0\50\0\50\0\u0460\0\u0488\0\240\0\u04b0\0\u04d8\0\u0500"+
+    "\0\u0528\0\u0550\0\u0578\0\u05a0\0\240\0\240\0\u05c8\0\240"+
+    "\0\240\0\u05f0\0\240\0\240";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[67];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -119,41 +120,40 @@ class MarieLexer {
     "\1\12\1\6\1\13\1\14\2\6\1\15\1\6\1\16"+
     "\1\17\3\6\1\20\1\21\1\22\1\23\1\24\1\25"+
     "\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35"+
-    "\1\36\1\37\1\40\47\0\1\3\47\0\1\41\43\0"+
-    "\1\6\2\0\1\6\1\0\17\6\26\0\1\7\41\0"+
-    "\1\6\2\0\1\6\1\0\1\6\1\42\15\6\22\0"+
-    "\1\6\2\0\1\6\1\0\12\6\1\43\4\6\22\0"+
-    "\1\6\2\0\1\6\1\0\3\6\1\44\7\6\1\45"+
-    "\3\6\22\0\1\6\2\0\1\6\1\0\1\6\1\46"+
-    "\15\6\22\0\1\6\2\0\1\6\1\0\6\6\1\47"+
-    "\10\6\22\0\1\6\2\0\1\6\1\0\11\6\1\50"+
-    "\5\6\22\0\1\6\2\0\1\6\1\0\7\6\1\51"+
-    "\7\6\22\0\1\6\2\0\1\6\1\0\16\6\1\52"+
-    "\54\0\1\53\45\0\1\54\45\0\1\55\55\0\1\56"+
-    "\46\0\1\57\2\0\1\6\2\0\1\6\1\0\2\6"+
-    "\1\60\14\6\22\0\1\6\2\0\1\6\1\0\4\6"+
-    "\1\61\12\6\22\0\1\6\2\0\1\6\1\0\4\6"+
-    "\1\62\12\6\22\0\1\6\2\0\1\6\1\0\15\6"+
-    "\1\63\1\6\22\0\1\6\2\0\1\6\1\0\6\6"+
-    "\1\64\10\6\22\0\1\6\2\0\1\6\1\0\2\6"+
-    "\1\65\14\6\22\0\1\6\2\0\1\6\1\0\14\6"+
-    "\1\66\2\6\22\0\1\6\2\0\1\6\1\0\7\6"+
-    "\1\67\7\6\22\0\1\6\2\0\1\6\1\0\3\6"+
-    "\1\70\13\6\22\0\1\6\2\0\1\6\1\0\15\6"+
-    "\1\71\1\6\22\0\1\6\2\0\1\6\1\0\12\6"+
-    "\1\72\4\6\22\0\1\6\2\0\1\6\1\0\7\6"+
-    "\1\73\7\6\22\0\1\6\2\0\1\6\1\0\7\6"+
-    "\1\74\7\6\22\0\1\6\2\0\1\6\1\0\12\6"+
-    "\1\75\4\6\22\0\1\6\2\0\1\6\1\0\14\6"+
-    "\1\76\2\6\22\0\1\6\2\0\1\6\1\0\4\6"+
-    "\1\77\12\6\22\0\1\6\2\0\1\6\1\0\1\6"+
-    "\1\100\15\6\22\0\1\6\2\0\1\6\1\0\12\6"+
-    "\1\101\4\6\22\0\1\6\2\0\1\6\1\0\12\6"+
-    "\1\102\4\6\22\0\1\6\2\0\1\6\1\0\3\6"+
-    "\1\103\13\6\21\0";
+    "\1\36\1\37\1\40\1\41\1\42\51\0\1\3\51\0"+
+    "\1\43\45\0\1\6\2\0\1\6\1\0\17\6\30\0"+
+    "\1\7\43\0\1\6\2\0\1\6\1\0\1\6\1\44"+
+    "\15\6\24\0\1\6\2\0\1\6\1\0\12\6\1\45"+
+    "\4\6\24\0\1\6\2\0\1\6\1\0\3\6\1\46"+
+    "\7\6\1\47\3\6\24\0\1\6\2\0\1\6\1\0"+
+    "\1\6\1\50\15\6\24\0\1\6\2\0\1\6\1\0"+
+    "\6\6\1\51\10\6\24\0\1\6\2\0\1\6\1\0"+
+    "\11\6\1\52\5\6\24\0\1\6\2\0\1\6\1\0"+
+    "\7\6\1\53\7\6\24\0\1\6\2\0\1\6\1\0"+
+    "\16\6\1\54\60\0\1\55\47\0\1\56\47\0\1\57"+
+    "\47\0\1\60\57\0\1\61\50\0\1\62\2\0\1\6"+
+    "\2\0\1\6\1\0\2\6\1\63\14\6\24\0\1\6"+
+    "\2\0\1\6\1\0\4\6\1\64\12\6\24\0\1\6"+
+    "\2\0\1\6\1\0\4\6\1\65\12\6\24\0\1\6"+
+    "\2\0\1\6\1\0\15\6\1\66\1\6\24\0\1\6"+
+    "\2\0\1\6\1\0\6\6\1\67\10\6\24\0\1\6"+
+    "\2\0\1\6\1\0\2\6\1\70\14\6\24\0\1\6"+
+    "\2\0\1\6\1\0\14\6\1\71\2\6\24\0\1\6"+
+    "\2\0\1\6\1\0\7\6\1\72\7\6\24\0\1\6"+
+    "\2\0\1\6\1\0\3\6\1\73\13\6\24\0\1\6"+
+    "\2\0\1\6\1\0\15\6\1\74\1\6\24\0\1\6"+
+    "\2\0\1\6\1\0\12\6\1\75\4\6\24\0\1\6"+
+    "\2\0\1\6\1\0\7\6\1\76\7\6\24\0\1\6"+
+    "\2\0\1\6\1\0\7\6\1\77\7\6\24\0\1\6"+
+    "\2\0\1\6\1\0\12\6\1\100\4\6\24\0\1\6"+
+    "\2\0\1\6\1\0\14\6\1\66\2\6\24\0\1\6"+
+    "\2\0\1\6\1\0\4\6\1\101\12\6\24\0\1\6"+
+    "\2\0\1\6\1\0\1\6\1\102\15\6\24\0\1\6"+
+    "\2\0\1\6\1\0\12\6\1\103\4\6\24\0\1\6"+
+    "\2\0\1\6\1\0\3\6\1\104\13\6\23\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1482];
+    int [] result = new int[1560];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -191,11 +191,11 @@ class MarieLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\1\1\1\11\13\1\13\11\5\1\2\11"+
-    "\11\1\5\11\24\1";
+    "\1\0\1\11\1\1\1\11\13\1\10\11\1\1\4\11"+
+    "\5\1\2\11\11\1\6\11\22\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[67];
+    int [] result = new int[68];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -274,9 +274,9 @@ class MarieLexer {
     public MarieParser parser;
 	public int lineno;
 
-    public MarieLexer(java.io.Reader r, MarieParser) {
+    public MarieLexer(java.io.Reader r, MarieParser parser) {
         this(r);
-        this.parser;
+        this.parser = parser;
 		this.lineno = 1;
     }
 
@@ -301,7 +301,7 @@ class MarieLexer {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 152) {
+    while (i < 154) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -609,149 +609,157 @@ class MarieLexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.err.println("Unexpected Character: " + yytext()); return -1
+            { System.err.println("Unexpected Character: " + yytext()); return -1;
             }
-          case 37: break;
+          case 39: break;
           case 2: 
             { parser.yylval = new ParserVal((Object) yytext()); return Parser.INT_LIT;
             }
-          case 38: break;
+          case 40: break;
           case 3: 
             { this.lineno++;
             }
-          case 39: break;
+          case 41: break;
           case 4: 
-            { return Parser.DIV;
+            { return MarieParser.DIV;
             }
-          case 40: break;
+          case 42: break;
           case 5: 
             { parser.yylval = new ParserVal((Object) yytext()); return Parser.IDENT;
             }
-          case 41: break;
+          case 43: break;
           case 6: 
             { System.out.println("Ignoring Whitespace");
             }
-          case 42: break;
-          case 7: 
-            { return Parser.LCURLY;
-            }
-          case 43: break;
-          case 8: 
-            { return Parser.RCURLY;
-            }
           case 44: break;
-          case 9: 
-            { return Parser.LCIRCLE;
+          case 7: 
+            { return MarieParser.SEMI;
             }
           case 45: break;
-          case 10: 
-            { return Parser.RCIRCLE;
+          case 8: 
+            { return MarieParser.COMMA;
             }
           case 46: break;
-          case 11: 
-            { return Parser.LSQUARE;
+          case 9: 
+            { return MarieParser.LCURLY;
             }
           case 47: break;
-          case 12: 
-            { return Parser.RSQUARE;
+          case 10: 
+            { return MarieParser.RCURLY;
             }
           case 48: break;
-          case 13: 
-            { return Parser.ASSIGN;
+          case 11: 
+            { return MarieParser.LCIRCLE;
             }
           case 49: break;
-          case 14: 
-            { return Parser.ADD;
+          case 12: 
+            { return MarieParser.RCIRCLE;
             }
           case 50: break;
-          case 15: 
-            { return Parser.MINUS;
+          case 13: 
+            { return MarieParser.LSQUARE;
             }
           case 51: break;
-          case 16: 
-            { return Parser.MULTI;
+          case 14: 
+            { return MarieParser.RSQUARE;
             }
           case 52: break;
-          case 17: 
-            { return Parser.MOD;
+          case 15: 
+            { return MarieParser.ASSIGN;
             }
           case 53: break;
-          case 18: 
-            { return Parser.LT;
+          case 16: 
+            { return MarieParser.ADD;
             }
           case 54: break;
-          case 19: 
-            { return Parser.GT;
+          case 17: 
+            { return MarieParser.MINUS;
             }
           case 55: break;
-          case 20: 
-            { return Parser.NOT;
+          case 18: 
+            { return MarieParser.MULTI;
             }
           case 56: break;
-          case 21: 
-            { System.err.println("BACKSPACE ERROR!");
+          case 19: 
+            { return MarieParser.MOD;
             }
           case 57: break;
-          case 22: 
-            { System.out.println("Comment Detected: Ignoring");
+          case 20: 
+            { return MarieParser.LT;
             }
           case 58: break;
-          case 23: 
-            { return Parser.IF;
+          case 21: 
+            { return MarieParser.GT;
             }
           case 59: break;
-          case 24: 
-            { return Parser.LTE;
+          case 22: 
+            { return MarieParser.NOT;
             }
           case 60: break;
-          case 25: 
-            { return Parser.GTE;
+          case 23: 
+            { System.err.println("BACKSPACE ERROR!");
             }
           case 61: break;
-          case 26: 
-            { return Parser.NE;
+          case 24: 
+            { System.out.println("Comment Detected: Ignoring");
             }
           case 62: break;
-          case 27: 
-            { return Parser.AND;
+          case 25: 
+            { return MarieParser.IF;
             }
           case 63: break;
-          case 28: 
-            { return Parser.OR;
+          case 26: 
+            { return MarieParser.EQ;
             }
           case 64: break;
-          case 29: 
-            { return Parser.INT;
+          case 27: 
+            { return MarieParser.LTE;
             }
           case 65: break;
-          case 30: 
-            { return Parser.TRUE;
+          case 28: 
+            { return MarieParser.GTE;
             }
           case 66: break;
-          case 31: 
-            { return Parser.BOOL;
+          case 29: 
+            { return MarieParser.NE;
             }
           case 67: break;
-          case 32: 
-            { return Parser.ELSE;
+          case 30: 
+            { return MarieParser.AND;
             }
           case 68: break;
-          case 33: 
-            { return Parser.PRINT;
+          case 31: 
+            { return MarieParser.OR;
             }
           case 69: break;
-          case 34: 
-            { return Parser.WHILE;
+          case 32: 
+            { return MarieParser.INT;
             }
           case 70: break;
-          case 35: 
-            { return Parser.FALSE;
+          case 33: 
+            { return MarieParser.BOOL_LIT;
             }
           case 71: break;
-          case 36: 
-            { return Parser.RETURN;
+          case 34: 
+            { return MarieParser.BOOL;
             }
           case 72: break;
+          case 35: 
+            { return MarieParser.ELSE;
+            }
+          case 73: break;
+          case 36: 
+            { return MarieParser.PRINT;
+            }
+          case 74: break;
+          case 37: 
+            { return MarieParser.WHILE;
+            }
+          case 75: break;
+          case 38: 
+            { return MarieParser.RETURN;
+            }
+          case 76: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
