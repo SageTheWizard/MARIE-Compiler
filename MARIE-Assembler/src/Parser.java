@@ -193,84 +193,84 @@ public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
     0,    0,    1,    1,    2,    2,    3,    3,    3,    4,
     4,    4,    4,    4,    4,    4,    4,    4,    4,    4,
-    4,    4,    4,    5,    5,    5,    5,    5,    5,    5,
-    6,    6,    7,    7,    8,    8,    9,
+    4,    4,    4,    4,    5,    5,    5,    5,    5,    5,
+    5,    6,    6,    7,    7,    8,    8,    9,
 };
 final static short yylen[] = {                            2,
     3,    1,    2,    2,    2,    1,    2,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-    1,    1,    1,    1,    1,    2,    2,
+    1,    1,    1,    1,    1,    1,    2,    2,
 };
 final static short yydefred[] = {                         0,
    10,   11,   12,   13,   14,   15,   16,   17,   18,   19,
    20,   21,   22,   23,   24,   25,   26,   27,   28,   29,
-   30,    0,    0,    0,   33,    0,    0,    2,    0,    6,
-    0,    8,    9,   34,   35,    0,   36,   37,    5,    4,
-    3,   32,    7,   31,    1,
+   30,   31,    0,    0,    0,   34,    0,    0,    2,    0,
+    6,    0,    8,    9,   35,   36,    0,   37,   38,    5,
+    4,    3,   33,    7,   32,    1,
 };
-final static short yydgoto[] = {                         27,
-   28,   29,   30,   31,   32,   43,   33,   34,   35,
+final static short yydgoto[] = {                         28,
+   29,   30,   31,   32,   33,   44,   34,   35,   36,
 };
 final static short yysindex[] = {                      -258,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0, -156, -281, -257,    0, -165,    0,    0, -227,    0,
- -163,    0,    0,    0,    0, -196,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,
+    0,    0, -156, -259, -257,    0, -165,    0,    0, -227,
+    0, -163,    0,    0,    0,    0, -196,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,
 };
 final static short yyrindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,
 };
 final static short yygindex[] = {                         0,
-   87,    0,    1,    0,    0,    0,   -5,    0,    0,
+   86,    0,   21,    0,    0,    0,   -6,    0,    0,
 };
 final static int YYTABLESIZE=131;
 static short yytable[];
 static { yytable();}
 static void yytable(){
 yytable = new short[]{                          1,
-    2,    3,    4,    5,   37,    6,    7,    8,    9,   10,
-   11,   12,   13,   14,   15,   16,   36,   17,   18,   19,
-   20,   21,   22,   23,   24,   44,   39,   38,   25,   26,
-    1,    2,    3,    4,    5,    0,    6,    7,    8,    9,
-   10,   11,   12,   13,   14,   15,   16,    0,   17,   18,
-   19,   20,   21,    0,   23,   24,   40,    0,    0,   25,
-   26,    1,    2,    3,    4,    5,    0,    6,    7,    8,
-    9,   10,   11,   12,   13,   14,   15,   16,    0,   17,
-   18,   19,   20,   21,    0,   23,   24,    0,    0,    0,
-   25,   26,    1,    2,    3,    4,    5,    0,    6,    7,
-    8,    9,   10,   11,   12,   13,   14,   15,   16,    0,
-   17,   18,   19,   20,   21,   41,   23,   24,   23,   24,
-    0,   25,   45,   25,   42,   23,   24,    0,    0,    0,
-   25,
+    2,    3,    4,    5,    6,    7,    8,    9,   10,   11,
+   12,   13,   14,   15,   16,   17,   37,   18,   19,   20,
+   21,   22,   23,   24,   25,   45,   38,   39,   26,   27,
+    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,
+   11,   12,   13,   14,   15,   16,   17,   40,   18,   19,
+   20,   21,   22,    0,   24,   25,   41,    0,    0,   26,
+   27,    1,    2,    3,    4,    5,    6,    7,    8,    9,
+   10,   11,   12,   13,   14,   15,   16,   17,    0,   18,
+   19,   20,   21,   22,    0,   24,   25,    0,    0,    0,
+   26,   27,    1,    2,    3,    4,    5,    6,    7,    8,
+    9,   10,   11,   12,   13,   14,   15,   16,   17,    0,
+   18,   19,   20,   21,   22,   42,   24,   25,   24,   25,
+    0,   26,   46,   26,   43,   24,   25,    0,    0,    0,
+   26,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                        258,
-  259,  260,  261,  262,  286,  264,  265,  266,  267,  268,
-  269,  270,  271,  272,  273,  274,   22,  276,  277,  278,
-  279,  280,  281,  282,  283,   31,   26,  285,  287,  288,
-  258,  259,  260,  261,  262,   -1,  264,  265,  266,  267,
-  268,  269,  270,  271,  272,  273,  274,   -1,  276,  277,
+  259,  260,  261,  262,  263,  264,  265,  266,  267,  268,
+  269,  270,  271,  272,  273,  274,   23,  276,  277,  278,
+  279,  280,  281,  282,  283,   32,  286,  285,  287,  288,
+  258,  259,  260,  261,  262,  263,  264,  265,  266,  267,
+  268,  269,  270,  271,  272,  273,  274,   27,  276,  277,
   278,  279,  280,   -1,  282,  283,  284,   -1,   -1,  287,
-  288,  258,  259,  260,  261,  262,   -1,  264,  265,  266,
+  288,  258,  259,  260,  261,  262,  263,  264,  265,  266,
   267,  268,  269,  270,  271,  272,  273,  274,   -1,  276,
   277,  278,  279,  280,   -1,  282,  283,   -1,   -1,   -1,
-  287,  288,  258,  259,  260,  261,  262,   -1,  264,  265,
+  287,  288,  258,  259,  260,  261,  262,  263,  264,  265,
   266,  267,  268,  269,  270,  271,  272,  273,  274,   -1,
-  276,  277,  278,  279,  280,   29,  282,  283,  282,  283,
-   -1,  287,   36,  287,  288,  282,  283,   -1,   -1,   -1,
+  276,  277,  278,  279,  280,   30,  282,  283,  282,  283,
+   -1,  287,   37,  287,  288,  282,  283,   -1,   -1,   -1,
   287,
 };
 }
-final static short YYFINAL=27;
+final static short YYFINAL=28;
 final static short YYMAXTOKEN=288;
 final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -310,6 +310,7 @@ final static String yyrule[] = {
 "instr : STORE",
 "instr : ADD",
 "instr : SUBT",
+"instr : CLEAR",
 "instr : JNP",
 "instr : STKINC",
 "instr : STKDEC",
@@ -335,7 +336,7 @@ final static String yyrule[] = {
 "oct_num_state : OCT OCT_NUM",
 };
 
-//#line 89 "AssemblerParser.y"
+//#line 90 "AssemblerParser.y"
     private Lexer lexer;
 
     private int yylex () {
@@ -357,7 +358,7 @@ final static String yyrule[] = {
     public Parser(Reader r) {
         lexer = new Lexer(r, this);
     }
-//#line 288 "Parser.java"
+//#line 289 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -550,117 +551,121 @@ case 9:
 break;
 case 10:
 //#line 49 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.JUMP;}
 break;
 case 11:
 //#line 50 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.LOAD;}
 break;
 case 12:
 //#line 51 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STORE;}
 break;
 case 13:
 //#line 52 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.ADD;}
 break;
 case 14:
 //#line 53 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.SUBT;}
 break;
 case 15:
 //#line 54 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.CLEAR;}
 break;
 case 16:
 //#line 55 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.JNP;}
 break;
 case 17:
 //#line 56 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STKINC;}
 break;
 case 18:
 //#line 57 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STKDEC;}
 break;
 case 19:
 //#line 58 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STKPSH;}
 break;
 case 20:
 //#line 59 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STKPEK;}
 break;
 case 21:
 //#line 60 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.ADDI;}
 break;
 case 22:
 //#line 61 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.JUMPI;}
 break;
 case 23:
 //#line 62 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.STOREI;}
 break;
 case 24:
-//#line 65 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+//#line 63 "AssemblerParser.y"
+{yyval.obj = MARIEValues.LOADI;}
 break;
 case 25:
 //#line 66 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.INPUT;}
 break;
 case 26:
 //#line 67 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.OUTPUT;}
 break;
 case 27:
 //#line 68 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = HALT;}
 break;
 case 28:
 //#line 69 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.SKPLT;}
 break;
 case 29:
 //#line 70 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.SKPEQ;}
 break;
 case 30:
 //#line 71 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = MARIEValues.SKPGT;}
 break;
 case 31:
-//#line 74 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+//#line 72 "AssemblerParser.y"
+{yyval.obj = MARIEValues.JMPRT;}
 break;
 case 32:
 //#line 75 "AssemblerParser.y"
-{yyval.obj = operandLabel(val_peek(0).obj);}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 33:
-//#line 78 "AssemblerParser.y"
-{yyval.obj = numHex_num(val_peek(0).obj);}
+//#line 76 "AssemblerParser.y"
+{yyval.obj = operandLabel(val_peek(0).obj);}
 break;
 case 34:
 //#line 79 "AssemblerParser.y"
-{yyval.obj = val_peek(0).obj;}
+{yyval.obj = numHex_num(val_peek(0).obj);}
 break;
 case 35:
-//#line 82 "AssemblerParser.y"
+//#line 80 "AssemblerParser.y"
 {yyval.obj = val_peek(0).obj;}
 break;
 case 36:
 //#line 83 "AssemblerParser.y"
-{yyval.obj = numDec_num(val_peek(1).obj);}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 37:
-//#line 86 "AssemblerParser.y"
+//#line 84 "AssemblerParser.y"
+{yyval.obj = numDec_num(val_peek(1).obj);}
+break;
+case 38:
+//#line 87 "AssemblerParser.y"
 {yyval.obj = numOct_num(val_peek(1).obj);}
 break;
-//#line 585 "Parser.java"
+//#line 590 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

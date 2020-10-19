@@ -46,29 +46,30 @@ line_                : instr operand        {$$ = line_InstrOperand($1, $2);}
 		             | num                  {$$ = $1;}
 		             ;
 
-instr           	 : JUMP				    {$$ = $1;}
-		             | LOAD                 {$$ = $1;}
-		             | STORE                {$$ = $1;}
-		             | ADD                  {$$ = $1;}
-		             | SUBT                 {$$ = $1;}
-		             | JNP                  {$$ = $1;}
-		             | STKINC               {$$ = $1;}
-		             | STKDEC               {$$ = $1;}
-		             | STKPSH               {$$ = $1;}
-		             | STKPEK               {$$ = $1;}
-		             | ADDI                 {$$ = $1;}
-		             | JUMPI                {$$ = $1;}
-		             | STOREI               {$$ = $1;}
-		             | LOADI                {$$ = $1;}
+instr           	 : JUMP				    {$$ = MARIEValues.JUMP;}
+		             | LOAD                 {$$ = MARIEValues.LOAD;}
+		             | STORE                {$$ = MARIEValues.STORE;}
+		             | ADD                  {$$ = MARIEValues.ADD;}
+		             | SUBT                 {$$ = MARIEValues.SUBT;}
+					 | CLEAR                {$$ = MARIEValues.CLEAR;}
+		             | JNP                  {$$ = MARIEValues.JNP;}
+		             | STKINC               {$$ = MARIEValues.STKINC;}
+		             | STKDEC               {$$ = MARIEValues.STKDEC;}
+		             | STKPSH               {$$ = MARIEValues.STKPSH;}
+		             | STKPEK               {$$ = MARIEValues.STKPEK;}
+		             | ADDI                 {$$ = MARIEValues.ADDI;}
+		             | JUMPI                {$$ = MARIEValues.JUMPI;}
+		             | STOREI               {$$ = MARIEValues.STOREI;}
+		             | LOADI                {$$ = MARIEValues.LOADI;}
 		             ;
 		
-non_operand_instr    : INPUT                {$$ = $1;}
-					 | OUTPUT               {$$ = $1;}
-					 | HALT                 {$$ = $1;}
-					 | SKPLT                {$$ = $1;}
-					 | SKPEQ                {$$ = $1;}
-					 | SKPGT                {$$ = $1;}
-					 | JMPRT                {$$ = $1;}
+non_operand_instr    : INPUT                {$$ = MARIEValues.INPUT;}
+					 | OUTPUT               {$$ = MARIEValues.OUTPUT;}
+					 | HALT                 {$$ = HALT;}
+					 | SKPLT                {$$ = MARIEValues.SKPLT;}
+					 | SKPEQ                {$$ = MARIEValues.SKPEQ;}
+					 | SKPGT                {$$ = MARIEValues.SKPGT;}
+					 | JMPRT                {$$ = MARIEValues.JMPRT;}
 					 ;
 
 operand              : num                  {$$ = $1;}
