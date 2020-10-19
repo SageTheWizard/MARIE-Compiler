@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Scope {
     private HashMap<String, String> symbolTable;
-    private Scope prev;
+    public Scope prev;
 
     public Scope() {
         this.symbolTable = new HashMap<>();

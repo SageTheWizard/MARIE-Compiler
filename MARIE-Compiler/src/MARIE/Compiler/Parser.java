@@ -17,9 +17,10 @@
 
 
 //#line 2 "MarieParser.y"
+package MARIE.Compiler;
 import java.io.*;
 import java.util.*;
-//#line 20 "Parser.java"
+//#line 21 "Parser.java"
 
 
 
@@ -475,7 +476,7 @@ final static String yyrule[] = {
 "expr : INT_LIT",
 };
 
-//#line 143 "MarieParser.y"
+//#line 144 "MarieParser.y"
 
 
 public static MarieLexer lexer;
@@ -496,12 +497,12 @@ public void yyerror (String error) {
 	System.out.println("ERROR: " + error);
 }
 
-public MarieParser(Reader r) {
+public Parser(Reader r) {
 	lexer = new MarieLexer(r, this);
 }
 
 
-//#line 432 "Parser.java"
+//#line 433 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -530,8 +531,8 @@ String yys;    //current token string
 //###############################################################
 // method: yyparse : parse input and execute indicated items
 //###############################################################
-int yyparse()
-throws SemanticException
+public int yyparse()
+throws SemanticError
 {
 boolean doaction;
   init_stacks();
@@ -657,226 +658,230 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 33 "MarieParser.y"
+//#line 34 "MarieParser.y"
 {yyval.obj = program___decllist();}
 break;
 case 2:
-//#line 36 "MarieParser.y"
+//#line 37 "MarieParser.y"
 {yyval.obj = decl_list___decl_list_decl();}
 break;
 case 3:
-//#line 37 "MarieParser.y"
+//#line 38 "MarieParser.y"
 {yyval.obj = decl_list____eps();}
 break;
 case 4:
-//#line 40 "MarieParser.y"
+//#line 41 "MarieParser.y"
 {yyval.obj = decl____var_decl();}
 break;
 case 5:
-//#line 41 "MarieParser.y"
+//#line 42 "MarieParser.y"
 {yyval.obj = decl____fun_decl();}
 break;
 case 6:
-//#line 44 "MarieParser.y"
+//#line 45 "MarieParser.y"
 {yyval.obj = var_decl____type_spec_IDENT_SEMI(val_peek(2).obj, val_peek(1).obj);}
 break;
 case 7:
-//#line 47 "MarieParser.y"
+//#line 48 "MarieParser.y"
 {yyval.obj = type_spec____BOOL();}
 break;
 case 8:
-//#line 48 "MarieParser.y"
+//#line 49 "MarieParser.y"
 {yyval.obj = type_spec____INT();}
 break;
 case 9:
-//#line 49 "MarieParser.y"
+//#line 50 "MarieParser.y"
 {yyval.obj = type_spec____type_spec_LSQUARE_RSQUARE(val_peek(2).obj);}
 break;
 case 10:
-//#line 52 "MarieParser.y"
+//#line 53 "MarieParser.y"
 {yyval.obj = fun_decl____type_spec_IDENT_LCIRCLE_params_RCIRCLE(val_peek(4).obj, val_peek(3).obj, val_peek(1).obj);}
 break;
 case 11:
-//#line 53 "MarieParser.y"
+//#line 54 "MarieParser.y"
 {fun_decl____LCURLY(val_peek(3).obj);}
 break;
 case 12:
-//#line 54 "MarieParser.y"
+//#line 55 "MarieParser.y"
 {fun_decl____RCURLY(val_peek(9).obj);}
 break;
 case 13:
-//#line 57 "MarieParser.y"
+//#line 58 "MarieParser.y"
 {yyval.obj = val_peek(0).obj;}
 break;
 case 14:
-//#line 58 "MarieParser.y"
+//#line 59 "MarieParser.y"
 {yyval.obj = params____eps();}
 break;
 case 15:
-//#line 61 "MarieParser.y"
+//#line 62 "MarieParser.y"
 {yyval.obj = param_list____param_list_COMMA_param(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 16:
-//#line 62 "MarieParser.y"
+//#line 63 "MarieParser.y"
 {yyval.obj = param_list____param(val_peek(0).obj);}
 break;
 case 17:
-//#line 65 "MarieParser.y"
+//#line 66 "MarieParser.y"
 {yyval.obj = param____type_spec_IDENT(val_peek(1).obj, val_peek(0).obj);}
 break;
 case 18:
-//#line 68 "MarieParser.y"
+//#line 69 "MarieParser.y"
 {yyval.obj = stmt_list____stmt_list_stmt(); }
 break;
 case 19:
-//#line 69 "MarieParser.y"
+//#line 70 "MarieParser.y"
 {yyval.obj = stmt_list____eps();}
 break;
 case 20:
-//#line 72 "MarieParser.y"
+//#line 73 "MarieParser.y"
 {yyval.obj = stmt____expr_stmt();}
 break;
 case 24:
-//#line 76 "MarieParser.y"
+//#line 77 "MarieParser.y"
 {yyval.obj = stmt____return_stmt();}
 break;
 case 27:
-//#line 81 "MarieParser.y"
+//#line 82 "MarieParser.y"
 {yyval.obj = expr_stmt____IDENT_ASSIGN_expr_stmt(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 28:
-//#line 82 "MarieParser.y"
+//#line 83 "MarieParser.y"
 {yyval.obj = expr_stmt____expr(val_peek(1).obj);}
 break;
 case 29:
-//#line 83 "MarieParser.y"
+//#line 84 "MarieParser.y"
 {yyval.obj = expr_stmt____IDENT_arr_ASSIGN_expr_stmt(val_peek(5).obj, val_peek(3).obj, val_peek(0).obj);}
 break;
 case 30:
-//#line 86 "MarieParser.y"
+//#line 87 "MarieParser.y"
 {yyval.obj = while_stmt____WHILE_LCIRCLE_expr_RCIRCLE(val_peek(1).obj);}
 break;
 case 32:
-//#line 89 "MarieParser.y"
+//#line 90 "MarieParser.y"
 {compound_stmt___LBRACE();}
 break;
 case 33:
-//#line 91 "MarieParser.y"
+//#line 92 "MarieParser.y"
 {compound_stmt___RBRACE();}
 break;
 case 34:
-//#line 93 "MarieParser.y"
+//#line 94 "MarieParser.y"
 {yyval.obj = if_stmt____LCIRCLE_expr(val_peek(0).obj);}
 break;
+case 38:
+//#line 101 "MarieParser.y"
+{yyval.obj = val_peek(2).obj;}
+break;
 case 39:
-//#line 103 "MarieParser.y"
+//#line 104 "MarieParser.y"
 {yyval.obj = return_stmt____RETURN_expr_SEMI(val_peek(1).obj);}
 break;
 case 41:
-//#line 107 "MarieParser.y"
+//#line 108 "MarieParser.y"
 {yyval.obj = local_decls____eps();}
 break;
 case 42:
-//#line 110 "MarieParser.y"
+//#line 111 "MarieParser.y"
 {yyval.obj = local_decl____type_spec_IDENT_SEMI(val_peek(2).obj, val_peek(1).obj);}
 break;
 case 43:
-//#line 113 "MarieParser.y"
+//#line 114 "MarieParser.y"
 {yyval.obj = arg_list____arg_list_COMMA_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 44:
-//#line 114 "MarieParser.y"
+//#line 115 "MarieParser.y"
 {yyval.obj = arg_list____expr(val_peek(0).obj);}
 break;
 case 45:
-//#line 117 "MarieParser.y"
-{yyval.obj = val_peek(0).obj}
+//#line 118 "MarieParser.y"
+{yyval.obj = val_peek(0).obj;}
 break;
 case 46:
-//#line 118 "MarieParser.y"
+//#line 119 "MarieParser.y"
 {yyval.obj = args____eps();}
 break;
 case 47:
-//#line 121 "MarieParser.y"
+//#line 122 "MarieParser.y"
 {yyval.obj = expr____expr_ADD_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 48:
-//#line 122 "MarieParser.y"
+//#line 123 "MarieParser.y"
 {yyval.obj = expr____expr_SUB_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 49:
-//#line 123 "MarieParser.y"
+//#line 124 "MarieParser.y"
 {yyval.obj = expr____expr_MUL_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 50:
-//#line 124 "MarieParser.y"
+//#line 125 "MarieParser.y"
 {yyval.obj = expr____expr_DIV_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 51:
-//#line 125 "MarieParser.y"
+//#line 126 "MarieParser.y"
 {yyval.obj = expr____expr_MOD_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 52:
-//#line 126 "MarieParser.y"
+//#line 127 "MarieParser.y"
 {yyval.obj = expr____expr_OR_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 53:
-//#line 127 "MarieParser.y"
+//#line 128 "MarieParser.y"
 {yyval.obj = expr____NOT_expr(val_peek(0).obj);}
 break;
 case 54:
-//#line 128 "MarieParser.y"
+//#line 129 "MarieParser.y"
 {yyval.obj = expr____expr_EQ_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 55:
-//#line 129 "MarieParser.y"
+//#line 130 "MarieParser.y"
 {yyval.obj = expr____expr_NE_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 56:
-//#line 130 "MarieParser.y"
+//#line 131 "MarieParser.y"
 {yyval.obj = expr____expr_LE_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 57:
-//#line 131 "MarieParser.y"
+//#line 132 "MarieParser.y"
 {yyval.obj = expr____expr_LT_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 58:
-//#line 132 "MarieParser.y"
+//#line 133 "MarieParser.y"
 {yyval.obj = expr____expr_GE_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 59:
-//#line 133 "MarieParser.y"
+//#line 134 "MarieParser.y"
 {yyval.obj = expr____expr_GT_expr(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 60:
-//#line 134 "MarieParser.y"
+//#line 135 "MarieParser.y"
 {yyval.obj = val_peek(1).obj;}
 break;
 case 61:
-//#line 135 "MarieParser.y"
+//#line 136 "MarieParser.y"
 {yyval.obj = expr____IDENT(val_peek(0).obj);}
 break;
 case 62:
-//#line 136 "MarieParser.y"
+//#line 137 "MarieParser.y"
 {yyval.obj = expr____IDENT_LCIRCLE_args_RCIRCLE(val_peek(3).obj, val_peek(1).obj);}
 break;
 case 63:
-//#line 137 "MarieParser.y"
+//#line 138 "MarieParser.y"
 {yyval.obj = expr____IDENT_LSQUARE_expr_RSQUARE(val_peek(3).obj, val_peek(1).obj);}
 break;
 case 64:
-//#line 138 "MarieParser.y"
+//#line 139 "MarieParser.y"
 {yyval.obj = expr____NEW_type_spec_LSQUARE_expr_RSQUARE(val_peek(3).obj, val_peek(1).obj);}
 break;
 case 65:
-//#line 139 "MarieParser.y"
+//#line 140 "MarieParser.y"
 {yyval.obj = expr____BOOL_LIT(val_peek(0).obj);}
 break;
 case 66:
-//#line 140 "MarieParser.y"
+//#line 141 "MarieParser.y"
 {yyval.obj = expr____INT_LIT(val_peek(0).obj);}
 break;
-//#line 801 "Parser.java"
+//#line 806 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

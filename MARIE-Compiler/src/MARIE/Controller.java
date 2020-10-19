@@ -1,4 +1,5 @@
 package MARIE;
+import MARIE.Compiler.Parser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -78,8 +79,10 @@ public class Controller {
 
     @FXML
     private void runCode() {
-        String code = codeBox.getText();
         runBox.clear();
+        /*
+        String code = codeBox.getText();
+
         lineByLine = code.split("\n");
 
         for (String line : lineByLine) {
@@ -90,6 +93,23 @@ public class Controller {
                 runBox.appendText(line);
             }
             runBox.appendText("\n");
+        }
+         */
+        try {
+            java.io.Reader r = new java.io.FileReader(filename.getText());
+            Parser marieParser = new Parser(r);
+            int success = marieParser.yyparse();
+            if (success == 0) {
+                runBox.appendText("Code Compiled Successfully with exit status 0");
+            }
+            else {
+                runBox.appendText("Code Compiled With error " + success + ".  Syntax Errors Exist.");
+            }
+        } catch (FileNotFoundException fnfe) {
+            runBox.appendText("Error Opening File!");
+        } catch (Exception e) {
+            runBox.appendText("Semantic Error: \n");
+            runBox.appendText(e.getMessage());
         }
     }
 

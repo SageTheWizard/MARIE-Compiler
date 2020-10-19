@@ -1,4 +1,5 @@
 %{
+package MARIE.Compiler;
 import java.io.*;
 import java.util.*;
 %}
@@ -97,7 +98,7 @@ else_stmt : ELSE stmt
           |
           ;
 
-print_stmt : PRINT expr SEMI
+print_stmt : PRINT expr SEMI {$$ = $1;}
 	   ;
 
 return_stmt : RETURN expr SEMI {$$ = return_stmt____RETURN_expr_SEMI($2);}
@@ -114,7 +115,7 @@ arg_list    : arg_list COMMA expr {$$ = arg_list____arg_list_COMMA_expr($1, $3);
 	    | expr                {$$ = arg_list____expr($1);}
 	    ;
 
-args	    : arg_list {$$ = $1}
+args	    : arg_list {$$ = $1;}
 	    | 	       {$$ = args____eps();}
 	    ;
 
@@ -160,7 +161,7 @@ public void yyerror (String error) {
 	System.out.println("ERROR: " + error);
 }
 
-public MarieParser(Reader r) {
+public Parser(Reader r) {
 	lexer = new MarieLexer(r, this);
 }
 

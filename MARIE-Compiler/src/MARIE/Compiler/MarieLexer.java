@@ -5,6 +5,7 @@
  * <a href="http://www.jflex.de/">JFlex</a> 1.6.1
  * from the specification file <tt>MarieLexer.flex</tt>
  */
+package MARIE.Compiler;
 class MarieLexer {
 
   /** This character denotes the end of file */
@@ -271,10 +272,10 @@ class MarieLexer {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
-    public MarieParser parser;
+    public Parser parser;
 	public int lineno;
 
-    public MarieLexer(java.io.Reader r, MarieParser parser) {
+    public MarieLexer(java.io.Reader r, Parser parser) {
         this(r);
         this.parser = parser;
 		this.lineno = 1;
@@ -621,7 +622,7 @@ class MarieLexer {
             }
           case 41: break;
           case 4: 
-            { return MarieParser.DIV;
+            { return Parser.DIV;
             }
           case 42: break;
           case 5: 
@@ -633,67 +634,67 @@ class MarieLexer {
             }
           case 44: break;
           case 7: 
-            { return MarieParser.SEMI;
+            { return Parser.SEMI;
             }
           case 45: break;
           case 8: 
-            { return MarieParser.COMMA;
+            { return Parser.COMMA;
             }
           case 46: break;
           case 9: 
-            { return MarieParser.LCURLY;
+            { return Parser.LCURLY;
             }
           case 47: break;
           case 10: 
-            { return MarieParser.RCURLY;
+            { return Parser.RCURLY;
             }
           case 48: break;
           case 11: 
-            { return MarieParser.LCIRCLE;
+            { return Parser.LCIRCLE;
             }
           case 49: break;
           case 12: 
-            { return MarieParser.RCIRCLE;
+            { return Parser.RCIRCLE;
             }
           case 50: break;
           case 13: 
-            { return MarieParser.LSQUARE;
+            { return Parser.LSQUARE;
             }
           case 51: break;
           case 14: 
-            { return MarieParser.RSQUARE;
+            { return Parser.RSQUARE;
             }
           case 52: break;
           case 15: 
-            { return MarieParser.ASSIGN;
+            { return Parser.ASSIGN;
             }
           case 53: break;
           case 16: 
-            { return MarieParser.ADD;
+            { return Parser.ADD;
             }
           case 54: break;
           case 17: 
-            { return MarieParser.MINUS;
+            { return Parser.SUB;
             }
           case 55: break;
           case 18: 
-            { return MarieParser.MULTI;
+            { return Parser.MUL;
             }
           case 56: break;
           case 19: 
-            { return MarieParser.MOD;
+            { return Parser.MOD;
             }
           case 57: break;
           case 20: 
-            { return MarieParser.LT;
+            { return Parser.LT;
             }
           case 58: break;
           case 21: 
-            { return MarieParser.GT;
+            { return Parser.GT;
             }
           case 59: break;
           case 22: 
-            { return MarieParser.NOT;
+            { return Parser.NOT;
             }
           case 60: break;
           case 23: 
@@ -705,59 +706,59 @@ class MarieLexer {
             }
           case 62: break;
           case 25: 
-            { return MarieParser.IF;
+            { return Parser.IF;
             }
           case 63: break;
           case 26: 
-            { return MarieParser.EQ;
+            { return Parser.EQ;
             }
           case 64: break;
           case 27: 
-            { return MarieParser.LTE;
+            { return Parser.LE;
             }
           case 65: break;
           case 28: 
-            { return MarieParser.GTE;
+            { return Parser.GE;
             }
           case 66: break;
           case 29: 
-            { return MarieParser.NE;
+            { return Parser.NE;
             }
           case 67: break;
           case 30: 
-            { return MarieParser.AND;
+            { return Parser.AND;
             }
           case 68: break;
           case 31: 
-            { return MarieParser.OR;
+            { return Parser.OR;
             }
           case 69: break;
           case 32: 
-            { return MarieParser.INT;
+            { return Parser.INT;
             }
           case 70: break;
           case 33: 
-            { return MarieParser.BOOL_LIT;
+            { return Parser.BOOL_LIT;
             }
           case 71: break;
           case 34: 
-            { return MarieParser.BOOL;
+            { return Parser.BOOL;
             }
           case 72: break;
           case 35: 
-            { return MarieParser.ELSE;
+            { return Parser.ELSE;
             }
           case 73: break;
           case 36: 
-            { return MarieParser.PRINT;
+            { return Parser.PRINT;
             }
           case 74: break;
           case 37: 
-            { return MarieParser.WHILE;
+            { return Parser.WHILE;
             }
           case 75: break;
           case 38: 
-            { return MarieParser.RETURN;
+            { return Parser.RETURN;
             }
           case 76: break;
           default:
