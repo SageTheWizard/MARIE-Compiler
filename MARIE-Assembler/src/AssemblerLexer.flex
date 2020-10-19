@@ -1,15 +1,16 @@
 %%
 
-%class MarieLexer
+%class Lexer
 %byaccj
 
 %{
-    public MarieParser parser;
+    public Parser parser;
 	public int lineno;
+	java.io.Reader r;
 
-    public MarieLexer(java.io.Reader r, MarieParser) {
-        this(r);
-        this.parser;
+    public Lexer(java.io.Reader r, Parser p) {
+        this.r = r;
+        this.parser = p;
 		this.lineno = 1;
     }
 %}
@@ -53,21 +54,18 @@ label = ":"identifier
 "DEC"          {return Parser.DEC;}
 "OCT"          {return Parser.OCT;}
 "END"          {return Parser.END;}
-//TODO may be removed
-"storer"       {return Parser.STORER;}
-"loadr"        {return Parser.LOADR;}
 // Regex Related code
 {oct_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.OCT_NUM;} //OCT_NUM can also be HEX_NUM and DEC_NUM, account for this when programming
 {dec_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.DEC_NUM;} //DEC_NUM can also be HEX_NUM, account for this when programming
 {hex_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;}
 {label}        {parser.yylval = new ParserVal((Object) yytext()); return Parser.LABEL;}
 {comment}      {System.out.println("Comment Detected: Ignoring");}
-{newline}      {this.lineno++;%}
+{newline}      {this.lineno++;}
 {whitespace}   {System.out.println("Ignoring Whitespace");}
 
 
 
 // Error handling
 \b             {System.err.println("BACKSPACE ERROR!");}
-[^]            {System.err.println("Unexpected Character: " + yytext()); return -1}
+[^]            {System.err.println("Unexpected Character: " + yytext()); return -1;}
 

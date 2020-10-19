@@ -18,12 +18,12 @@ import java.io.*;
 %right  NUM
 
 
-%token <int>    JUMP LOAD STORE ADD SUBT CLEAR JNP STKINC STKDEC STKPSH STKPEK ADDI JUMPI STOREI LOADI
-%token <int>    INPUT OUTPUT NOT HALT SKPLT SKPEQ SKPGT JMPRT
+%token <obj>    JUMP LOAD STORE ADD SUBT CLEAR JNP STKINC STKDEC STKPSH STKPEK ADDI JUMPI STOREI LOADI
+%token <obj>    INPUT OUTPUT NOT HALT SKPLT SKPEQ SKPGT JMPRT
 %token <obj>    ORG DEC OCT END
 
-%token <int>    OCT_NUM DEC_NUM HEX_NUM
-%token <String> LABEL
+%token <obj>    OCT_NUM DEC_NUM HEX_NUM
+%token <obj> LABEL
 
 %type <obj> start prgm line line_ instr non_operand_instr operand num oct_or_dec_num oct_num_state
 
@@ -33,7 +33,7 @@ start                : ORG num prgm	        {$$ = startOrg($2, $3);}
 		             | prgm                 {$$ = start($1);}
 		             ;
 		
-prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2)}
+prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2);}
 		             | line END             {$$ = prgmLineEnd($1);}
 		             ;
 

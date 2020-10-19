@@ -522,7 +522,7 @@ case 2:
 break;
 case 3:
 //#line 36 "AssemblerParser.y"
-{yyval.obj = prgmLinePrgm(val_peek(1).obj, val_peek(0).obj)}
+{yyval.obj = prgmLinePrgm(val_peek(1).obj, val_peek(0).obj);}
 break;
 case 4:
 //#line 37 "AssemblerParser.y"
@@ -530,7 +530,7 @@ case 4:
 break;
 case 5:
 //#line 40 "AssemblerParser.y"
-{yyval.obj = lineLabelLine_(val_peek(1).String, val_peek(0).obj);}
+{yyval.obj = lineLabelLine_(val_peek(1).obj, val_peek(0).obj);}
 break;
 case 6:
 //#line 41 "AssemblerParser.y"
@@ -550,87 +550,87 @@ case 9:
 break;
 case 10:
 //#line 49 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 11:
 //#line 50 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 12:
 //#line 51 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 13:
 //#line 52 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 14:
 //#line 53 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 15:
 //#line 54 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 16:
 //#line 55 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 17:
 //#line 56 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 18:
 //#line 57 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 19:
 //#line 58 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 20:
 //#line 59 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 21:
 //#line 60 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 22:
 //#line 61 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 23:
 //#line 62 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 24:
 //#line 65 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 25:
 //#line 66 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 26:
 //#line 67 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 27:
 //#line 68 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 28:
 //#line 69 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 29:
 //#line 70 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 30:
 //#line 71 "AssemblerParser.y"
-{yyval.obj = val_peek(0).int;}
+{yyval.obj = val_peek(0).obj;}
 break;
 case 31:
 //#line 74 "AssemblerParser.y"
@@ -638,11 +638,11 @@ case 31:
 break;
 case 32:
 //#line 75 "AssemblerParser.y"
-{yyval.obj = operandLabel(val_peek(0).String);}
+{yyval.obj = operandLabel(val_peek(0).obj);}
 break;
 case 33:
 //#line 78 "AssemblerParser.y"
-{yyval.obj = numHex_num(val_peek(0).int);}
+{yyval.obj = numHex_num(val_peek(0).obj);}
 break;
 case 34:
 //#line 79 "AssemblerParser.y"
