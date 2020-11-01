@@ -9,7 +9,7 @@
 	java.io.Reader r;
 
     public Lexer(java.io.Reader r, Parser p) {
-        this.r = r;
+        this(r);
         this.parser = p;
 		this.lineno = 1;
     }
@@ -22,7 +22,7 @@ newline    = \n
 comment    = "//"
 identifier = [a-zA-Z_][a-zA-Z0-9_]*
 whitespace = [ \t\r]+
-label = ":"identifier
+label = ":"{identifier}
 
 %%
 // Instructions
@@ -60,7 +60,7 @@ label = ":"identifier
 {hex_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;}
 {label}        {parser.yylval = new ParserVal((Object) yytext()); return Parser.LABEL;}
 {comment}      {System.out.println("Comment Detected: Ignoring");}
-{newline}      {this.lineno++;}
+{newline}      {this.lineno++; return Parser.NEWLINE;}
 {whitespace}   {System.out.println("Ignoring Whitespace");}
 
 

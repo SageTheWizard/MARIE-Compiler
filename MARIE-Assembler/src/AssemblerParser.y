@@ -23,7 +23,7 @@ import java.io.*;
 %token <obj>    ORG DEC OCT END
 
 %token <obj>    OCT_NUM DEC_NUM HEX_NUM
-%token <obj> LABEL
+%token <obj> LABEL NEWLINE
 
 %type <obj> start prgm line line_ instr non_operand_instr operand num oct_or_dec_num oct_num_state
 
@@ -37,8 +37,9 @@ prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2);}
 		             | line END             {$$ = prgmLineEnd($1);}
 		             ;
 
-line                 : LABEL line_          {$$ = lineLabelLine_($1, $2);}
-		             | line_			    {$$ = lineLine_($1);}
+line                 : LABEL line_ NEWLINE         {$$ = lineLabelLine_($1, $2);}
+		             | line_ NEWLINE       {$$ = lineLine_($1);}
+		             | NEWLINE             {$$ = newLine($1);}
 		             ;
 		
 line_                : instr operand        {$$ = line_InstrOperand($1, $2);}
@@ -46,48 +47,52 @@ line_                : instr operand        {$$ = line_InstrOperand($1, $2);}
 		             | num                  {$$ = $1;}
 		             ;
 
-instr           	 : JUMP				    {$$ = MARIEValues.JUMP;}
-		             | LOAD                 {$$ = MARIEValues.LOAD;}
-		             | STORE                {$$ = MARIEValues.STORE;}
-		             | ADD                  {$$ = MARIEValues.ADD;}
-		             | SUBT                 {$$ = MARIEValues.SUBT;}
-					 | CLEAR                {$$ = MARIEValues.CLEAR;}
-		             | JNP                  {$$ = MARIEValues.JNP;}
-		             | STKINC               {$$ = MARIEValues.STKINC;}
-		             | STKDEC               {$$ = MARIEValues.STKDEC;}
-		             | STKPSH               {$$ = MARIEValues.STKPSH;}
-		             | STKPEK               {$$ = MARIEValues.STKPEK;}
-		             | ADDI                 {$$ = MARIEValues.ADDI;}
-		             | JUMPI                {$$ = MARIEValues.JUMPI;}
-		             | STOREI               {$$ = MARIEValues.STOREI;}
-		             | LOADI                {$$ = MARIEValues.LOADI;}
+instr           	 : JUMP			    {$$ = Integer.toHexString(MARIEValues.JUMP).toUpperCase();}
+		             | LOAD                 {$$ = Integer.toHexString(MARIEValues.LOAD).toUpperCase();}
+		             | STORE                {$$ = Integer.toHexString(MARIEValues.STORE).toUpperCase();}
+		             | ADD                  {$$ = Integer.toHexString(MARIEValues.ADD).toUpperCase();}
+		             | SUBT                 {$$ = Integer.toHexString(MARIEValues.SUBT).toUpperCase();}
+			     | CLEAR                {$$ = Integer.toHexString(MARIEValues.CLEAR).toUpperCase();}
+		             | JNP                  {$$ = Integer.toHexString(MARIEValues.JNP).toUpperCase();}
+		             | STKINC               {$$ = Integer.toHexString(MARIEValues.STKINC).toUpperCase();}
+		             | STKDEC               {$$ = Integer.toHexString(MARIEValues.STKDEC).toUpperCase();}
+		             | STKPSH               {$$ = Integer.toHexString(MARIEValues.STKPSH).toUpperCase();}
+		             | STKPEK               {$$ = Integer.toHexString(MARIEValues.STKPEK).toUpperCase();}
+		             | ADDI                 {$$ = Integer.toHexString(MARIEValues.ADDI).toUpperCase();}
+		             | JUMPI                {$$ = Integer.toHexString(MARIEValues.JUMPI).toUpperCase();}
+		             | STOREI               {$$ = Integer.toHexString(MARIEValues.STOREI).toUpperCase();}
+		             | LOADI                {$$ = Integer.toHexString(MARIEValues.LOADI).toUpperCase();}
 		             ;
 		
-non_operand_instr    : INPUT                {$$ = MARIEValues.INPUT;}
-					 | OUTPUT               {$$ = MARIEValues.OUTPUT;}
-					 | HALT                 {$$ = HALT;}
-					 | SKPLT                {$$ = MARIEValues.SKPLT;}
-					 | SKPEQ                {$$ = MARIEValues.SKPEQ;}
-					 | SKPGT                {$$ = MARIEValues.SKPGT;}
-					 | JMPRT                {$$ = MARIEValues.JMPRT;}
+non_operand_instr    : INPUT                {$$ = padRight(Integer.toHexString(MARIEValues.INPUT).toUpperCase());}
+					 | OUTPUT               {$$ = padRight(Integer.toHexString(MARIEValues.OUTPUT).toUpperCase());}
+					 | HALT                 {$$ = padRight(Integer.toHexString(MARIEValues.HALT).toUpperCase());}
+					 | SKPLT                {$$ = padRight(Integer.toHexString(MARIEValues.SKPLT).toUpperCase());}
+					 | SKPEQ                {$$ = padRight(Integer.toHexString(MARIEValues.SKPEQ).toUpperCase());}
+					 | SKPGT                {$$ = padRight(Integer.toHexString(MARIEValues.SKPGT).toUpperCase());}
+					 | JMPRT                {$$ = padRight(Integer.toHexString(MARIEValues.JMPRT).toUpperCase());}
+					 | CLEAR                {$$ = padRight(Integer.toHexString(MARIEValues.CLEAR).toUpperCase());}
 					 ;
 
 operand              : num                  {$$ = $1;}
 		             | LABEL                {$$ = operandLabel($1);}
 		             ;
 		   
-num                  : HEX_NUM              {$$ = numHex_num($1);}   
+num                  : HEX_NUM              {$$ = numHex_num($1);}
+		     | DEC_NUM		    {$$ = numHex_num($1);}
+		     | OCT_NUM              {$$ = numHex_num($1);}
                      | oct_or_dec_num       {$$ = $1;}
 		             ;
 
 oct_or_dec_num       : oct_num_state        {$$ = $1;}
                      | DEC DEC_NUM          {$$ = numDec_num($1);}
+                     | DEC OCT_NUM          {$$ = numDec_num($1);}
 				     ;
 				  
 oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($1);}
                      ;
 %%
-    private Lexer lexer;
+
 
     private int yylex () {
         int yyl_return = -1;
@@ -106,5 +111,5 @@ oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($1);}
     }
 
     public Parser(Reader r) {
-        lexer = new Lexer(r, this);
+    	this.lexer = new Lexer(r, this);
     }
