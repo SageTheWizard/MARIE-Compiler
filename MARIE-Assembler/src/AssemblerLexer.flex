@@ -43,7 +43,7 @@ label = ":"{identifier}
 "loadi"        {return Parser.LOADI;}
 "input"        {return Parser.INPUT;}
 "output"       {return Parser.OUTPUT;}
-"not"          {return Parser.NOT;}
+"negate"       {return Parser.NEGATE;}
 "halt"         {return Parser.HALT;}
 "skplt"        {return Parser.SKPLT;}
 "skpeq"        {return Parser.SKPEQ;}

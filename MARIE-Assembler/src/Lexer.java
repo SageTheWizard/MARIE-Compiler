@@ -33,8 +33,8 @@ class Lexer {
     "\10\0\1\45\1\7\1\4\2\0\1\7\22\0\1\7\16\0\1\5"+
     "\10\3\2\2\1\10\6\0\2\1\1\42\1\40\1\41\1\1\1\37"+
     "\6\6\1\44\1\35\2\6\1\36\1\6\1\43\6\6\4\0\1\6"+
-    "\1\0\1\17\1\25\1\26\1\20\1\24\1\6\1\34\1\32\1\31"+
-    "\1\11\1\30\1\15\1\13\1\27\1\16\1\14\1\33\1\23\1\21"+
+    "\1\0\1\17\1\25\1\26\1\20\1\24\1\6\1\33\1\32\1\31"+
+    "\1\11\1\30\1\15\1\13\1\27\1\16\1\14\1\34\1\23\1\21"+
     "\1\22\1\12\5\6\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff95\0";
 
   /** 
@@ -50,14 +50,14 @@ class Lexer {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\1\1\6"+
     "\13\1\2\2\1\7\1\10\1\11\17\0\1\2\3\0"+
-    "\1\12\2\0\1\13\5\0\1\14\2\0\1\15\1\16"+
-    "\1\17\1\20\1\21\1\0\1\22\1\0\1\23\1\24"+
-    "\11\0\1\25\1\26\1\27\1\30\1\0\1\31\4\0"+
-    "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\1\41"+
+    "\1\12\2\0\1\13\10\0\1\14\1\15\1\16\1\17"+
+    "\1\20\1\0\1\21\1\0\1\22\1\23\12\0\1\24"+
+    "\1\25\1\26\1\27\1\0\1\30\4\0\1\31\1\32"+
+    "\1\33\1\34\1\0\1\35\1\36\1\37\1\40\1\41"+
     "\1\42\1\43\1\44";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[95];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -88,15 +88,16 @@ class Lexer {
     "\0\u031e\0\u0344\0\u036a\0\u0390\0\u03b6\0\u03dc\0\u0402\0\u0428"+
     "\0\u044e\0\u0474\0\u049a\0\u04c0\0\u04e6\0\u050c\0\u0532\0\u0558"+
     "\0\u057e\0\u05a4\0\u05ca\0\46\0\u05f0\0\u0616\0\u063c\0\u0662"+
-    "\0\u0688\0\u06ae\0\u06d4\0\u06fa\0\46\0\u0720\0\u0746\0\46"+
-    "\0\46\0\114\0\46\0\u076c\0\u0792\0\u07b8\0\u07de\0\46"+
-    "\0\46\0\u0804\0\u082a\0\u0850\0\u0876\0\u089c\0\u08c2\0\u08e8"+
-    "\0\u090e\0\u0934\0\46\0\46\0\46\0\46\0\u095a\0\u0980"+
-    "\0\u09a6\0\u09cc\0\u09f2\0\u0a18\0\46\0\46\0\46\0\46"+
-    "\0\46\0\46\0\46\0\46\0\46\0\46\0\46";
+    "\0\u0688\0\u06ae\0\u06d4\0\u06fa\0\u0720\0\u0746\0\u076c\0\46"+
+    "\0\46\0\114\0\46\0\u0792\0\u07b8\0\u07de\0\u0804\0\46"+
+    "\0\46\0\u082a\0\u0850\0\u0876\0\u089c\0\u08c2\0\u08e8\0\u090e"+
+    "\0\u0934\0\u095a\0\u0980\0\46\0\46\0\46\0\46\0\u09a6"+
+    "\0\u09cc\0\u09f2\0\u0a18\0\u0a3e\0\u0a64\0\46\0\46\0\46"+
+    "\0\46\0\u0a8a\0\46\0\46\0\46\0\46\0\46\0\46"+
+    "\0\46\0\46";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[95];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -128,27 +129,28 @@ class Lexer {
     "\1\10\37\0\1\30\4\0\1\30\2\0\34\30\13\0"+
     "\1\31\1\32\13\0\1\33\34\0\1\34\41\0\1\35"+
     "\53\0\1\36\37\0\1\37\7\0\1\40\5\0\1\41"+
-    "\32\0\1\42\46\0\1\43\56\0\1\44\35\0\1\45"+
+    "\32\0\1\42\54\0\1\43\50\0\1\44\35\0\1\45"+
     "\64\0\1\46\3\0\1\47\4\0\3\3\34\0\1\3"+
     "\1\50\1\3\4\0\3\3\34\0\3\3\1\0\1\51"+
     "\2\0\3\30\2\0\1\30\2\0\34\30\14\0\1\52"+
     "\46\0\1\53\45\0\1\54\50\0\1\55\50\0\1\56"+
     "\43\0\1\57\52\0\1\60\36\0\1\61\11\0\1\62"+
-    "\31\0\1\63\55\0\1\64\43\0\1\65\37\0\1\66"+
+    "\31\0\1\63\55\0\1\64\54\0\1\65\26\0\1\66"+
     "\46\0\1\67\67\0\1\70\51\0\1\71\3\0\3\3"+
     "\34\0\2\3\1\72\43\0\1\73\21\0\1\74\54\0"+
     "\1\75\42\0\1\76\41\0\1\77\62\0\1\100\36\0"+
     "\1\101\46\0\1\102\36\0\1\103\3\0\1\104\10\0"+
-    "\1\105\31\0\1\106\6\0\1\107\7\0\1\110\30\0"+
-    "\1\111\40\0\1\112\55\0\1\113\54\0\1\114\36\0"+
-    "\1\115\54\0\1\116\26\0\1\117\57\0\1\120\42\0"+
-    "\1\121\2\0\1\122\45\0\1\123\50\0\1\124\40\0"+
-    "\1\125\56\0\1\126\34\0\1\127\46\0\1\130\44\0"+
-    "\1\131\45\0\1\132\54\0\1\133\46\0\1\134\43\0"+
-    "\1\135\43\0\1\136\45\0\1\137\17\0";
+    "\1\105\31\0\1\106\6\0\1\107\6\0\1\110\31\0"+
+    "\1\111\45\0\1\112\40\0\1\113\55\0\1\114\54\0"+
+    "\1\115\36\0\1\116\54\0\1\117\26\0\1\120\57\0"+
+    "\1\121\42\0\1\122\2\0\1\123\45\0\1\124\50\0"+
+    "\1\125\40\0\1\126\57\0\1\127\33\0\1\130\46\0"+
+    "\1\131\44\0\1\132\45\0\1\133\45\0\1\134\54\0"+
+    "\1\135\46\0\1\136\43\0\1\137\43\0\1\140\45\0"+
+    "\1\141\43\0\1\142\21\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[2622];
+    int [] result = new int[2736];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -187,12 +189,12 @@ class Lexer {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\3\1\1\11\17\1\2\11\1\1\17\0"+
-    "\1\1\3\0\1\11\2\0\1\1\5\0\1\11\2\0"+
-    "\2\11\1\1\1\11\1\1\1\0\1\1\1\0\2\11"+
-    "\11\0\4\11\1\0\1\1\4\0\13\11";
+    "\1\1\3\0\1\11\2\0\1\1\10\0\2\11\1\1"+
+    "\1\11\1\1\1\0\1\1\1\0\2\11\12\0\4\11"+
+    "\1\0\1\1\4\0\4\11\1\0\10\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[95];
+    int [] result = new int[98];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -651,103 +653,103 @@ class Lexer {
             }
           case 47: break;
           case 12: 
-            { return Parser.NOT;
+            { return Parser.ORG;
             }
           case 48: break;
           case 13: 
-            { return Parser.ORG;
+            { return Parser.OCT;
             }
           case 49: break;
           case 14: 
-            { return Parser.OCT;
+            { return Parser.DEC;
             }
           case 50: break;
           case 15: 
-            { return Parser.DEC;
+            { return Parser.END;
             }
           case 51: break;
           case 16: 
-            { return Parser.END;
+            { return Parser.JUMP;
             }
           case 52: break;
           case 17: 
-            { return Parser.JUMP;
+            { return Parser.LOAD;
             }
           case 53: break;
           case 18: 
-            { return Parser.LOAD;
+            { return Parser.ADDI;
             }
           case 54: break;
           case 19: 
-            { return Parser.ADDI;
+            { return Parser.SUBT;
             }
           case 55: break;
           case 20: 
-            { return Parser.SUBT;
+            { return Parser.HALT;
             }
           case 56: break;
           case 21: 
-            { return Parser.HALT;
+            { return Parser.JUMPI;
             }
           case 57: break;
           case 22: 
-            { return Parser.JUMPI;
+            { return Parser.JMPRT;
             }
           case 58: break;
           case 23: 
-            { return Parser.JMPRT;
+            { return Parser.LOADI;
             }
           case 59: break;
           case 24: 
-            { return Parser.LOADI;
+            { return Parser.STORE;
             }
           case 60: break;
           case 25: 
-            { return Parser.STORE;
+            { return Parser.SKPLT;
             }
           case 61: break;
           case 26: 
-            { return Parser.SKPLT;
+            { return Parser.SKPEQ;
             }
           case 62: break;
           case 27: 
-            { return Parser.SKPEQ;
+            { return Parser.SKPGT;
             }
           case 63: break;
           case 28: 
-            { return Parser.SKPGT;
+            { return Parser.CLEAR;
             }
           case 64: break;
           case 29: 
-            { return Parser.CLEAR;
+            { return Parser.INPUT;
             }
           case 65: break;
           case 30: 
-            { return Parser.INPUT;
+            { return Parser.OUTPUT;
             }
           case 66: break;
           case 31: 
-            { return Parser.OUTPUT;
+            { return Parser.STOREI;
             }
           case 67: break;
           case 32: 
-            { return Parser.STOREI;
+            { return Parser.STKPSH;
             }
           case 68: break;
           case 33: 
-            { return Parser.STKPSH;
+            { return Parser.STKPEK;
             }
           case 69: break;
           case 34: 
-            { return Parser.STKPEK;
+            { return Parser.STKDEC;
             }
           case 70: break;
           case 35: 
-            { return Parser.STKDEC;
+            { return Parser.STKINC;
             }
           case 71: break;
           case 36: 
-            { return Parser.STKINC;
+            { return Parser.NEGATE;
             }
           case 72: break;
           default:

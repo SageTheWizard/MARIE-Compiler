@@ -18,9 +18,10 @@ public class MARIEValues {
     public static final int LOADI = 0xE;
     public static final int INPUT = 0xF;
     public static final int OUTPUT = 0xF1;
-    public static final int HALT = 0xF2;
-    public static final int SKPLT = 0xF3;
-    public static final int SKPEQ = 0xF4;
-    public static final int SKPGT = 0xF5;
-    public static final int JMPRT = 0xF6;
+    public static final int NEGATE = 0xF2;
+    public static final int HALT = 0xF3;
+    public static final int SKPLT = 0xF4;
+    public static final int SKPEQ = 0xF5;
+    public static final int SKPGT = 0xF6;
+    public static final int JMPRT = 0xF7;
 }

@@ -28,6 +28,8 @@ abstract class MARIEComputer {
      * @return true if the computer halts, false otherwise
      */
     private boolean clockTick() {
+        //clear the bus
+        bus = 0;
         int mcBitString = MicrocodeGenerator.getMicroCode()[0b1111111100000000 & ioReg][microcodeCounter];
         //do outputs first so we can populate the bus
         if((mcBitString & MicrocodeGenerator.RO) != 0) {
@@ -56,7 +58,7 @@ abstract class MARIEComputer {
         }
 
         if((mcBitString & MicrocodeGenerator.IO) != 0) {
-            bus = instructionReg;
+            bus = instructionReg & 0x0FFF; //IR 11-0
         }
 
         if((mcBitString & MicrocodeGenerator.ONE) != 0) {
@@ -64,16 +66,37 @@ abstract class MARIEComputer {
         }
 
         if((mcBitString & MicrocodeGenerator.SPO) != 0) {
-            bus = stackPointer;
+            bus = stackPointer - (instructionReg & 0x0FFF);
+        }
+
+        if((mcBitString & MicrocodeGenerator.IN) != 0) {
+            bus = input();
+        }
+
+        //stack pointer increment and decrement
+        if((mcBitString & MicrocodeGenerator.SPINC) != 0) {
+            //see if we're only doing a single or taking from the IR
+            if((mcBitString & MicrocodeGenerator.ONE) != 0) {
+                stackPointer++;
+            }
+            else {
+                stackPointer += (instructionReg & 0x0FFF);
+            }
+        }
+
+        if((mcBitString & MicrocodeGenerator.SPDEC) != 0) {
+            //see if we're only doing a single or taking from the IR
+            if((mcBitString & MicrocodeGenerator.ONE) != 0) {
+                stackPointer--;
+            }
+            else {
+                stackPointer -= (instructionReg & 0x0FFF);
+            }
         }
 
         //then we do io and skipcond operations
-        if((mcBitString & MicrocodeGenerator.OUTPUT) != 0) {
-            output(accumulator);
-        }
-
-        if((mcBitString & MicrocodeGenerator.INPUT) != 0) {
-            accumulator = input();
+        if((mcBitString & MicrocodeGenerator.OUT) != 0) {
+            output(bus);
         }
 
         if((mcBitString & MicrocodeGenerator.LTZ) != 0) {
@@ -122,6 +145,11 @@ abstract class MARIEComputer {
         //then we check for jump
         if((mcBitString & MicrocodeGenerator.JMP) != 0) {
             programCtr = bus;
+        }
+
+        //then we check for not
+        if((mcBitString & MicrocodeGenerator.NEG) != 0) {
+            accumulator = -1 * accumulator;
         }
 
         //then we increment program counter
