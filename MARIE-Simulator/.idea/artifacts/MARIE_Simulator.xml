@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="MARIE-Simulator">
+    <output-path>$PROJECT_DIR$/out/artifacts/MARIE_Simulator</output-path>
+    <root id="root">
+      <element id="archive" name="MARIE_Simulator.jar">
+        <element id="module-output" name="MARIE-Simulator" />
+      </element>
+    </root>
+  </artifact>
+</component>
