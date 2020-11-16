@@ -1,6 +1,8 @@
+package MARIE;
+
 import java.io.File;
 
-abstract class MARIEComputer {
+public abstract class MARIEComputer {
 
 
     static final int MAX_MEMORY_SIZE = 4096;
@@ -27,7 +29,7 @@ abstract class MARIEComputer {
      * Simulates a clock tick and updates all necessary registers
      * @return true if the computer halts, false otherwise
      */
-    private boolean clockTick() {
+    public boolean clockTick() {
         //clear the bus
         bus = 0;
         int mcBitString = MicrocodeGenerator.getMicroCode()[0b1111111100000000 & ioReg][microcodeCounter];
@@ -172,6 +174,43 @@ abstract class MARIEComputer {
         //TODO implement
     }
 
+    public int getBus() {
+        return bus;
+    }
 
+    public int getMicrocodeCounter() {
+        return microcodeCounter;
+    }
 
+    public int getProgramCtr() {
+        return programCtr;
+    }
+
+    public int getInstructionReg() {
+        return instructionReg;
+    }
+
+    public int getIoReg() {
+        return ioReg;
+    }
+
+    public int getAccumulator() {
+        return accumulator;
+    }
+
+    public int getStackPointer() {
+        return stackPointer;
+    }
+
+    public int[] getMainMemory() {
+        return mainMemory;
+    }
+
+    public int getMemoryBufferReg() {
+        return memoryBufferReg;
+    }
+
+    public int getMemoryAddrReg() {
+        return memoryAddrReg;
+    }
 }

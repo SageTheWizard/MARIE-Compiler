@@ -1,0 +1,62 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Label?>
+<VBox fx:controller="MARIE.Controller" xmlns:fx="http://javafx.com/fmxl">
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="Open"/>
+            <Menu text="Run"/>
+            <Menu text="Step"/>
+            <Menu text="Step Mode">
+                <items>
+                    <RadioMenuItem text="By Line">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="stepMode"/>
+                        </toggleGroup>
+                    </RadioMenuItem>
+                    <RadioMenuItem text="By Clock Cycle">
+                        <toggleGroup>
+                            <fx:reference source="stepMode"/>
+                        </toggleGroup>
+                    </RadioMenuItem>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <HBox>
+        <TableView fx:id="hexCode">
+
+        </TableView>
+
+        <VBox>
+            <Label text="Console"/>
+            <TextArea fx:id="console" editable="false">
+            </TextArea>
+
+            <Label text="Input"/>
+            <TextField fx:id="userInput"/>
+        </VBox>
+    </HBox>
+
+
+    <VBox VBox.vgrow="ALWAYS" alignment="BOTTOM_CENTER">
+        <TableView fx:id="registers">
+
+        </TableView>
+
+        <TableView fx:id="memory">
+
+        </TableView>
+    </VBox>
+</VBox>

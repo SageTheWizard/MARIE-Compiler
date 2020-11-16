@@ -1,3 +1,5 @@
+package MARIE;
+
 public class MicrocodeGenerator {
     final static int MAX_INSTR_SIZE = 0x100;
     final static int MAX_CLOCK_STEPS = 16;
