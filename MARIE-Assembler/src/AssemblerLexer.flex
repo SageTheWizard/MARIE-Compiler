@@ -58,7 +58,7 @@ label = ":"{identifier}
 {oct_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.OCT_NUM;} //OCT_NUM can also be HEX_NUM and DEC_NUM, account for this when programming
 {dec_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.DEC_NUM;} //DEC_NUM can also be HEX_NUM, account for this when programming
 {hex_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;}
-{label}        {parser.yylval = new ParserVal((Object) yytext()); return Parser.LABEL;}
+{label}        {parser.yylval = new MARIELabel(this.lineno, yytext()); return Parser.LABEL;}
 {comment}      {System.out.println("Comment Detected: Ignoring");}
 {newline}      {this.lineno++; return Parser.NEWLINE;}
 {whitespace}   {System.out.println("Ignoring Whitespace");}

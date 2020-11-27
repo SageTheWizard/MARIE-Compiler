@@ -11,10 +11,12 @@
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
 <VBox fx:controller="MARIE.Controller" xmlns:fx="http://javafx.com/fmxl">
     <MenuBar fx:id="menuBar">
         <menus>
-            <Menu text="Open"/>
+            <Menu text="Open" />
+            <Menu text="Reload"/>
             <Menu text="Run"/>
             <Menu text="Step"/>
             <Menu text="Step Mode">
@@ -34,18 +36,21 @@
         </menus>
     </MenuBar>
 
-    <HBox>
+    <HBox HBox.hgrow="ALWAYS">
         <TableView fx:id="hexCode">
 
         </TableView>
 
-        <VBox>
+        <VBox VBox.vgrow="ALWAYS" >
             <Label text="Console"/>
             <TextArea fx:id="console" editable="false">
             </TextArea>
-
-            <Label text="Input"/>
-            <TextField fx:id="userInput"/>
+            <HBox>
+                <ComboBox fx:id="inputType"
+                    />
+                <Label text="Input"/>
+                <TextField fx:id="userInput"/>
+            </HBox>
         </VBox>
     </HBox>
 

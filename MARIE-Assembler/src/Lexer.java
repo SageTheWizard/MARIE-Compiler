@@ -641,7 +641,7 @@ class Lexer {
             }
           case 44: break;
           case 9: 
-            { parser.yylval = new ParserVal((Object) yytext()); return Parser.LABEL;
+            { parser.yylval = new MARIELabel(this.lineno, yytext()); return Parser.LABEL;
             }
           case 45: break;
           case 10: 

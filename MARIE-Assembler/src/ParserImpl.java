@@ -43,9 +43,9 @@ public class ParserImpl
     }
 
     Object lineLabelLine_(Object label, Object line) throws MARIEAssemblerException {
-        if(symbolTable.containsKey((String) label)) {
-            if(symbolTable.get(label) == -1) {
-                symbolTable.put((String) label, offset + lexer.lineno);
+        if(symbolTable.containsKey(((MARIELabel) label).name)) {
+            if(symbolTable.get(((MARIELabel) label).name) == -1) {
+                symbolTable.put(((MARIELabel) label).name, offset + ((MARIELabel) label).lineno);
             }
             else {
                 //duplicate label
