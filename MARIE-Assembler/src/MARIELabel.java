@@ -6,4 +6,9 @@ public class MARIELabel {
         this.lineno = lineno;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "" + lineno;
+    }
 }

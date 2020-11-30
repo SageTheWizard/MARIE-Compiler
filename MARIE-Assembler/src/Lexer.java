@@ -49,12 +49,12 @@ class Lexer {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\1\1\6"+
-    "\13\1\2\2\1\7\1\10\1\11\17\0\1\2\3\0"+
-    "\1\12\2\0\1\13\10\0\1\14\1\15\1\16\1\17"+
-    "\1\20\1\0\1\21\1\0\1\22\1\23\12\0\1\24"+
-    "\1\25\1\26\1\27\1\0\1\30\4\0\1\31\1\32"+
-    "\1\33\1\34\1\0\1\35\1\36\1\37\1\40\1\41"+
-    "\1\42\1\43\1\44";
+    "\13\1\2\2\1\7\1\6\1\10\17\0\1\2\3\0"+
+    "\1\11\2\0\1\12\10\0\1\13\1\14\1\15\1\16"+
+    "\1\17\1\0\1\20\1\0\1\21\1\22\12\0\1\23"+
+    "\1\24\1\25\1\26\1\0\1\27\4\0\1\30\1\31"+
+    "\1\32\1\33\1\0\1\34\1\35\1\36\1\37\1\40"+
+    "\1\41\1\42\1\43";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[98];
@@ -611,147 +611,143 @@ class Lexer {
           case 1: 
             { System.err.println("Unexpected Character: " + yytext()); return -1;
             }
-          case 37: break;
+          case 36: break;
           case 2: 
             { parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;
             }
-          case 38: break;
+          case 37: break;
           case 3: 
             { parser.yylval = new ParserVal((Object) yytext()); return Parser.DEC_NUM;
             }
-          case 39: break;
+          case 38: break;
           case 4: 
             { parser.yylval = new ParserVal((Object) yytext()); return Parser.OCT_NUM;
             }
-          case 40: break;
+          case 39: break;
           case 5: 
             { this.lineno++; return Parser.NEWLINE;
             }
-          case 41: break;
+          case 40: break;
           case 6: 
-            { System.out.println("Ignoring Whitespace");
+            { 
             }
-          case 42: break;
+          case 41: break;
           case 7: 
             { System.err.println("BACKSPACE ERROR!");
             }
-          case 43: break;
+          case 42: break;
           case 8: 
-            { System.out.println("Comment Detected: Ignoring");
+            { parser.yylval = new ParserVal(new MARIELabel(this.lineno, yytext() + ":")); return Parser.LABEL;
             }
-          case 44: break;
+          case 43: break;
           case 9: 
-            { parser.yylval = new MARIELabel(this.lineno, yytext()); return Parser.LABEL;
-            }
-          case 45: break;
-          case 10: 
             { return Parser.JNP;
             }
-          case 46: break;
-          case 11: 
+          case 44: break;
+          case 10: 
             { return Parser.ADD;
             }
-          case 47: break;
-          case 12: 
+          case 45: break;
+          case 11: 
             { return Parser.ORG;
             }
-          case 48: break;
-          case 13: 
+          case 46: break;
+          case 12: 
             { return Parser.OCT;
             }
-          case 49: break;
-          case 14: 
+          case 47: break;
+          case 13: 
             { return Parser.DEC;
             }
-          case 50: break;
-          case 15: 
+          case 48: break;
+          case 14: 
             { return Parser.END;
             }
-          case 51: break;
-          case 16: 
+          case 49: break;
+          case 15: 
             { return Parser.JUMP;
             }
-          case 52: break;
-          case 17: 
+          case 50: break;
+          case 16: 
             { return Parser.LOAD;
             }
-          case 53: break;
-          case 18: 
+          case 51: break;
+          case 17: 
             { return Parser.ADDI;
             }
-          case 54: break;
-          case 19: 
+          case 52: break;
+          case 18: 
             { return Parser.SUBT;
             }
-          case 55: break;
-          case 20: 
+          case 53: break;
+          case 19: 
             { return Parser.HALT;
             }
-          case 56: break;
-          case 21: 
+          case 54: break;
+          case 20: 
             { return Parser.JUMPI;
             }
-          case 57: break;
-          case 22: 
+          case 55: break;
+          case 21: 
             { return Parser.JMPRT;
             }
-          case 58: break;
-          case 23: 
+          case 56: break;
+          case 22: 
             { return Parser.LOADI;
             }
-          case 59: break;
-          case 24: 
+          case 57: break;
+          case 23: 
             { return Parser.STORE;
             }
-          case 60: break;
-          case 25: 
+          case 58: break;
+          case 24: 
             { return Parser.SKPLT;
             }
-          case 61: break;
-          case 26: 
+          case 59: break;
+          case 25: 
             { return Parser.SKPEQ;
             }
-          case 62: break;
-          case 27: 
+          case 60: break;
+          case 26: 
             { return Parser.SKPGT;
             }
-          case 63: break;
-          case 28: 
+          case 61: break;
+          case 27: 
             { return Parser.CLEAR;
             }
-          case 64: break;
-          case 29: 
+          case 62: break;
+          case 28: 
             { return Parser.INPUT;
             }
-          case 65: break;
-          case 30: 
+          case 63: break;
+          case 29: 
             { return Parser.OUTPUT;
             }
-          case 66: break;
-          case 31: 
+          case 64: break;
+          case 30: 
             { return Parser.STOREI;
             }
-          case 67: break;
-          case 32: 
+          case 65: break;
+          case 31: 
             { return Parser.STKPSH;
             }
-          case 68: break;
-          case 33: 
+          case 66: break;
+          case 32: 
             { return Parser.STKPEK;
             }
-          case 69: break;
-          case 34: 
+          case 67: break;
+          case 33: 
             { return Parser.STKDEC;
             }
-          case 70: break;
-          case 35: 
+          case 68: break;
+          case 34: 
             { return Parser.STKINC;
             }
-          case 71: break;
-          case 36: 
+          case 69: break;
+          case 35: 
             { return Parser.NEGATE;
             }
-          case 72: break;
+          case 70: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

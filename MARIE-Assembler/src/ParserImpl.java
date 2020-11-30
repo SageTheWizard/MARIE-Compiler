@@ -7,11 +7,11 @@ public class ParserImpl
 
     HashMap<String, Integer> symbolTable = new HashMap<String, Integer>();
 
-    String output = "";
+    String outputArr[];
 
     Object startOrg(Object orgNum, Object program) throws MARIEAssemblerException {
-        offset = (int) orgNum;
-        output = (String) program;
+        offset = Integer.parseInt((String) orgNum, 16);
+        outputArr = ("ORG " + Integer.toHexString(offset) + "\n" + program).split("\\n");
         //check to make sure everything has an address and replace the labels with numbers
         for(String s : symbolTable.keySet()) {
             if(symbolTable.get(s) == -1) {
@@ -19,7 +19,14 @@ public class ParserImpl
                 throw new MARIEAssemblerException("Label " + s + " does not point to an address.");
             }
 
-            output = output.replace(s, "" + symbolTable.get((String) s));
+            for(int i = 0; i < outputArr.length; i++) {
+                if (outputArr[i].indexOf(s) == 0) { //this means the label comes first and we should straight up delete it
+                    outputArr[i] = padLeft(outputArr[i].substring(s.length()), 4);
+                }
+                else {
+                    outputArr[i] = outputArr[i].replace(s, Integer.toHexString(symbolTable.get(s) + offset));
+                }
+            }
 
         }
 
@@ -42,21 +49,21 @@ public class ParserImpl
         return line.toString();
     }
 
-    Object lineLabelLine_(Object label, Object line) throws MARIEAssemblerException {
-        if(symbolTable.containsKey(((MARIELabel) label).name)) {
-            if(symbolTable.get(((MARIELabel) label).name) == -1) {
-                symbolTable.put(((MARIELabel) label).name, offset + ((MARIELabel) label).lineno);
+    Object lineLabelLine_(MARIELabel label, Object line) throws MARIEAssemblerException {
+        if(symbolTable.containsKey(label.name)) {
+            if(symbolTable.get(label.name) == -1) {
+                symbolTable.put(label.name, label.lineno);
             }
             else {
                 //duplicate label
-                throw new MARIEAssemblerException("Duplicate label " + label + " found at line: " + offset + lexer.lineno);
+                throw new MARIEAssemblerException("Duplicate label " + label.name + " found at line: " + label.lineno);
             }
         }
         else {
             //symbol table doesn't have that label
-            symbolTable.put((String) label, lexer.lineno);
+            symbolTable.put(label.name, label.lineno);
         }
-        return label.toString() + line.toString() + '\n';
+        return label.name + line.toString() + '\n';
     }
 
     Object lineLine_(Object instr) {
@@ -65,18 +72,19 @@ public class ParserImpl
     }
 
     Object line_InstrOperand(Object instr, Object operand) {
-
+        if(operand instanceof MARIELabel) {
+            return instr.toString() + padLeft(((MARIELabel) operand).name, 3);
+        }
         return instr.toString() + padLeft(operand.toString(), 3);
     }
 
     Object newLine(Object newLine) {
-        output += '\n';
-        return '\n';
+        return "0000\n";
     }
 
-    Object operandLabel(Object label) {
-        if(!symbolTable.containsKey((String) label)) {
-            symbolTable.put((String) label, -1); //use -1 as a placeholder since we don't have an address yet
+    Object operandLabel(MARIELabel label) {
+        if(!symbolTable.containsKey(label.name)) {
+            symbolTable.put(label.name, -1); //use -1 as a placeholder since we don't have an address yet
         }
         return label;
     }

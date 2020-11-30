@@ -1,29 +1,33 @@
 package MARIE;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Controller extends MARIEComputer implements Initializable {
     private final String[] INPUT_TYPES = {"HEX", "DEC", "ASCII"};
+    @FXML private Menu openMenuItem, reloadMenuItem, runMenuItem, stepMenuItem;
 
     @FXML private ComboBox inputType;
     @FXML private TableView<String> memory;
     @FXML private TableView<String> registers;
     @FXML private TextArea console;
     @FXML private TextField userInput;
+
+    private File currentlyOpenFile;
 
     private Stage primaryStage;
 
@@ -43,30 +47,95 @@ public class Controller extends MARIEComputer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inputType.setItems(FXCollections.observableArrayList(INPUT_TYPES));
         inputType.getSelectionModel().selectFirst();
+
+        Label openMenuLabel = new Label("Open");
+        openMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                openFile();
+            }
+        });
+
+        Label reloadMenuLabel = new Label("Reload");
+        reloadMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                reload();
+            }
+        });
+
+        Label runMenuLabel = new Label("Run");
+        runMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                runFile();
+            }
+        });
+
+        Label stepMenuLabel = new Label("Step");
+        stepMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                step();
+            }
+        });
+
+        openMenuItem.setGraphic(openMenuLabel);
+        reloadMenuItem.setGraphic(reloadMenuLabel);
+        runMenuItem.setGraphic(runMenuLabel);
+        stepMenuItem.setGraphic(stepMenuLabel);
+
+
         regTableInit();
         memTableInit();
     }
 
     @FXML
-    public void openFile(ActionEvent actionEvent) {
+    public void openFile() {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Open Machine Code File");
 
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
         if(selectedFile != null) {
-
+            openFile(selectedFile);
         }
     }
 
+    public void openFile(File toOpen) {
+        try {
+            int offset = 0;
+            Scanner input = new Scanner(toOpen);
+            //read first line to get the ORG
+            offset = Integer.parseInt(input.nextLine().split(" ")[1], 16);
+            setProgramCtr(offset); //set the program counter to the ORG offset
+            currentlyOpenFile = toOpen;
+
+            int i = 0;
+            String hexCodeLine;
+            while(input.hasNextLine()) {
+                getMainMemory()[i + offset] = Integer.parseInt(input.nextLine(), 16);
+                i++;
+            }
+        } catch (IOException e) {
+            //TODO implement
+            e.printStackTrace();
+        }
+
+    }
+
+    public void reload() {
+        openFile(currentlyOpenFile);
+    }
+
     @FXML
-    public void runFile(ActionEvent actionEvent) {
-        while(!clockTick() && getProgramCtr() <= 0xFFF) {} //run until we reach a halt or until the program counter runs
+    public void runFile() {
+        while(!clockTick()) {} //run until we reach a halt or until the program counter runs out
 
     }
 
     @FXML
-    public void step(ActionEvent actionEvent) {
+    public void step() {
 
 
     }

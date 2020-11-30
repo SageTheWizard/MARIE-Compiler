@@ -32,7 +32,12 @@ public abstract class MARIEComputer {
     public boolean clockTick() {
         //clear the bus
         bus = 0;
-        int mcBitString = MicrocodeGenerator.getMicroCode()[0b1111111100000000 & ioReg][microcodeCounter];
+        if(microcodeCounter >= 16) {
+            microcodeCounter = 0; //reset the counter in case it runs over
+            System.err.println("WARNING: MICROCODE COUNTER OVERFLOW");
+        }
+        System.out.println(Integer.toHexString((0b1111111100000000 & instructionReg) >> 8));
+        int mcBitString = MicrocodeGenerator.getMicroCode()[(0b1111111100000000 & instructionReg) >> 8][microcodeCounter];
         //do outputs first so we can populate the bus
         if((mcBitString & MicrocodeGenerator.RO) != 0) {
             bus = mainMemory[memoryAddrReg];
@@ -156,6 +161,9 @@ public abstract class MARIEComputer {
 
         //then we increment program counter
         if((mcBitString & MicrocodeGenerator.CE) != 0) {
+            if(programCtr >= 0xFFFF) {
+                return true;
+            }
             programCtr++;
         }
 
@@ -212,5 +220,9 @@ public abstract class MARIEComputer {
 
     public int getMemoryAddrReg() {
         return memoryAddrReg;
+    }
+
+    public void setProgramCtr(int newPC) {
+        programCtr = newPC;
     }
 }

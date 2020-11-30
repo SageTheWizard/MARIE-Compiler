@@ -199,7 +199,7 @@ final static short yylhs[] = {                           -1,
     8,    8,    8,    9,
 };
 final static short yylen[] = {                            2,
-    3,    1,    2,    2,    3,    2,    1,    2,    1,    1,
+    4,    1,    2,    2,    3,    2,    1,    2,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -211,7 +211,7 @@ final static short yydefred[] = {                         0,
    30,   31,   32,    0,    0,    0,   39,   38,   37,    0,
     7,    0,    2,    0,    0,    0,    9,   10,   40,   41,
     0,   43,   42,   44,    0,    4,    3,    6,   36,    8,
-   35,    1,    5,
+   35,    0,    5,    1,
 };
 final static short yydgoto[] = {                         32,
    33,   34,   35,   36,   37,   50,   38,   39,   40,
@@ -219,23 +219,23 @@ final static short yydgoto[] = {                         32,
 final static short yysindex[] = {                      -258,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0, -133, -159, -259,    0,    0,    0, -162,
-    0,    0,    0, -226, -234, -140,    0,    0,    0,    0,
- -194,    0,    0,    0, -202,    0,    0,    0,    0,    0,
-    0,    0,    0,
+    0,    0,    0, -140, -137, -259,    0,    0,    0, -162,
+    0,    0,    0, -226, -234, -147,    0,    0,    0,    0,
+ -202,    0,    0,    0, -199,    0,    0,    0,    0,    0,
+    0, -194,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0, -153,    0,    0,    0,    0,
+    0,    0,    0,    0,    0, -156,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,
+    0,    0,    0,    0,
 };
 final static short yygindex[] = {                         0,
-  103,    0,   60,    0,    0,    0,   95,    0,    0,
+   85,    0,  114,    0,    0,    0,   98,    0,    0,
 };
-final static int YYTABLESIZE=154;
+final static int YYTABLESIZE=149;
 static short yytable[];
 static { yytable();}
 static void yytable(){
@@ -248,14 +248,13 @@ yytable = new short[]{                          1,
    20,   21,   22,   23,   48,   25,   26,   46,   27,   28,
    29,   30,   31,    1,    2,    3,    4,    5,    6,    7,
     8,    9,   10,   11,   12,   13,   14,   15,   16,   17,
-   18,   19,   20,   21,   22,   23,   53,   25,   26,   45,
+   18,   19,   20,   21,   22,   23,   52,   25,   26,   53,
    27,   28,   29,   30,   31,    1,    2,    3,    4,    5,
     6,    7,    8,    9,   10,   11,   12,   13,   14,   15,
-   16,   17,   18,   19,   20,   21,   22,   23,   41,   25,
-   26,    0,   27,   28,   29,   42,   43,    0,   16,   16,
-   51,   16,   16,   16,   16,   33,   47,    0,    0,    0,
-    0,   25,   26,   52,   27,   28,   29,   49,   25,   26,
-    0,   27,   28,   29,
+   16,   17,   18,   19,   20,   21,   22,   23,   47,   25,
+   26,   41,   27,   28,   29,   16,   16,    0,   16,   16,
+   16,   16,   33,   51,   25,   26,   54,   27,   28,   29,
+   49,   25,   26,   45,   27,   28,   29,   42,   43,
 };
 }
 static short yycheck[];
@@ -270,14 +269,13 @@ yycheck = new short[] {                        258,
   277,  278,  279,  280,  289,  282,  283,  284,  285,  286,
   287,  288,  289,  258,  259,  260,  261,  262,  263,  264,
   265,  266,  267,  268,  269,  270,  271,  272,  273,  274,
-  275,  276,  277,  278,  279,  280,  289,  282,  283,   30,
+  275,  276,  277,  278,  279,  280,  289,  282,  283,  289,
   285,  286,  287,  288,  289,  258,  259,  260,  261,  262,
   263,  264,  265,  266,  267,  268,  269,  270,  271,  272,
-  273,  274,  275,  276,  277,  278,  279,  280,   24,  282,
-  283,   -1,  285,  286,  287,  285,  286,   -1,  282,  283,
-   36,  285,  286,  287,  288,  289,   34,   -1,   -1,   -1,
-   -1,  282,  283,   41,  285,  286,  287,  288,  282,  283,
-   -1,  285,  286,  287,
+  273,  274,  275,  276,  277,  278,  279,  280,   34,  282,
+  283,   24,  285,  286,  287,  282,  283,   -1,  285,  286,
+  287,  288,  289,   36,  282,  283,   52,  285,  286,  287,
+  288,  282,  283,   30,  285,  286,  287,  285,  286,
 };
 }
 final static short YYFINAL=32;
@@ -306,7 +304,7 @@ null,null,null,"NUM","JUMP","LOAD","STORE","ADD","SUBT","CLEAR","JNP","STKINC",
 };
 final static String yyrule[] = {
 "$accept : start",
-"start : ORG num prgm",
+"start : ORG num NEWLINE prgm",
 "start : prgm",
 "prgm : line prgm",
 "prgm : line END",
@@ -374,7 +372,7 @@ final static String yyrule[] = {
     public Parser(Reader r) {
     	this.lexer = new Lexer(r, this);
     }
-//#line 305 "Parser.java"
+//#line 303 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -531,7 +529,7 @@ boolean doaction;
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
 //#line 32 "AssemblerParser.y"
-{yyval.obj = startOrg(val_peek(1).obj, val_peek(0).obj);}
+{yyval.obj = startOrg(val_peek(2).obj, val_peek(0).obj);}
 break;
 case 2:
 //#line 33 "AssemblerParser.y"
@@ -547,7 +545,7 @@ case 4:
 break;
 case 5:
 //#line 40 "AssemblerParser.y"
-{yyval.obj = lineLabelLine_(val_peek(2).obj, val_peek(1).obj);}
+{yyval.obj = lineLabelLine_((MARIELabel) val_peek(2).obj, val_peek(1).obj);}
 break;
 case 6:
 //#line 41 "AssemblerParser.y"
@@ -671,7 +669,7 @@ case 35:
 break;
 case 36:
 //#line 79 "AssemblerParser.y"
-{yyval.obj = operandLabel(val_peek(0).obj);}
+{yyval.obj = operandLabel((MARIELabel) val_peek(0).obj);}
 break;
 case 37:
 //#line 82 "AssemblerParser.y"
@@ -705,7 +703,7 @@ case 44:
 //#line 93 "AssemblerParser.y"
 {yyval.obj = numOct_num(val_peek(1).obj);}
 break;
-//#line 630 "Parser.java"
+//#line 628 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

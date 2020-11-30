@@ -29,7 +29,7 @@ import java.io.*;
 
 %%
 
-start                : ORG num prgm	        {$$ = startOrg($2, $3);}
+start                : ORG num NEWLINE prgm	        {$$ = startOrg($2, $4);}
 		             | prgm                 {$$ = start($1);}
 		             ;
 		
@@ -37,7 +37,7 @@ prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2);}
 		             | line END             {$$ = prgmLineEnd($1);}
 		             ;
 
-line                 : LABEL line_ NEWLINE         {$$ = lineLabelLine_($1, $2);}
+line                 : LABEL line_ NEWLINE         {$$ = lineLabelLine_((MARIELabel) $1, $2);}
 		             | line_ NEWLINE       {$$ = lineLine_($1);}
 		             | NEWLINE             {$$ = newLine($1);}
 		             ;
@@ -76,7 +76,7 @@ non_operand_instr    : INPUT                {$$ = padRight(Integer.toHexString(M
 					 ;
 
 operand              : num                  {$$ = $1;}
-		             | LABEL                {$$ = operandLabel($1);}
+		             | LABEL                {$$ = operandLabel((MARIELabel) $1);}
 		             ;
 		   
 num                  : HEX_NUM              {$$ = numHex_num($1);}

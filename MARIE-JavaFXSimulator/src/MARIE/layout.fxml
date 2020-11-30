@@ -15,10 +15,10 @@
 <VBox fx:controller="MARIE.Controller" xmlns:fx="http://javafx.com/fmxl">
     <MenuBar fx:id="menuBar">
         <menus>
-            <Menu text="Open" />
-            <Menu text="Reload"/>
-            <Menu text="Run"/>
-            <Menu text="Step"/>
+            <Menu fx:id="openMenuItem"/>
+            <Menu fx:id="reloadMenuItem"/>
+            <Menu fx:id="runMenuItem"/>
+            <Menu fx:id="stepMenuItem"/>
             <Menu text="Step Mode">
                 <items>
                     <RadioMenuItem text="By Line">

@@ -58,10 +58,10 @@ label = ":"{identifier}
 {oct_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.OCT_NUM;} //OCT_NUM can also be HEX_NUM and DEC_NUM, account for this when programming
 {dec_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.DEC_NUM;} //DEC_NUM can also be HEX_NUM, account for this when programming
 {hex_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;}
-{label}        {parser.yylval = new MARIELabel(this.lineno, yytext()); return Parser.LABEL;}
-{comment}      {System.out.println("Comment Detected: Ignoring");}
+{label}        {parser.yylval = new ParserVal(new MARIELabel(this.lineno, yytext() + ":")); return Parser.LABEL;}//we add the colon to the end so we can separate similarly-named variables, ex :var, :var2, etc.
+{comment}      {}
 {newline}      {this.lineno++; return Parser.NEWLINE;}
-{whitespace}   {System.out.println("Ignoring Whitespace");}
+{whitespace}   {}
 
 
 
