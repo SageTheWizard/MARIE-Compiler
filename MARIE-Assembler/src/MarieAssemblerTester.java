@@ -14,7 +14,7 @@ public class MarieAssemblerTester {
         try {
             if (p.yyparse() == 0) {
                 System.out.println("Success");
-                PrintWriter out = new PrintWriter(new File(args[0].substring(0, args[0].indexOf(extension)) + executableExtension));
+                PrintWriter out = new PrintWriter(new File(args[0].split("\\.")[0] + executableExtension));
                 for(String s : p.outputArr) {
                     out.println(s);
                 }
