@@ -1,6 +1,7 @@
 package MARIE;
 
 import java.io.File;
+import java.util.Arrays;
 
 public abstract class MARIEComputer {
 
@@ -224,5 +225,21 @@ public abstract class MARIEComputer {
 
     public void setProgramCtr(int newPC) {
         programCtr = newPC;
+    }
+
+    public void clear() {
+        bus = 0;
+        microcodeCounter = 0;
+
+        programCtr = 0;
+        instructionReg = 0;
+        ioReg = 0;
+        accumulator = 0;
+        stackPointer = 0;
+
+        memoryBufferReg = 0;
+        memoryAddrReg = 0;
+
+        Arrays.fill(mainMemory, 0);
     }
 }

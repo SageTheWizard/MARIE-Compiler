@@ -51,6 +51,7 @@ label = ":"{identifier}
 "jmprt"        {return Parser.JMPRT;}
 //ORG, DEC, and OCT
 "ORG"          {return Parser.ORG;}
+"HEX"          {return Parser.HEX;}
 "DEC"          {return Parser.DEC;}
 "OCT"          {return Parser.OCT;}
 "END"          {return Parser.END;}

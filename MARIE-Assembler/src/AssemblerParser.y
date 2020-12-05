@@ -20,7 +20,7 @@ import java.io.*;
 
 %token <obj>    JUMP LOAD STORE ADD SUBT CLEAR JNP STKINC STKDEC STKPSH STKPEK ADDI JUMPI STOREI LOADI
 %token <obj>    INPUT OUTPUT NEGATE HALT SKPLT SKPEQ SKPGT JMPRT
-%token <obj>    ORG DEC OCT END
+%token <obj>    ORG HEX DEC OCT END
 
 %token <obj>    OCT_NUM DEC_NUM HEX_NUM
 %token <obj> LABEL NEWLINE
@@ -80,17 +80,20 @@ operand              : num                  {$$ = $1;}
 		             ;
 		   
 num                  : HEX_NUM              {$$ = numHex_num($1);}
+		     | HEX HEX_NUM          {$$ = numHex_num($2);}
+		     | HEX DEC_NUM          {$$ = numHex_num($2);}
+		     | HEX OCT_NUM          {$$ = numHex_num($2);}
 		     | DEC_NUM		    {$$ = numHex_num($1);}
 		     | OCT_NUM              {$$ = numHex_num($1);}
                      | oct_or_dec_num       {$$ = $1;}
 		             ;
 
 oct_or_dec_num       : oct_num_state        {$$ = $1;}
-                     | DEC DEC_NUM          {$$ = numDec_num($1);}
-                     | DEC OCT_NUM          {$$ = numDec_num($1);}
+                     | DEC DEC_NUM          {$$ = numDec_num($2);}
+                     | DEC OCT_NUM          {$$ = numDec_num($2);}
 				     ;
 				  
-oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($1);}
+oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($2);}
                      ;
 %%
 
