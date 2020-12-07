@@ -21,7 +21,7 @@ import java.util.*;
 %token <obj> IDENT INT_LIT BOOL_LIT
 
 %token <obj> BOOL INT
-%token <obj> IF ELSE NEW PRINT WHILE RETURN
+%token <obj> IF ELSE PRINT WHILE RETURN
 %token <obj> LCIRCLE RCIRCLE LCURLY RCURLY LSQUARE RSQUARE SEMI COMMA
 
 %type <obj> program decl_list decl
@@ -44,10 +44,14 @@ decl	  : var_decl                    {$$ = decl____var_decl();}
 
 var_decl  : type_spec IDENT SEMI        {$$ = var_decl____type_spec_IDENT_SEMI($1, $2);}
           ;
-
+/*
+type_spec_global : BOOL                        {$$ = type_spec____BOOL();}
+	         | INT                         {$$ = type_spec____INT();}
+	         | type_spec LSQUARE INT_LIT RSQUARE   {$$ = type_spec____type_spec_LSQUARE_RSQUARE($1);}
+	         ;
+*/
 type_spec : BOOL                        {$$ = type_spec____BOOL();}
 	  | INT                         {$$ = type_spec____INT();}
-	  | type_spec LSQUARE RSQUARE   {$$ = type_spec____type_spec_LSQUARE_RSQUARE($1);}
 	  ;
 
 fun_decl  : type_spec IDENT LCIRCLE params RCIRCLE {$$ = fun_decl____type_spec_IDENT_LCIRCLE_params_RCIRCLE($1, $2, $4);}
@@ -91,10 +95,10 @@ compound_stmt : LCURLY {compound_stmt___LBRACE();}
 	        local_decls stmt_list
 	        RCURLY {compound_stmt___RBRACE();}
 
-if_stmt : IF LCIRCLE expr {$$ = if_stmt____LCIRCLE_expr($3);} RCIRCLE else_stmt
+if_stmt : IF LCIRCLE expr RCIRCLE {$$ = if_stmt____LCIRCLE_expr($3);} LCURLY stmt RCURLY else_stmt
 	;
 
-else_stmt : ELSE stmt
+else_stmt : ELSE LCURLY stmt RCURLY
           |
           ;
 
@@ -125,6 +129,7 @@ expr        : expr ADD expr                        {$$ = expr____expr_ADD_expr($
             | expr DIV expr                        {$$ = expr____expr_DIV_expr($1, $3);}
             | expr MOD expr                        {$$ = expr____expr_MOD_expr($1, $3);}
 	    | expr OR expr                         {$$ = expr____expr_OR_expr($1, $3);}
+	    | expr AND expr                        {$$ = expr____expr_AND_expr($1, $3);}
 	    | NOT expr                             {$$ = expr____NOT_expr($2);}
 	    | expr EQ expr                         {$$ = expr____expr_EQ_expr($1, $3);}
 	    | expr NE expr                         {$$ = expr____expr_NE_expr($1, $3);}
@@ -136,7 +141,6 @@ expr        : expr ADD expr                        {$$ = expr____expr_ADD_expr($
 	    | IDENT                                {$$ = expr____IDENT($1);}
 	    | IDENT LCIRCLE args RCIRCLE           {$$ = expr____IDENT_LCIRCLE_args_RCIRCLE($1, $3);}
 	    | IDENT LSQUARE expr RSQUARE           {$$ = expr____IDENT_LSQUARE_expr_RSQUARE($1, $3);}
-	    | NEW type_spec LSQUARE expr RSQUARE   {$$ = expr____NEW_type_spec_LSQUARE_expr_RSQUARE($2, $4);}
 	    | BOOL_LIT                             {$$ = expr____BOOL_LIT($1);}
 	    | INT_LIT                              {$$ = expr____INT_LIT($1);}
 	    ;
@@ -158,7 +162,7 @@ private int yylex() {
 }
 
 public void yyerror (String error) {
-	System.out.println("ERROR: " + error);
+	System.out.println("ERROR: " + error + ". Line Number: " + lexer.lineno);
 }
 
 public Parser(Reader r) {

@@ -101,6 +101,19 @@ public class Controller {
             int success = marieParser.yyparse();
             if (success == 0) {
                 runBox.appendText("Code Compiled Successfully with exit status 0");
+                try {
+                    String fn = filename.getText();
+                    if (fn.equals("")) {
+                        fn = "untitled.mre.intercode";
+                    }
+                    fn += ".intercode";
+                    FileWriter fileWriter = new FileWriter(fn);
+                    fileWriter.write("ORG 100\n");
+                    fileWriter.write(Parser.tree.getCode());
+                    fileWriter.close();
+                } catch (IOException ioe) {
+                    System.err.println("ERROR SAVING FILE");
+                }
             }
             else {
                 runBox.appendText("Code Compiled With error " + success + ".  Syntax Errors Exist.");

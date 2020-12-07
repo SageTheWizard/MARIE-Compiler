@@ -6,11 +6,13 @@
 %{
     public Parser parser;
 	public int lineno;
+	public String lastIdent;
 
     public MarieLexer(java.io.Reader r, Parser parser) {
         this(r);
         this.parser = parser;
 		this.lineno = 1;
+		this.lastIdent = "";
     }
 %}
 
@@ -61,7 +63,7 @@ WS = [ \t\r]+
 "||"       {return Parser.OR;}
 // Regex Related code
 {INT_LIT}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.INT_LIT;}
-{IDENT}        {parser.yylval = new ParserVal((Object) yytext()); return Parser.IDENT;}
+{IDENT}        {this.lastIdent = yytext(); parser.yylval = new ParserVal((Object) this.lastIdent); return Parser.IDENT;}
 {COMMENT}      {System.out.println("Comment Detected: Ignoring");}
 {NEWLINE}      {this.lineno++;}
 {WS}   {System.out.println("Ignoring Whitespace");}

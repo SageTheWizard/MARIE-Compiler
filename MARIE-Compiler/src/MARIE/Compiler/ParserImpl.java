@@ -376,12 +376,24 @@ public class ParserImpl {
 
         return "boolean";
     }
+    public Object expr____expr_AND_expr(Object op1, Object op2) throws SemanticError {
+        String type1 = (String) op1;
+        String type2 = (String) op2;
+
+        if (!type1.equals(type2) || (!type1.equals("boolean") || !type2.equals("boolean"))) {
+            throw new SemanticError("Error: Expression " + type1 + " && " + type2 +
+                    " is not allowed.  Operands must be of integer type.  " +
+                    "(Line Number: " + Parser.lexer.lineno + ").");
+        }
+
+        return "boolean";
+    }
 
     public Object expr____expr_EQ_expr(Object op1, Object op2) throws SemanticError {
         String type1 = (String) op1;
         String type2 = (String) op2;
 
-        if (!type1.equals(type2) || (!type1.equals("boolean") || !type2.equals("boolean"))) {
+        if (!type1.equals(type2)) {
             throw new SemanticError("Error: Expression " + type1 + " == " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
                     "(Line Number: " + Parser.lexer.lineno + ").");
@@ -394,7 +406,7 @@ public class ParserImpl {
         String type1 = (String) op1;
         String type2 = (String) op2;
 
-        if (!type1.equals(type2) || (!type1.equals("boolean") || !type2.equals("boolean"))) {
+        if (!type1.equals(type2)) {
             throw new SemanticError("Error: Expression " + type1 + " != " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
                     "(Line Number: " + Parser.lexer.lineno + ").");
