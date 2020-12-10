@@ -37,6 +37,8 @@ public class Controller extends MARIEComputer implements Initializable {
 
     ArrayList<ClockStep> clockSteps = new ArrayList<>();
 
+    private boolean halted;
+
     public Controller() {
 
     }
@@ -138,7 +140,7 @@ public class Controller extends MARIEComputer implements Initializable {
 
     @FXML
     public void runFile() {
-        while(!clockTick()) {
+        while(!(halted = clockTick())) {
             regTableUpdate(false);
             memTableUpdate();
         } //run until we reach a halt or until the program counter runs out
@@ -147,9 +149,12 @@ public class Controller extends MARIEComputer implements Initializable {
 
     @FXML
     public void step() {
+        if(!halted) {
+            halted = clockTick();
+            regTableUpdate(false);
+            memTableUpdate();
+        }
 
-        regTableUpdate(false);
-        memTableUpdate();
     }
 
     @Override

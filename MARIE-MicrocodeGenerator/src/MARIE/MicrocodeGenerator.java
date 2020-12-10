@@ -37,7 +37,8 @@ public class MicrocodeGenerator {
      * where PIN_POS is the pin that the ROM would output the data on
      */
 
-
+    public static final int IOIN = 1 << 28;
+    public static final int IOOUT = 1 << 27;
     public static final int SPDEC = 1 << 26; //stack pointer decrement
     public static final int SPINC = 1 << 25; //stack pointer increment
     public static final int NEG = 1 << 24; //negate
@@ -78,45 +79,45 @@ public class MicrocodeGenerator {
         }
 
         //Single operand instructions should be run in for loops to cover all possible operands
-        for(int i = JUMP; i <= JUMP +  0x0F; i++) {
+        for(int i = JUMP * 0x0f; i <= JUMP * 0x0f +  0x0F; i++) {
             microCode[i][3] = IO + JMP;
             microCode[i][4] = MCR;
         }
 
-        for(int i = LOAD; i <= LOAD + 0x0F; i++) {
+        for(int i = LOAD * 0x0f; i <= LOAD * 0x0f + 0x0F; i++) {
             microCode[i][3] = MI + IO;
             microCode[i][4] = MBRI + RO;
             microCode[i][5] = ACI + MBRO;
             microCode[i][6] = MCR;
         }
 
-        for(int i = STORE; i <= STORE + 0x0F; i++) {
+        for(int i = STORE * 0x0f; i <= STORE * 0x0f + 0x0F; i++) {
             microCode[i][3] = MI + IO;
             microCode[i][4] = MBRI + ACO;
             microCode[i][5] = RI + MBRO;
             microCode[i][6] = MCR;
         }
 
-        for(int i = ADD; i <= ADD + 0x0F; i++) {
+        for(int i = ADD * 0x0f; i <= ADD * 0x0f + 0x0F; i++) {
             microCode[i][3] = MI + IO;
             microCode[i][4] = MBRI + RO;
             microCode[i][5] = ALUO + ACI;
             microCode[i][6] = MCR;
         }
 
-        for(int i = SUBT; i <= SUBT + 0x0F; i++) {
+        for(int i = SUBT * 0x0f; i <= SUBT * 0x0f + 0x0F; i++) {
             microCode[i][3] = MI + IO;
             microCode[i][4] = MBRI + RO;
             microCode[i][5] = ALUO + ACI + SU;
             microCode[i][6] = MCR;
         }
 
-        for(int i = CLEAR; i <= CLEAR + 0x0F; i++) {
+        for(int i = CLEAR * 0x0f; i <= CLEAR * 0x0f + 0x0F; i++) {
             microCode[i][3] = ACI;
             microCode[i][4] = MCR;
         }
 
-        for(int i = JNP; i <= JNP + 0x0F; i++) {
+        for(int i = JNP * 0x0f; i <= JNP * 0x0f + 0x0F; i++) {
             microCode[i][3] = ONE + SPINC;
             microCode[i][4] = SPO + MI;
             microCode[i][5] = CO + RI;
@@ -124,29 +125,29 @@ public class MicrocodeGenerator {
             microCode[i][7] = MCR;
         }
 
-        for(int i = STKINC; i <= STKINC + 0x0F; i++) {
+        for(int i = STKINC * 0x0f; i <= STKINC * 0x0f + 0x0F; i++) {
             microCode[i][3] = SPINC;
             microCode[i][4] = MCR;
         }
 
-        for(int i = STKDEC; i <= STKDEC + 0x0F; i++) {
+        for(int i = STKDEC * 0x0f; i <= STKDEC * 0x0f + 0x0F; i++) {
             microCode[i][3] = SPDEC;
             microCode[i][4] = MCR;
         }
 
-        for(int i = STKPSH; i <= STKPSH + 0x0F; i++) {
+        for(int i = STKPSH * 0x0f; i <= STKPSH * 0x0f + 0x0F; i++) {
             microCode[i][3] = SPO + MI;
             microCode[i][4] = ACO + RI;
             microCode[i][5] = MCR;
         }
 
-        for(int i = STKPEK; i <= STKPEK + 0x0F; i++) {
+        for(int i = STKPEK * 0x0f; i <= STKPEK * 0x0f + 0x0F; i++) {
             microCode[i][3] = SPO + MI;
             microCode[i][4] = ACI + RO;
             microCode[i][5] = MCR;
         }
 
-        for(int i = ADDI; i <= ADDI + 0x0F; i++) {
+        for(int i = ADDI * 0x0f; i <= ADDI * 0x0f + 0x0F; i++) {
             microCode[i][3] = IO + MI;
             microCode[i][4] = MBRI + RO;
             microCode[i][5] = MBRO + MI;
@@ -155,14 +156,14 @@ public class MicrocodeGenerator {
             microCode[i][8] = MCR;
         }
 
-        for(int i = JUMPI; i <= JUMPI + 0x0F; i++) {
+        for(int i = JUMPI * 0x0f; i <= JUMPI * 0x0f + 0x0F; i++) {
             microCode[i][3] = IO + MI;
             microCode[i][4] = RO + MBRI;
             microCode[i][5] = MBRO + JMP;
             microCode[i][6] = MCR;
         }
 
-        for(int i = STOREI; i <= STOREI + 0x0F; i++) {
+        for(int i = STOREI * 0x0f; i <= STOREI * 0x0f + 0x0F; i++) {
             microCode[i][3] = IO + MI;
             microCode[i][4] = RO + MBRI;
             microCode[i][5] = MBRO + MI;
@@ -171,7 +172,7 @@ public class MicrocodeGenerator {
             microCode[i][8] = MCR;
         }
 
-        for(int i = LOADI; i <= LOADI + 0x0F; i++) {
+        for(int i = LOADI * 0x0f; i <= LOADI * 0x0f + 0x0F; i++) {
             microCode[i][3] = IO + MI;
             microCode[i][4] = RO + MBRI;
             microCode[i][5] = MBRO + MI;
@@ -183,10 +184,12 @@ public class MicrocodeGenerator {
         //now that we are in the extended opcodes we don't need for loops anymore
 
         microCode[INPUT][3] = IN;
-        microCode[INPUT][4] = MCR;
+        microCode[INPUT][4] = IOOUT + ACI;
+        microCode[INPUT][5] = MCR;
 
-        microCode[OUTPUT][3] = OUT;
-        microCode[OUTPUT][4] = MCR;
+        microCode[OUTPUT][3] = ACO + IOIN;
+        microCode[OUTPUT][4] = OUT;
+        microCode[OUTPUT][5] = MCR;
 
         microCode[NEGATE][3] = NEG;
         microCode[NEGATE][4] = MCR;

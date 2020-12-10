@@ -40,6 +40,11 @@ public abstract class MARIEComputer {
         System.out.println(Integer.toHexString((0b1111111100000000 & instructionReg) >> 8));
         int mcBitString = MicrocodeGenerator.getMicroCode()[(0b1111111100000000 & instructionReg) >> 8][microcodeCounter];
         //do outputs first so we can populate the bus
+
+        if((mcBitString & MicrocodeGenerator.IOOUT) != 0) {
+            bus = ioReg;
+        }
+
         if((mcBitString & MicrocodeGenerator.RO) != 0) {
             bus = mainMemory[memoryAddrReg];
         }
@@ -78,7 +83,7 @@ public abstract class MARIEComputer {
         }
 
         if((mcBitString & MicrocodeGenerator.IN) != 0) {
-            bus = input();
+            ioReg = input();
         }
 
         //stack pointer increment and decrement
@@ -104,7 +109,7 @@ public abstract class MARIEComputer {
 
         //then we do io and skipcond operations
         if((mcBitString & MicrocodeGenerator.OUT) != 0) {
-            output(bus);
+            output(ioReg);
         }
 
         if((mcBitString & MicrocodeGenerator.LTZ) != 0) {
@@ -126,6 +131,11 @@ public abstract class MARIEComputer {
         }
 
         //then we do inputs
+
+        if((mcBitString & MicrocodeGenerator.IOIN) != 0) {
+            ioReg = bus;
+        }
+
         if((mcBitString & MicrocodeGenerator.MI) != 0) {
             memoryAddrReg = bus;
         }
