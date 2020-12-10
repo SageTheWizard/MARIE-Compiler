@@ -639,7 +639,7 @@ class Lexer {
             }
           case 43: break;
           case 8: 
-            { parser.yylval = new ParserVal(new MARIELabel(this.lineno, yytext() + ":")); return Parser.LABEL;
+            { parser.yylval = new ParserVal(new MARIELabel(this.lineno - 1, yytext() + ":")); return Parser.LABEL;
             }
           case 44: break;
           case 9: 
