@@ -1,3 +1,5 @@
+package MARIE;
+
 import java.util.HashMap;
 
 public class ParserImpl
@@ -7,7 +9,7 @@ public class ParserImpl
 
     HashMap<String, Integer> symbolTable = new HashMap<String, Integer>();
 
-    String outputArr[];
+    protected String outputArr[];
 
     Object startOrg(Object orgNum, Object program) throws MARIEAssemblerException {
         offset = Integer.parseInt((String) orgNum, 16);
@@ -92,7 +94,7 @@ public class ParserImpl
     Object numHex_num(Object hex) throws MARIEAssemblerException {
         int hexNum = Integer.parseInt((String) hex, 16);
         if(hexNum >= MARIEValues.INT_MIN_VALUE && hexNum <= MARIEValues.INT_MAX_VALUE) {
-            return Integer.toHexString(hexNum).toUpperCase();
+            return Integer.toHexString(hexNum & 0xFFFF).toUpperCase();
         }
         else {
             throw new MARIEAssemblerException("Number is not in the range 0000 to FFFF");
@@ -102,7 +104,7 @@ public class ParserImpl
     Object numDec_num(Object dec) throws MARIEAssemblerException {
         int decNum = Integer.parseInt((String) dec);
         if (decNum >= MARIEValues.INT_MIN_VALUE && decNum <= MARIEValues.INT_MAX_VALUE) {
-            return Integer.toHexString(decNum).toUpperCase();
+            return Integer.toHexString(decNum & 0xFFFF).toUpperCase();
         }
         else {
             throw new MARIEAssemblerException("Number is not in the range 0000 to FFFF");
@@ -112,7 +114,7 @@ public class ParserImpl
     Object numOct_num(Object oct) throws MARIEAssemblerException {
         int octNum = Integer.parseInt((String) oct, 8);
         if (octNum >= MARIEValues.INT_MIN_VALUE && octNum <= MARIEValues.INT_MAX_VALUE) {
-            return Integer.toHexString(octNum).toUpperCase();
+            return Integer.toHexString(octNum & 0xFFFF).toUpperCase();
         }
         else {
             throw new MARIEAssemblerException("Number is not in the range 0000 to FFFF");

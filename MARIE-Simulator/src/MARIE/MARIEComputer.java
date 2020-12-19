@@ -82,6 +82,10 @@ public abstract class MARIEComputer {
             bus = stackPointer - (instructionReg & 0x0FFF);
         }
 
+        if((mcBitString & MicrocodeGenerator.SPO_NO_OFF) != 0) {
+            bus = stackPointer;
+        }
+
         if((mcBitString & MicrocodeGenerator.IN) != 0) {
             ioReg = input();
         }

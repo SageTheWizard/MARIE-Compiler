@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="MARIE.EditorController" xmlns:fx="http://javafx.com/fmxl" VBox.vgrow="ALWAYS">
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="File" fx:id="fileMenu">
+                <MenuItem text="Open" fx:id="open"/>
+                <MenuItem text="Save" fx:id="save"/>
+                <MenuItem text="Save As" fx:id="saveas"/>
+                <MenuItem text="Save and Assemble" fx:id="assemble"/>
+                <MenuItem text="Save, Assemble, and Load in Simulator" fx:id="saveAndLoad"/>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <TextArea fx:id="editor"/>
+
+</VBox>

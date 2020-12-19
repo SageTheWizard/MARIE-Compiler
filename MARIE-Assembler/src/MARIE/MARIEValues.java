@@ -1,3 +1,5 @@
+package MARIE;
+
 public class MARIEValues {
     public static final int INT_MIN_VALUE = -32768;
     public static final int INT_MAX_VALUE = 32767;
@@ -24,4 +26,6 @@ public class MARIEValues {
     public static final int SKPEQ = 0xF5;
     public static final int SKPGT = 0xF6;
     public static final int JMPRT = 0xF7;
+    public static final String EXTENSION = "mre";
+    public static final String EXECUTABLE_EXTENSION = "mex";
 }

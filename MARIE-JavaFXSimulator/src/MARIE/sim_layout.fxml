@@ -12,10 +12,13 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
-<VBox fx:controller="MARIE.Controller" xmlns:fx="http://javafx.com/fmxl">
+<VBox fx:controller="MARIE.SimController" xmlns:fx="http://javafx.com/fmxl">
     <MenuBar fx:id="menuBar">
         <menus>
-            <Menu fx:id="openMenuItem"/>
+            <Menu text="File" fx:id="fileMenu">
+                <MenuItem text="New" fx:id="newMenuItem"/>
+                <MenuItem text="Open" fx:id="openMenuItem"/>
+            </Menu>
             <Menu fx:id="reloadMenuItem"/>
             <Menu fx:id="runMenuItem"/>
             <Menu fx:id="stepMenuItem"/>
@@ -38,6 +41,10 @@
 
     <HBox HBox.hgrow="ALWAYS">
         <TableView fx:id="hexCode">
+
+        </TableView>
+
+        <TableView fx:id="stackTableView">
 
         </TableView>
 

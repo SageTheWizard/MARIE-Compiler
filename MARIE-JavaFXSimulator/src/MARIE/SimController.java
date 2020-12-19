@@ -1,6 +1,7 @@
 package MARIE;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class Controller extends MARIEComputer implements Initializable {
+public class SimController extends MARIEComputer implements Initializable {
     private final String[] INPUT_TYPES = {"HEX", "DEC", "ASCII"};
-    @FXML private Menu openMenuItem, reloadMenuItem, runMenuItem, stepMenuItem;
+    @FXML private Menu reloadMenuItem, runMenuItem, stepMenuItem;
+    @FXML private MenuItem newMenuItem, openMenuItem;
 
     @FXML private ComboBox inputType;
     @FXML private TableView<MemoryTableRow> memory;
@@ -39,60 +41,47 @@ public class Controller extends MARIEComputer implements Initializable {
 
     private boolean halted;
 
-    public Controller() {
+    public SimController() {
 
     }
 
-    public Controller(Stage primaryStage) throws IOException {
+    public SimController(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("MARIE Simulator");
-        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("sim_layout.fxml"));
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EditorController.setParent(this);
+
         inputType.setItems(FXCollections.observableArrayList(INPUT_TYPES));
         inputType.getSelectionModel().selectFirst();
 
-        Label openMenuLabel = new Label("Open");
-        openMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                openFile();
-            }
-        });
-
         Label reloadMenuLabel = new Label("Reload");
-        reloadMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                reload();
-            }
-        });
+        reloadMenuLabel.setOnMouseClicked(mouseEvent -> reload());
 
         Label runMenuLabel = new Label("Run");
-        runMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                runFile();
-            }
-        });
+        runMenuLabel.setOnMouseClicked(mouseEvent -> runFile());
 
         Label stepMenuLabel = new Label("Step");
-        stepMenuLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                step();
-            }
-        });
+        stepMenuLabel.setOnMouseClicked(mouseEvent -> step());
 
-        openMenuItem.setGraphic(openMenuLabel);
         reloadMenuItem.setGraphic(reloadMenuLabel);
         runMenuItem.setGraphic(runMenuLabel);
         stepMenuItem.setGraphic(stepMenuLabel);
 
+        newMenuItem.setOnAction(actionEvent -> {
+            try {
+                new EditorController(SimController.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        openMenuItem.setOnAction(actionEvent -> openFile());
 
         regTableInit();
         memTableInit();
@@ -102,16 +91,23 @@ public class Controller extends MARIEComputer implements Initializable {
     public void openFile() {
         FileChooser fileChooser = new FileChooser();
 
-        fileChooser.setTitle("Open Machine Code File");
+        fileChooser.setTitle("Open Machine Code or Editor File");
 
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
         if(selectedFile != null) {
-            openFile(selectedFile);
+            //now see if it is an assembly file or an executable file
+            if(selectedFile.toString().endsWith(MARIEValues.EXTENSION)) {
+                openEditorFile(selectedFile);
+            }
+            else if(selectedFile.toString().endsWith(MARIEValues.EXECUTABLE_EXTENSION)) {
+                openFile(selectedFile);
+            }
         }
     }
 
     public void openFile(File toOpen) {
         try {
+            clear();
             int offset = 0;
             Scanner input = new Scanner(toOpen);
             //read first line to get the ORG
@@ -132,6 +128,15 @@ public class Controller extends MARIEComputer implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    public void openEditorFile(File toOpen) {
+        try {
+            new EditorController(toOpen);
+        } catch (IOException e) {
+            //TODO implement
+            e.printStackTrace();
+        }
     }
 
     public void reload() {
@@ -237,6 +242,14 @@ public class Controller extends MARIEComputer implements Initializable {
         memory.refresh();
     }
 
+    public void stackTableInit() {
+        //TODO implement
+    }
+
+    public void instrTableInit() {
+        //TODO implement
+    }
+
     public void regTableUpdate(Boolean clearTable) {
         if(clearTable) {
             clockSteps.clear();
@@ -265,5 +278,9 @@ public class Controller extends MARIEComputer implements Initializable {
 
         memory.setItems(FXCollections.observableArrayList(memRow));
         memory.refresh();
+    }
+
+    public void stackTableUpdate() {
+        //TODO implement
     }
 }

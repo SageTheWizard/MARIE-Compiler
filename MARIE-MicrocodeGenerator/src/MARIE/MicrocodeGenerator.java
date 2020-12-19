@@ -37,6 +37,7 @@ public class MicrocodeGenerator {
      * where PIN_POS is the pin that the ROM would output the data on
      */
 
+    public static final int SPO_NO_OFF = 1 << 29;
     public static final int IOIN = 1 << 28;
     public static final int IOOUT = 1 << 27;
     public static final int SPDEC = 1 << 26; //stack pointer decrement
@@ -119,7 +120,7 @@ public class MicrocodeGenerator {
 
         for(int i = JNP * 0x0f; i <= JNP * 0x0f + 0x0F; i++) {
             microCode[i][3] = ONE + SPINC;
-            microCode[i][4] = SPO + MI;
+            microCode[i][4] = SPO_NO_OFF + MI;
             microCode[i][5] = CO + RI;
             microCode[i][6] = IO + JMP;
             microCode[i][7] = MCR;
@@ -205,14 +206,10 @@ public class MicrocodeGenerator {
         microCode[SGT][3] = GTZ;
         microCode[SGT][4] = MCR;
 
-        microCode[JRT][3] = SPO + MI;
-        microCode[JRT][4] = RO + MBRI;
-        microCode[JRT][5] = RI + ACO;
-        microCode[JRT][6] = ONE + ACI;
-        microCode[JRT][7] = JMP + ALUO;
-        microCode[JRT][8] = RO + ACI;
-        microCode[JRT][9] = SPDEC + ONE;
-        microCode[JRT][10] = MCR;
+        microCode[JRT][3] = SPO_NO_OFF + MI;
+        microCode[JRT][4] = RO + JMP;
+        microCode[JRT][5] = SPDEC + ONE;
+        microCode[JRT][6] = MCR;
     }
 
     public static int[][] getMicroCode() {

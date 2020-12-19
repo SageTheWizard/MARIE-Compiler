@@ -1,3 +1,5 @@
+package MARIE;
+
 public class MARIELabel {
     public int lineno;
     public String name;

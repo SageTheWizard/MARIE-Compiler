@@ -30,7 +30,7 @@ import java.io.*;
 %%
 
 start                : ORG num NEWLINE prgm	        {$$ = startOrg($2, $4);}
-		             | prgm                 {$$ = start($1);}
+		             | prgm                     {$$ = start($1);}
 		             ;
 		
 prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2);}
