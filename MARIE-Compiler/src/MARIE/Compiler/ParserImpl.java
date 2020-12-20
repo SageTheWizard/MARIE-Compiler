@@ -1,6 +1,5 @@
 package MARIE.Compiler;
 
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 
 public class ParserImpl {
@@ -37,7 +36,7 @@ public class ParserImpl {
     public Object var_decl____type_spec_IDENT_SEMI(Object type, Object ident) throws SemanticError {
         if (!scope.put((String) ident, (String) type)){
             throw new SemanticError("Variable " + (String) ident + " is already defined. (Line: " +
-                    Parser.lexer.lineno + ")");
+                    ParserICGN.lexer.lineno + ")");
         }
         return null;
     }
@@ -82,12 +81,12 @@ public class ParserImpl {
 
         if (!validPut) {
             throw new SemanticError("Variable " + id + " is already defined. (Line: " +
-                    Parser.lexer.lineno + ")");
+                    ParserICGN.lexer.lineno + ")");
         }
         if (id.equals("main")) {
             if (!ret.equals("integer")) {
                 throw new SemanticError("Main function must return an integer. (Line: " +
-                        Parser.lexer.lineno + ")");
+                        ParserICGN.lexer.lineno + ")");
             }
             foundMain = true;
         }
@@ -112,7 +111,7 @@ public class ParserImpl {
 
             if (!scope.put(tokens[1], tokens[0])){
                 throw new SemanticError("Variable " + tokens[1] + " is already defined. (Line: " +
-                        Parser.lexer.lineno + ")");
+                        ParserICGN.lexer.lineno + ")");
             }
         }
         foundReturn = false;
@@ -123,7 +122,7 @@ public class ParserImpl {
 
         if (!foundReturn) {
             throw new SemanticError("Function " + funcName + " must return a " + currentFunctionReturnType +
-                    " (Line Number: " + Parser.lexer.lineno + ")");
+                    " (Line Number: " + ParserICGN.lexer.lineno + ")");
         }
         scope = scope.prev;
         foundReturn = false;
@@ -175,13 +174,13 @@ public class ParserImpl {
 
         if (expectedType == null) {
             throw new SemanticError("Error: Variable " + name + " is not declared. " +
-                    "(Line Number: " + Parser.lexer.lineno + ")");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ")");
         }
 
         if (!expectedType.equals((String) assignType)) {
             throw new SemanticError("Error: Variable " + name + " is of " + expectedType.toUpperCase() +
-                    "Type. Given: " + ((String) assignType).toUpperCase() + ". Line Number: (" +
-                    Parser.lexer.lineno + ")");
+                    "Type. Given: " + assignType + ". Line Number: (" +
+                    ParserICGN.lexer.lineno + ")");
         }
 
         return null;
@@ -198,16 +197,16 @@ public class ParserImpl {
 
         if (scope.get(arrName) == null || scope.get(arrName).contains("array")){
             throw new SemanticError("Error: Variable " + arrName + " is not an array, therefore, " +
-                    "cannot be indexed.  (Line Number: " + Parser.lexer.lineno + ").");
+                    "cannot be indexed.  (Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         else if (!scope.get(arrName).split(" ")[1].equals(assign)) {
             throw new SemanticError("Error: Array " + arrName + " is of type " +
                     scope.get("array " + arrName) + " not of type " + assign + ". " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         else if (!indxType.equals("integer")) {
             throw new SemanticError("Error: Arrays cannot be indexed by type " + indxType + "." +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return assign;
@@ -218,7 +217,7 @@ public class ParserImpl {
 
         if (!loopCond.equals("boolean")) {
             throw new SemanticError("Error: While loop condition must be boolean not " +
-                    loopCond + " type.  (Line Number: " + Parser.lexer.lineno + ").");
+                    loopCond + " type.  (Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return null;
@@ -237,7 +236,7 @@ public class ParserImpl {
 
         if (!cond.equals("boolean")) {
             throw new SemanticError("Error: If statement cannot be conditioned on a " + ifCond +
-                    ".  Must by of type boolean. (Line Number: " + Parser.lexer.lineno + ").");
+                    ".  Must by of type boolean. (Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return null;
@@ -250,7 +249,7 @@ public class ParserImpl {
         if (!retType.equals(currentFunctionReturnType)) {
             throw new SemanticError("Error: Function " + currentFunction + " has return type of " +
                     currentFunctionReturnType + " not " + retType + ". (Line Number: " +
-                    Parser.lexer.lineno + ")");
+                    ParserICGN.lexer.lineno + ")");
         }
 
         return null;
@@ -267,7 +266,7 @@ public class ParserImpl {
 
         if (!validPut) {
             throw new SemanticError("Variable " + id + " is already defined within the scope.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         return null;
     }
@@ -295,7 +294,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " + " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "integer";
@@ -307,7 +306,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " - " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "integer";
@@ -320,7 +319,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " * " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "integer";
@@ -333,7 +332,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " / " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "integer";
@@ -346,7 +345,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " % " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "integer";
@@ -359,7 +358,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("boolean") || !type2.equals("boolean"))) {
             throw new SemanticError("Error: Expression " + type1 + " || " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -371,7 +370,7 @@ public class ParserImpl {
         if (!type.equals("boolean")) {
             throw new SemanticError("Error: Expression ! " + type + " is not allowed.  " +
                     "Operator must be of type boolean.  (Line Number: " +
-                    Parser.lexer.lineno + ").");
+                    ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -383,7 +382,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("boolean") || !type2.equals("boolean"))) {
             throw new SemanticError("Error: Expression " + type1 + " && " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -396,7 +395,7 @@ public class ParserImpl {
         if (!type1.equals(type2)) {
             throw new SemanticError("Error: Expression " + type1 + " == " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -409,7 +408,7 @@ public class ParserImpl {
         if (!type1.equals(type2)) {
             throw new SemanticError("Error: Expression " + type1 + " != " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -422,7 +421,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " <= " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -435,7 +434,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " < " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -447,7 +446,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " >= " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -460,7 +459,7 @@ public class ParserImpl {
         if (!type1.equals(type2) || (!type1.equals("integer") || !type2.equals("integer"))) {
             throw new SemanticError("Error: Expression " + type1 + " > " + type2 +
                     " is not allowed.  Operands must be of integer type.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return "boolean";
@@ -472,11 +471,11 @@ public class ParserImpl {
 
         if (type == null) {
             throw new SemanticError("Undeclared variable " + id + ". (Line Number: " +
-                    Parser.lexer.lineno + ").");
+                    ParserICGN.lexer.lineno + ").");
         }
         else if (type.contains("-")) {
             throw new SemanticError("Error: " + id + " is a function and must be called. " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return type;
@@ -489,7 +488,7 @@ public class ParserImpl {
 
         if (funcInfo == null) {
             throw new SemanticError("Error: Function " + id + " is not defined. " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         String[] tokens = funcInfo.split("-");
@@ -499,7 +498,7 @@ public class ParserImpl {
             if (!tokens[i].equals((String) args.get(i - 1))) {
                 throw new SemanticError("Error: Argument #" + i + " of function " + id +
                         " must be a " + tokens[i] + " not a " + args.get(i - 1) + ". " +
-                        "(Line Number: " + Parser.lexer.lineno + ")");
+                        "(Line Number: " + ParserICGN.lexer.lineno + ")");
             }
         }
         return returnType;
@@ -511,15 +510,15 @@ public class ParserImpl {
 
         if (!indx.equals("integer")) {
             throw new SemanticError("Error: Arrays must be indexed with an Integer and not a " + indx +
-                    ".  (Line Number: " + Parser.lexer.lineno + ").");
+                    ".  (Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         else if (scope.get(id) == null) {
             throw new SemanticError("Error: Variable " + id + " is not defined.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         else if (!scope.get(id).contains("array")) {
             throw new SemanticError("Error: Variable " + id + " is not an array and cannot be indexed.  " +
-                    "(Line number: " + Parser.lexer.lineno + ").");
+                    "(Line number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return scope.get(id).split(" ")[1];
@@ -531,11 +530,11 @@ public class ParserImpl {
 
         if (!lenType.equals("integer")) {
             throw new SemanticError("Error: Cannot declare the length of an array with an " + lenType + ".  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
         else if (!(type.equals("integer") || type.equals("boolean"))) {
             throw new SemanticError("Error: Array types can only be integer or boolean.  " +
-                    "(Line Number: " + Parser.lexer.lineno + ").");
+                    "(Line Number: " + ParserICGN.lexer.lineno + ").");
         }
 
         return type;

@@ -1,11 +1,9 @@
 package MARIE;
-import MARIE.Compiler.Parser;
+import MARIE.Compiler.ParserICGN;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -97,8 +95,8 @@ public class Controller {
          */
         try {
             java.io.Reader r = new java.io.FileReader(filename.getText());
-            Parser marieParser = new Parser(r);
-            int success = marieParser.yyparse();
+            ParserICGN marieParserICGN = new ParserICGN(r);
+            int success = marieParserICGN.yyparse();
             if (success == 0) {
                 runBox.appendText("Code Compiled Successfully with exit status 0");
                 try {
@@ -108,8 +106,7 @@ public class Controller {
                     }
                     fn += ".intercode";
                     FileWriter fileWriter = new FileWriter(fn);
-                    fileWriter.write("ORG 100\n");
-                    fileWriter.write(Parser.tree.getCode());
+                    fileWriter.write(ParserICGN.tree.getCode());
                     fileWriter.close();
                 } catch (IOException ioe) {
                     System.err.println("ERROR SAVING FILE");

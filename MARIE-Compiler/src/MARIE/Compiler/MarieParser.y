@@ -95,10 +95,10 @@ compound_stmt : LCURLY {compound_stmt___LBRACE();}
 	        local_decls stmt_list
 	        RCURLY {compound_stmt___RBRACE();}
 
-if_stmt : IF LCIRCLE expr RCIRCLE {$$ = if_stmt____LCIRCLE_expr($3);} LCURLY stmt RCURLY else_stmt
+if_stmt : IF LCIRCLE expr RCIRCLE {$$ = if_stmt____LCIRCLE_expr($3);} LCURLY stmt_list RCURLY else_stmt
 	;
 
-else_stmt : ELSE LCURLY stmt RCURLY
+else_stmt : ELSE LCURLY stmt_list RCURLY
           |
           ;
 

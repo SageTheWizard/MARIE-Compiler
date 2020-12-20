@@ -34,6 +34,7 @@ import java.util.*;
 
 program   : decl_list
 		{tree.setBulkChildren((ArrayList<ICGNode>) $1);
+		 tree.orgAndMain();
 		 tree.generateCode();
 		 tree.setGlobalVars(inst);
 		}
@@ -47,8 +48,8 @@ decl	  : var_decl                    { $$ = $1;}
 	  | fun_decl                    { $$ = $1;}
 	  ;
 
-var_decl  : type_spec IDENT {String id = lexer.lastIdent;} SEMI
-	    {inst.addGlobalVar(id, (Integer) $1); $$ = new ICGNode();}
+var_decl  : type_spec IDENT {$2 = lexer.lastIdent;} SEMI
+	    {inst.addGlobalVar((String) $2, (Integer) $1); $$ = new ICGNode();}
           ;
 /*
 type_spec_global : BOOL                        {$$ = 1;}
@@ -61,15 +62,18 @@ type_spec : BOOL {$$ = 1;}
           | type_spec LSQUARE {int size = Integer.parseInt(lexer.yytext()); $$ = size;} INT_LIT RSQUARE
           ;
 
-fun_decl  : type_spec IDENT {id = lexer.lastIdent;} LCIRCLE params RCIRCLE
+fun_decl  : type_spec IDENT {$2 = lexer.lastIdent;} LCIRCLE params RCIRCLE
 		{
-			funcDeclNode = new ICGNode();
-			inst.putFunctionParamIDs(id, (ArrayList<String>) $5);
-			funcDeclNode.funcDecl(id);
+			ICGNode funcDeclNode = new ICGNode();
+			inst.setCurrentFunction((String) $2);
+			inst.putFunctionParamIDs((String) $2, (ArrayList<String>) $5);
+			funcDeclNode.funcDecl((String) $2);
+			$2 = funcDeclNode;
 		}
 		LCURLY
 		local_decls stmt_list RCURLY
 		{
+			ICGNode funcDeclNode = (ICGNode) $2;
 			funcDeclNode.setBulkChildren((ArrayList<ICGNode>) $9);
 			funcDeclNode.setBulkChildren((ArrayList<ICGNode>) $10);
 			funcDeclNode.endFunction();
@@ -114,8 +118,8 @@ stmt      : expr_stmt
 	  | SEMI
 	  ;
 
-expr_stmt : IDENT {id = lexer.lastIdent;} ASSIGN expr_stmt
-	    {ICGNode assignNode = new ICGNode(); assignNode.setChild($4); assignNode.assign(id, inst); $$ = assignNode;}
+expr_stmt : IDENT {$1 = lexer.lastIdent;} ASSIGN expr_stmt
+	    {ICGNode assignNode = new ICGNode(); assignNode.setChild($4); assignNode.assign((String) $1, inst); $$ = assignNode;}
 	  | expr SEMI
 	    {ICGNode exprNode = new ICGNode(); exprNode.setChild($1); exprNode.generateCode(); $$ = exprNode;}
 	  /*
@@ -131,9 +135,9 @@ expr_stmt : IDENT {id = lexer.lastIdent;} ASSIGN expr_stmt
 	  */
 	  ;
 
-while_stmt : WHILE {whileNode = new ICGNode(); whileNode.beginWhile(inst.getWhileCtr());}
-             LCIRCLE expr {whileNode.setChild($4);} RCIRCLE stmt
-             {whileNode.setChild($7); whileNode.endWhile(inst.getWhileCtrNoInc()); $$ = whileNode;}
+while_stmt : WHILE {ICGNode whileNode = new ICGNode(); whileNode.beginWhile(inst.getWhileCtr()); $1 = whileNode;}
+             LCIRCLE expr {ICGNode whileNode = (ICGNode) $1; whileNode.setChild($4); $1 = whileNode;} RCIRCLE stmt
+             {ICGNode whileNode = (ICGNode) $1; whileNode.setChild($7); whileNode.endWhile(inst.getWhileCtrNoInc()); $$ = whileNode;}
 	   ;
 
 compound_stmt : LCURLY
@@ -148,21 +152,22 @@ compound_stmt : LCURLY
 
 	        }
 
-if_stmt : {ifNode = new ICGNode();} IF LCIRCLE expr {ifNode.setChild($4); ifNode.loadIf(inst.getIfCtr()); } RCIRCLE
-	  LCURLY stmt RCURLY else_stmt
+if_stmt : IF LCIRCLE expr {ICGNode ifNode = new ICGNode(); ifNode.setChild($3); ifNode.loadIf(inst.getIfCtr()); $1 = ifNode; } RCIRCLE
+	  LCURLY stmt_list RCURLY else_stmt
 	  {
-	  	ifNode.setChild($8);
+	  	ICGNode ifNode = (ICGNode) $1;
+	  	ifNode.setBulkChildren((ArrayList<ICGNode>) $7);
 	  	ifNode.loadEndIf(inst.getIfCtrNoInc());
-	  	ifNode.setChild($10);
+	  	ifNode.loadElse((ICGNode) $9, inst.getIfCtrNoInc());
 	  	$$ = ifNode;
 	  }
 	;
 
-else_stmt : ELSE LCURLY stmt RCURLY {((ICGNode) $3).generateCode(); $$ = $3;}
-          |
+else_stmt : ELSE LCURLY stmt_list RCURLY {ICGNode elseNode = new ICGNode();  elseNode.setBulkChildren((ArrayList<ICGNode>) $3); elseNode.generateCode(); $$ = elseNode;}
+          | {$$ = new ICGNode();}
           ;
 
-print_stmt : PRINT expr {ICGNode toPrint =  (ICGNode) $1; toPrint.generateCode(); $$ = toPrint; } SEMI
+print_stmt : PRINT expr {ICGNode toPrint =  (ICGNode) $1; toPrint.generateCode(); toPrint.printAC(); $$ = toPrint; } SEMI
 	   ;
 
 return_stmt : RETURN expr SEMI
@@ -170,17 +175,17 @@ return_stmt : RETURN expr SEMI
 			ICGNode returnNode = new ICGNode();
 			returnNode.setChild($2);
 			returnNode.generateCode();
-			returnNode.returnFunction();
+			returnNode.returnFunction(inst);
 			$$ = returnNode;
 		}
 	    ;
 
-local_decls : local_decls local_decl {((ArrayList<ICGNode>) $1).add((ICGNode) $2); $$ = $1;}
+local_decls : local_decls local_decl {((ArrayList<ICGNode>) $1).add((ICGNode) $2); inst.incLocalVarCtr(); $$ = $1;}
 	    | {$$ = new ArrayList<ICGNode>();}
 	    ;
 
-local_decl  : type_spec IDENT {id = lexer.lastIdent;} SEMI
-              {ICGNode decl = new ICGNode(); decl.localDecl(id, inst); $$ = decl;}
+local_decl  : type_spec IDENT {$2 = lexer.lastIdent;} SEMI
+              {ICGNode decl = new ICGNode(); decl.localDecl((String) $2, inst); $$ = decl;}
 	    ;
 
 arg_list    : arg_list COMMA expr
@@ -219,29 +224,25 @@ expr        : expr ADD expr {ICGNode addOp = new ICGNode(); addOp.setChild($1); 
 	    | expr GE expr  {ICGNode geOp = new ICGNode(); geOp.setChild($1); geOp.setChild($3); geOp.equalityOps(Parser.GE, inst.getBoolCtr()); $$ = geOp;}
 	    | expr GT expr  {ICGNode gtOp = new ICGNode(); gtOp.setChild($1); gtOp.setChild($3); gtOp.equalityOps(Parser.GT, inst.getBoolCtr()); $$ = gtOp;}
 	    | LCIRCLE expr RCIRCLE {$$ = $1;}
-	    | IDENT {id = lexer.lastIdent;} {ICGNode idNode = new ICGNode(); idNode.loadId(id); $$ = idNode;}
-	    | IDENT {id = lexer.lastIdent;} LCIRCLE args RCIRCLE
+	    | IDENT {$1 = lexer.lastIdent;} {ICGNode idNode = new ICGNode(); idNode.loadId(inst, (String) $1); $$ = idNode;}
+	    | IDENT {$1 = lexer.lastIdent;} LCIRCLE args RCIRCLE
 	    	{
 	    		ICGNode functionCall = new ICGNode();
 	    		ArrayList<ICGNode> args = (ArrayList<ICGNode>) $4;
-	    		functionCall.callFunction(id, args, inst);
+	    		functionCall.callFunction((String) $1, args, inst);
 	    		$$ = functionCall;
 	    	}
-	    | IDENT {id = lexer.lastIdent;} LSQUARE expr RSQUARE
-	    | {ICGNode boolLit = new ICGNode(); boolLit.loadLiteral(lexer.yytext()); $$ = boolLit;} BOOL_LIT
-	    | {ICGNode intLit = new ICGNode(); intLit.loadLiteral(lexer.yytext()); $$ = intLit;}  INT_LIT
+	    | IDENT {$1 = lexer.lastIdent;} LSQUARE expr RSQUARE
+	    | {ICGNode boolLit = new ICGNode(); String lit = inst.addLiteral(lexer.yytext()); boolLit.loadLiteral(":" + lit); $$ = boolLit;} BOOL_LIT
+	    | {ICGNode intLit = new ICGNode(); String lit = inst.addLiteral(lexer.yytext()); intLit.loadLiteral(":" + lit); $$ = intLit;}  INT_LIT
 	    ;
 %%
 
 
 
-public static MarieLexer lexer;
+public static MarieLexerICGN lexer;
 public static ICGNode tree;
 public static Instructions inst;
-public static ICGNode funcDeclNode;
-public static String id;
-public static ICGNode ifNode;
-public static ICGNode whileNode;
 
 private int yylex() {
 	int yyl_return = -1;
@@ -259,8 +260,8 @@ public void yyerror (String error) {
 	System.out.println("ERROR: " + error + ". Line Number: " + lexer.lineno);
 }
 
-public Parser(Reader r) {
-	lexer = new MarieLexer(r, this);
+public ParserICGN(Reader r) {
+	lexer = new MarieLexerICGN(r, this);
 	tree = new ICGNode();
 	inst = new Instructions();
 }
