@@ -56,7 +56,7 @@
                 <ComboBox fx:id="inputType"
                     />
                 <Label text="Input"/>
-                <TextField fx:id="userInput"/>
+                <TextField fx:id="userInput" onAction="#onInputEnter"/>
             </HBox>
         </VBox>
     </HBox>

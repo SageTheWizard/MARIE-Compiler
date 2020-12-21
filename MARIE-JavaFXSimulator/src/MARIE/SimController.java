@@ -1,8 +1,6 @@
 package MARIE;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -20,26 +17,35 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class SimController extends MARIEComputer implements Initializable {
-    private final String[] INPUT_TYPES = {"HEX", "DEC", "ASCII"};
-    @FXML private Menu reloadMenuItem, runMenuItem, stepMenuItem;
-    @FXML private MenuItem newMenuItem, openMenuItem;
+public class SimController implements Initializable {
+    private final String[] INPUT_TYPES = {"HEX", "DEC", "OCT", "ASCII"};
+    @FXML
+    private Menu reloadMenuItem, runMenuItem, stepMenuItem;
+    @FXML
+    private MenuItem newMenuItem, openMenuItem;
 
-    @FXML private ComboBox inputType;
-    @FXML private TableView<MemoryTableRow> memory;
-    @FXML private TableView<ClockStep> registers;
-    @FXML private TextArea console;
-    @FXML private TextField userInput;
+    @FXML
+    private ComboBox inputType;
+    @FXML
+    private TableView<MemoryTableRow> memory;
+    @FXML
+    private TableView<ClockStep> registers;
+    @FXML
+    private TextArea console;
+    @FXML
+    private TextField userInput;
 
     private File currentlyOpenFile;
 
     private Stage primaryStage;
 
+    private SimulatorThread marieSimThread;
+
+    private boolean canInput = false;
+
     MemoryTableRow[] memRow = new MemoryTableRow[256];
 
     ArrayList<ClockStep> clockSteps = new ArrayList<>();
-
-    private boolean halted;
 
     public SimController() {
 
@@ -85,6 +91,8 @@ public class SimController extends MARIEComputer implements Initializable {
 
         regTableInit();
         memTableInit();
+
+        marieSimThread = new SimulatorThread(this);
     }
 
     @FXML
@@ -94,12 +102,11 @@ public class SimController extends MARIEComputer implements Initializable {
         fileChooser.setTitle("Open Machine Code or Editor File");
 
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             //now see if it is an assembly file or an executable file
-            if(selectedFile.toString().endsWith(MARIEValues.EXTENSION)) {
+            if (selectedFile.toString().endsWith(MARIEValues.EXTENSION)) {
                 openEditorFile(selectedFile);
-            }
-            else if(selectedFile.toString().endsWith(MARIEValues.EXECUTABLE_EXTENSION)) {
+            } else if (selectedFile.toString().endsWith(MARIEValues.EXECUTABLE_EXTENSION)) {
                 openFile(selectedFile);
             }
         }
@@ -107,17 +114,21 @@ public class SimController extends MARIEComputer implements Initializable {
 
     public void openFile(File toOpen) {
         try {
-            clear();
+            //first make sure we stop any running simulations, stop method handles checking for us
+            stop();
+            //then we make sure we can't accidentally start in the middle of updating everything
+            marieSimThread.runningSemaphore.acquire();
+            marieSimThread.clear();
             int offset = 0;
             Scanner input = new Scanner(toOpen);
             //read first line to get the ORG
             offset = Integer.parseInt(input.nextLine().split(" ")[1], 16);
-            setProgramCtr(offset); //set the program counter to the ORG offset
+            marieSimThread.setProgramCtr(offset); //set the program counter to the ORG offset
             currentlyOpenFile = toOpen;
 
             int i = 0;
-            while(input.hasNextLine()) {
-                getMainMemory()[i + offset] = Integer.parseInt(input.nextLine(), 16);
+            while (input.hasNextLine()) {
+                marieSimThread.getMainMemory()[i + offset] = Integer.parseInt(input.nextLine(), 16);
                 i++;
             }
 
@@ -126,6 +137,11 @@ public class SimController extends MARIEComputer implements Initializable {
         } catch (IOException e) {
             //TODO implement
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            //TODO implement
+            e.printStackTrace();
+        } finally {
+            marieSimThread.runningSemaphore.release();
         }
 
     }
@@ -145,33 +161,88 @@ public class SimController extends MARIEComputer implements Initializable {
 
     @FXML
     public void runFile() {
-        while(!(halted = clockTick())) {
-            regTableUpdate(false);
-            memTableUpdate();
-        } //run until we reach a halt or until the program counter runs out
-
-    }
-
-    @FXML
-    public void step() {
-        if(!halted) {
-            halted = clockTick();
-            regTableUpdate(false);
-            memTableUpdate();
+        if(marieSimThread.runningSemaphore.tryAcquire()) {
+            new Thread(marieSimThread).start();
+            marieSimThread.runningSemaphore.release();
         }
 
     }
 
-    @Override
-    int input() {
-        //TODO implement
-        return 0;
+    public void stop() {
+        try {
+            if(!marieSimThread.runningSemaphore.tryAcquire()) {
+                marieSimThread.stopMutex.acquire();
+                marieSimThread.stop = true;
+            }
+            else {
+                marieSimThread.runningSemaphore.release(); //immediately release since we successfully acquired it
+            }
+        } catch (InterruptedException e) {
+            //TODO implement
+        }
+        finally {
+            marieSimThread.stopMutex.release();
+        }
     }
 
-    @Override
+    @FXML
+    public void step() {
+        try {
+            marieSimThread.haltedMutex.acquire();
+            if (!marieSimThread.halted && marieSimThread.runningSemaphore.tryAcquire()) {
+                marieSimThread.halted = marieSimThread.clockTick();
+                regTableUpdate(false);
+                memTableUpdate();
+                marieSimThread.runningSemaphore.release();
+            }
+        } catch (InterruptedException e) {
+            //TODO implement
+        } finally {
+            marieSimThread.haltedMutex.release();
+        }
+
+    }
+
+    @FXML
+    public void onInputEnter() {
+        if (canInput) {
+            try {
+                marieSimThread.inputBufferMutex.acquire();
+                if (inputType.getValue().equals(INPUT_TYPES[0])) {//HEX
+                    marieSimThread.inputBuffer = Integer.parseInt(userInput.getText(), 16);
+                } else if (inputType.getValue().equals(INPUT_TYPES[1])) {//DEC
+                    marieSimThread.inputBuffer = Integer.parseInt(userInput.getText());
+                } else if (inputType.getValue().equals(INPUT_TYPES[2])) {//OCT
+                    marieSimThread.inputBuffer = Integer.parseInt(userInput.getText(), 8);
+                } else { //ASCII
+                    if (userInput.getText().length() > 0) {
+                        marieSimThread.inputBuffer = userInput.getText().charAt(0);
+                    } else {
+                        marieSimThread.inputBuffer = 0; //assume they want a null char
+                    }
+                }
+            } catch (InterruptedException e) {
+                //TODO implement
+                e.printStackTrace();
+            } catch (NumberFormatException e) {
+                //TODO implement number exception handling
+            } finally {
+                marieSimThread.inputBufferMutex.release();
+            }
+            canInput = false;
+        }
+        marieSimThread.threadInputSemaphore.release();
+    }
+
+
+    public void input() {
+        canInput = true;
+    }
+
+
     void output(int output) {
         console.setText(console.getText() + output + '\n');
-    }
+    } //TODO modify
 
     public void regTableInit() {
         TableColumn<ClockStep, String> step = new TableColumn<>("Previous Clock Cycle");
@@ -196,7 +267,6 @@ public class SimController extends MARIEComputer implements Initializable {
         registers.getColumns().addAll(step, prgCtr, instrReg, ioReg, accumulator, stackPtr, memBufReg, memAddrReg);
 
 
-
         registers.refresh();
     }
 
@@ -206,7 +276,7 @@ public class SimController extends MARIEComputer implements Initializable {
         TableColumn<MemoryTableRow, String> row = new TableColumn<>("Memory Row");
         row.setCellValueFactory(new PropertyValueFactory<>("rowHexString"));
 
-        for(int i = 0; i < offsets.length; i++) {
+        for (int i = 0; i < offsets.length; i++) {
             offsets[i] = new TableColumn<>(Integer.toHexString(i).toUpperCase());
         }
         offsets[0].setCellValueFactory(new PropertyValueFactory<>("zero"));
@@ -227,10 +297,8 @@ public class SimController extends MARIEComputer implements Initializable {
         offsets[15].setCellValueFactory(new PropertyValueFactory<>("f"));
 
 
-
-
-        for(int i = 0; i < memRow.length; i++) {
-            memRow[i] = new MemoryTableRow(i, getMainMemory());
+        for (int i = 0; i < memRow.length; i++) {
+            memRow[i] = new MemoryTableRow(i, marieSimThread.getMainMemory());
             memRow[i].update();
         }
 
@@ -251,19 +319,17 @@ public class SimController extends MARIEComputer implements Initializable {
     }
 
     public void regTableUpdate(Boolean clearTable) {
-        if(clearTable) {
+        if (clearTable) {
             clockSteps.clear();
-        }
-        else {
-            for(int i = 0; i < clockSteps.size(); i++) {
+        } else {
+            for (int i = 0; i < clockSteps.size(); i++) {
                 clockSteps.get(i).setPreviousStep(clockSteps.get(i).getPreviousStep() + 1);
             }
-            clockSteps.add(0, new ClockStep(getProgramCtr(), getInstructionReg(), getIoReg(), getAccumulator(), getStackPointer(), getMemoryBufferReg(), getMemoryAddrReg(), 0));
+            clockSteps.add(0, new ClockStep(marieSimThread.getProgramCtr(), marieSimThread.getInstructionReg(), marieSimThread.getIoReg(), marieSimThread.getAccumulator(), marieSimThread.getStackPointer(), marieSimThread.getMemoryBufferReg(), marieSimThread.getMemoryAddrReg(), 0));
         }
 
 
-
-        while(clockSteps.size() > 10) {
+        while (clockSteps.size() > 10) {
             clockSteps.remove(clockSteps.size() - 1);
         }
 
@@ -272,7 +338,7 @@ public class SimController extends MARIEComputer implements Initializable {
     }
 
     public void memTableUpdate() {
-        for(MemoryTableRow m : memRow) {
+        for (MemoryTableRow m : memRow) {
             m.update();
         }
 

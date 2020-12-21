@@ -275,6 +275,7 @@ class Lexer {
     public Parser parser;
 	public int lineno;
 	public int lineOffset;
+	private boolean countWhitespace = true;
 	java.io.Reader r;
 
     public Lexer(java.io.Reader r, Parser p) {
@@ -629,7 +630,7 @@ class Lexer {
             }
           case 41: break;
           case 5: 
-            { this.lineno++; return Parser.NEWLINE;
+            { this.lineno++; if(countWhitespace){return Parser.NEWLINE;}
             }
           case 42: break;
           case 6: 
@@ -669,7 +670,7 @@ class Lexer {
             }
           case 51: break;
           case 15: 
-            { return Parser.END;
+            { countWhitespace = false; return Parser.END;
             }
           case 52: break;
           case 16: 

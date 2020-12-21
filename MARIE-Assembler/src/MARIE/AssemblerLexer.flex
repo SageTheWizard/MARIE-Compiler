@@ -7,6 +7,7 @@
     public Parser parser;
 	public int lineno;
 	public int lineOffset;
+	private boolean countWhitespace = true;
 	java.io.Reader r;
 
     public Lexer(java.io.Reader r, Parser p) {
@@ -21,7 +22,7 @@ hex_num    = "-"?[0-9A-F]+
 dec_num    = "-"?[0-9]+
 oct_num    = "-"?[0-7]+
 newline    = \n
-comment    = "//"
+comment    = "//" //TODO fix
 identifier = [a-zA-Z_][a-zA-Z0-9_]*
 whitespace = [ \t\r]+
 label = ":"{identifier}
@@ -56,14 +57,14 @@ label = ":"{identifier}
 "HEX"          {return Parser.HEX;}
 "DEC"          {return Parser.DEC;}
 "OCT"          {return Parser.OCT;}
-"END"          {return Parser.END;}
+"END"          {countWhitespace = false; return Parser.END;}
 // Regex Related code
 {oct_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.OCT_NUM;} //OCT_NUM can also be HEX_NUM and DEC_NUM, account for this when programming
 {dec_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.DEC_NUM;} //DEC_NUM can also be HEX_NUM, account for this when programming
 {hex_num}      {parser.yylval = new ParserVal((Object) yytext()); return Parser.HEX_NUM;}
 {label}        {parser.yylval = new ParserVal(new MARIELabel(this.lineno - lineOffset, yytext() + ":")); return Parser.LABEL;}//we add the colon to the end so we can separate similarly-named variables, ex :var, :var2, etc.
 {comment}      {lineOffset++;}
-{newline}      {this.lineno++; return Parser.NEWLINE;}
+{newline}      {this.lineno++; if(countWhitespace){return Parser.NEWLINE;}}
 {whitespace}   {}
 
 
