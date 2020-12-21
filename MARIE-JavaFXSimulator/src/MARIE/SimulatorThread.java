@@ -15,7 +15,7 @@ public class SimulatorThread extends MARIEComputer implements Runnable {
 
     public int inputBuffer = 0;
     public Semaphore inputBufferMutex = new Semaphore(0, true);
-    public Semaphore threadInputSemaphore = new Semaphore(1, true);
+    public Semaphore threadInputSemaphore = new Semaphore(0, true);
 
     SimulatorThread(SimController parent) {
         this.parent = parent;

@@ -61,6 +61,7 @@ public class SimController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        marieSimThread = new SimulatorThread(this);
         EditorController.setParent(this);
 
         inputType.setItems(FXCollections.observableArrayList(INPUT_TYPES));
@@ -92,7 +93,6 @@ public class SimController implements Initializable {
         regTableInit();
         memTableInit();
 
-        marieSimThread = new SimulatorThread(this);
     }
 
     @FXML
@@ -221,6 +221,7 @@ public class SimController implements Initializable {
                         marieSimThread.inputBuffer = 0; //assume they want a null char
                     }
                 }
+                userInput.setText("");
             } catch (InterruptedException e) {
                 //TODO implement
                 e.printStackTrace();
