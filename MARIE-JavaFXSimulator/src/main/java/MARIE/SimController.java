@@ -29,7 +29,9 @@ public class SimController implements Initializable {
     @FXML
     private TableView<MemoryTableRow> memory;
     @FXML
-    private TableView<ClockStep> registers;
+    private TableView<ClockStepTableRow> registers;
+    @FXML
+    private TableView<StackTableRow> stackTableView;
     @FXML
     private TextArea console;
     @FXML
@@ -45,7 +47,8 @@ public class SimController implements Initializable {
 
     MemoryTableRow[] memRow = new MemoryTableRow[256];
 
-    ArrayList<ClockStep> clockSteps = new ArrayList<>();
+    ArrayList<ClockStepTableRow> clockStepTableRows = new ArrayList<>();
+    ArrayList<StackTableRow> stackTableRows = new ArrayList<>();
 
     public SimController() {
 
@@ -92,7 +95,7 @@ public class SimController implements Initializable {
 
         regTableInit();
         memTableInit();
-
+        stackTableInit();
     }
 
     @FXML
@@ -134,6 +137,7 @@ public class SimController implements Initializable {
 
             memTableUpdate();
             regTableUpdate(true);
+            stackTableUpdate();
         } catch (IOException e) {
             //TODO implement
             e.printStackTrace();
@@ -246,14 +250,22 @@ public class SimController implements Initializable {
     } //TODO modify
 
     public void regTableInit() {
-        TableColumn<ClockStep, String> step = new TableColumn<>("Previous Clock Cycle");
-        TableColumn<ClockStep, String> prgCtr = new TableColumn<>("Program Counter");
-        TableColumn<ClockStep, String> instrReg = new TableColumn<>("Instruction Register");
-        TableColumn<ClockStep, String> ioReg = new TableColumn<>("Input/Output Register");
-        TableColumn<ClockStep, String> accumulator = new TableColumn<>("Accumulator");
-        TableColumn<ClockStep, String> stackPtr = new TableColumn<>("Stack Pointer");
-        TableColumn<ClockStep, String> memBufReg = new TableColumn<>("Memory Buffer Register");
-        TableColumn<ClockStep, String> memAddrReg = new TableColumn<>("Memory Address Register");
+        TableColumn<ClockStepTableRow, String> step = new TableColumn<>("Previous Clock Cycle");
+        step.setSortable(false);
+        TableColumn<ClockStepTableRow, String> prgCtr = new TableColumn<>("Program Counter");
+        prgCtr.setSortable(false);
+        TableColumn<ClockStepTableRow, String> instrReg = new TableColumn<>("Instruction Register");
+        instrReg.setSortable(false);
+        TableColumn<ClockStepTableRow, String> ioReg = new TableColumn<>("Input/Output Register");
+        ioReg.setSortable(false);
+        TableColumn<ClockStepTableRow, String> accumulator = new TableColumn<>("Accumulator");
+        accumulator.setSortable(false);
+        TableColumn<ClockStepTableRow, String> stackPtr = new TableColumn<>("Stack Pointer");
+        stackPtr.setSortable(false);
+        TableColumn<ClockStepTableRow, String> memBufReg = new TableColumn<>("Memory Buffer Register");
+        memBufReg.setSortable(false);
+        TableColumn<ClockStepTableRow, String> memAddrReg = new TableColumn<>("Memory Address Register");
+        memAddrReg.setSortable(false);
 
         step.setCellValueFactory(new PropertyValueFactory<>("prevStepString"));
         prgCtr.setCellValueFactory(new PropertyValueFactory<>("programCtr"));
@@ -276,6 +288,7 @@ public class SimController implements Initializable {
 
         TableColumn<MemoryTableRow, String> row = new TableColumn<>("Memory Row");
         row.setCellValueFactory(new PropertyValueFactory<>("rowHexString"));
+        row.setSortable(false);
 
         for (int i = 0; i < offsets.length; i++) {
             offsets[i] = new TableColumn<>(Integer.toHexString(i).toUpperCase());
@@ -297,6 +310,9 @@ public class SimController implements Initializable {
         offsets[14].setCellValueFactory(new PropertyValueFactory<>("e"));
         offsets[15].setCellValueFactory(new PropertyValueFactory<>("f"));
 
+        for(TableColumn<MemoryTableRow, String> t : offsets) {
+            t.setSortable(false);
+        }
 
         for (int i = 0; i < memRow.length; i++) {
             memRow[i] = new MemoryTableRow(i, marieSimThread.getMainMemory());
@@ -312,7 +328,24 @@ public class SimController implements Initializable {
     }
 
     public void stackTableInit() {
-        //TODO implement
+        TableColumn<StackTableRow, String> stackOffset = new TableColumn<>("Stack Pointer Offset");
+        stackOffset.setCellValueFactory(new PropertyValueFactory<>("stackOffsetStr"));
+        stackOffset.setSortable(false);
+
+        TableColumn<StackTableRow, String> stackVal = new TableColumn<>("Value");
+        stackVal.setCellValueFactory(new PropertyValueFactory<>("valueStr"));
+        stackVal.setSortable(false);
+
+        stackOffset.setSortType(TableColumn.SortType.DESCENDING);
+        for(int i = 0; i <= marieSimThread.getStackPointer(); i++) {
+            stackTableRows.add(new StackTableRow(i, marieSimThread.getMainMemory(), marieSimThread.getStackPointer()));
+        }
+
+        stackTableView.getColumns().addAll(stackOffset, stackVal);
+
+        stackTableView.setItems(FXCollections.observableArrayList(stackTableRows));
+
+        stackTableView.refresh();
     }
 
     public void instrTableInit() {
@@ -321,20 +354,20 @@ public class SimController implements Initializable {
 
     public void regTableUpdate(Boolean clearTable) {
         if (clearTable) {
-            clockSteps.clear();
+            clockStepTableRows.clear();
         } else {
-            for (int i = 0; i < clockSteps.size(); i++) {
-                clockSteps.get(i).setPreviousStep(clockSteps.get(i).getPreviousStep() + 1);
+            for (int i = 0; i < clockStepTableRows.size(); i++) {
+                clockStepTableRows.get(i).setPreviousStep(clockStepTableRows.get(i).getPreviousStep() + 1);
             }
-            clockSteps.add(0, new ClockStep(marieSimThread.getProgramCtr(), marieSimThread.getInstructionReg(), marieSimThread.getIoReg(), marieSimThread.getAccumulator(), marieSimThread.getStackPointer(), marieSimThread.getMemoryBufferReg(), marieSimThread.getMemoryAddrReg(), 0));
+            clockStepTableRows.add(0, new ClockStepTableRow(marieSimThread.getProgramCtr(), marieSimThread.getInstructionReg(), marieSimThread.getIoReg(), marieSimThread.getAccumulator(), marieSimThread.getStackPointer(), marieSimThread.getMemoryBufferReg(), marieSimThread.getMemoryAddrReg(), 0));
         }
 
 
-        while (clockSteps.size() > 10) {
-            clockSteps.remove(clockSteps.size() - 1);
+        while (clockStepTableRows.size() > 10) {
+            clockStepTableRows.remove(clockStepTableRows.size() - 1);
         }
 
-        registers.setItems(FXCollections.observableArrayList(clockSteps));
+        registers.setItems(FXCollections.observableArrayList(clockStepTableRows));
         registers.refresh();
     }
 

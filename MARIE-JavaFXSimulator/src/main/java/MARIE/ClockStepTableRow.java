@@ -1,6 +1,6 @@
 package MARIE;
 
-public class ClockStep {
+public class ClockStepTableRow {
     private String programCtr;
     private String instructionReg;
     private String ioReg;
@@ -14,7 +14,7 @@ public class ClockStep {
 
     private String prevStepString;
 
-    public ClockStep(int programCtr, int instructionReg, int ioReg, int accumulator, int stackPointer, int memoryBufferReg, int memoryAddrReg, int previousStep) {
+    public ClockStepTableRow(int programCtr, int instructionReg, int ioReg, int accumulator, int stackPointer, int memoryBufferReg, int memoryAddrReg, int previousStep) {
         this.programCtr = Integer.toHexString(programCtr).toUpperCase();
         this.instructionReg = Integer.toHexString(instructionReg).toUpperCase();
         this.ioReg = Integer.toHexString(ioReg).toUpperCase();

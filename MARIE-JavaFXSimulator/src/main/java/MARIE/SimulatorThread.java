@@ -28,6 +28,7 @@ public class SimulatorThread extends MARIEComputer implements Runnable {
             haltedMutex.acquire();
             stopMutex.acquire();
             while (!(halted = clockTick()) && !stop) {
+                regWatch();
                 haltedMutex.release();
                 stopMutex.release();
 
@@ -41,7 +42,11 @@ public class SimulatorThread extends MARIEComputer implements Runnable {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
+            //TODO implement
+        } catch (MARIESimulatorException e) {
+            //TODO implement
+        }
+        finally {
             runningSemaphore.release();
             haltedMutex.release();//release it once we're outside the while loop
             stopMutex.release();
@@ -66,6 +71,14 @@ public class SimulatorThread extends MARIEComputer implements Runnable {
     @Override
     void output(int output) {
         parent.output(output);
+    }
+
+    /**
+     * Checks all registers to see if they are in acceptable ranges and throws an error if any are outside the acceptable range
+     * @throws MARIESimulatorException if any registers are out of range
+     */
+    public void regWatch() throws MARIESimulatorException {
+
     }
 
 }
