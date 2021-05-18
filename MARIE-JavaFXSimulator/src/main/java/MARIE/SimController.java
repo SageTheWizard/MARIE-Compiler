@@ -57,7 +57,7 @@ public class SimController implements Initializable {
     public SimController(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("MARIE Simulator");
-        Parent root = FXMLLoader.load(getClass().getResource("sim_layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sim_layout.fxml"));
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
