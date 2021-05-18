@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MARIE_JavaFXSimulator">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/MARIE_JavaFXSimulator/bundles/MARIE-JavaFXSimulator/app/MARIE_JavaFXSimulator.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
