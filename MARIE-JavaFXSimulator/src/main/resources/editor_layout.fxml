@@ -20,5 +20,6 @@
     </MenuBar>
 
     <TextArea fx:id="editor"/>
+    <Label fx:id="errorLabel"/>
 
 </VBox>

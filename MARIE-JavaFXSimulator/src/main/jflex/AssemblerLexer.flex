@@ -1,3 +1,5 @@
+package MARIE;
+
 %%
 
 %class Lexer
@@ -7,6 +9,7 @@
     public Parser parser;
 	public int lineno;
 	public int lineOffset;
+	public String errMsg = "";
 	private boolean countWhitespace = true;
 	java.io.Reader r;
 
@@ -71,5 +74,5 @@ label = ":"{identifier}
 
 // Error handling
 \b             {System.err.println("BACKSPACE ERROR!");}
-[^]            {System.err.println("Unexpected Character: " + yytext() + " on line: " + lineno); return -1;}
+[^]            {errMsg = "Unexpected Character: " + yytext() + " on line: " + lineno; return -1;}
 

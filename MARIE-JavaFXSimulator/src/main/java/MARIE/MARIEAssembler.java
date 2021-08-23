@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class MARIEAssembler {
-
-    public static void main(String[] args) throws FileNotFoundException {
+    public Parser p;
+    public static void main(String[] args) throws Exception {
         if(args.length > 0) {
+            MARIEAssembler assembler = new MARIEAssembler();
             System.out.println("Success");
             PrintWriter out = new PrintWriter(new File(args[0].split("\\.")[0] + '.' + MARIEValues.EXECUTABLE_EXTENSION));
-            String[] output = assemble(new File(args[0]));
+            String[] output = assembler.assemble(new File(args[0]));
             if(output != null) {
                 for (String s : output) {
                     out.println(s);
@@ -26,18 +27,12 @@ public class MARIEAssembler {
         }
     }
 
-    public static String[] assemble(File toAssemble) throws FileNotFoundException {
+    public String[] assemble(File toAssemble) throws Exception {
         java.io.Reader r = new java.io.FileReader(toAssemble);
-        Parser p = new Parser(r);
-        try {
+        p = new Parser(r);
             if (p.yyparse() == 0) {
                 return p.outputArr;
             }
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         return null;
     }
 }

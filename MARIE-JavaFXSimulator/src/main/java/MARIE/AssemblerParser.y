@@ -111,7 +111,7 @@ oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($2);}
     }
 
     public void yyerror (String error) {
-        System.out.println ("Error at line " + lexer.lineno + ": " + error);
+    	throw new Exception("Error at line " + lexer.lineno + ": " + error);
     }
 
     public Parser(Reader r) {

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
@@ -15,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -32,8 +34,13 @@ public class EditorController implements Initializable {
     @FXML
     private TextArea editor;
 
+    @FXML
+    private Label errorLabel;
+
     File currentFile = null;
     File currentExecutable = null;
+
+    MARIEAssembler assembler;
 
     public EditorController() {
 
@@ -43,7 +50,7 @@ public class EditorController implements Initializable {
         this.parent = parent;
         editorStage = new Stage();
         editorStage.setTitle("MARIE Editor");
-        Parent root = FXMLLoader.load(getClass().getResource("editor_layout.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/editor_layout.fxml")));
         editorStage.setScene(new Scene(root, 300, 275));
         editorStage.show();
     }
@@ -53,7 +60,7 @@ public class EditorController implements Initializable {
         this.currentFile = toOpen;
         editorStage = new Stage();
         editorStage.setTitle("MARIE Editor");
-        Parent root = FXMLLoader.load(getClass().getResource("editor_layout.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/editor_layout.fxml")));
         editorStage.setScene(new Scene(root, 300, 275));
         editorStage.show();
     }
@@ -82,6 +89,9 @@ public class EditorController implements Initializable {
         if (currentFile != null) {
             openFile(currentFile);
         }
+
+        errorLabel = new Label("errorLabel");
+        assembler = new MARIEAssembler();
     }
 
     public void openFile() {
@@ -146,7 +156,7 @@ public class EditorController implements Initializable {
 
 
         try {
-            String[] assembledOutput = MARIEAssembler.assemble(currentFile);
+            String[] assembledOutput = assembler.assemble(currentFile);
             if (assembledOutput != null) {
                 currentExecutable = new File(currentFile.toString().substring(0, (int) (currentFile.toString().length() - (MARIEValues.EXTENSION.length() + 1))) + "." + MARIEValues.EXECUTABLE_EXTENSION);
                 PrintWriter out = new PrintWriter(currentExecutable);
@@ -155,11 +165,14 @@ public class EditorController implements Initializable {
                 }
                 out.close();
             } else {
-                //TODO implement
+                //TODO implement error checking here
+                errorLabel.setText(assembler.p.lexer.errMsg);
             }
         } catch (FileNotFoundException e) {
             //TODO implement
             e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("STACKTRACE" + e.getMessage() + "STACKTRACE");
         }
     }
 
