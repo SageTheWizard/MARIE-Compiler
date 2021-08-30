@@ -96,7 +96,7 @@ oct_or_dec_num       : oct_num_state        {$$ = $1;}
 oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($2);}
                      ;
 %%
-
+    String primaryErr = "";
 
     private int yylex () {
         int yyl_return = -1;
@@ -111,7 +111,11 @@ oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($2);}
     }
 
     public void yyerror (String error) {
-    	throw new Exception("Error at line " + lexer.lineno + ": " + error);
+    	if(primaryErr.equals(""))
+    	{
+    	    primaryErr = "Error at line " + lexer.lineno + ": " + error;
+    	}
+    	System.out.println("Error at line " + lexer.lineno + ": " + error);
     }
 
     public Parser(Reader r) {

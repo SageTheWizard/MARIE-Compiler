@@ -18,7 +18,6 @@
             </Menu>
         </menus>
     </MenuBar>
-
     <TextArea fx:id="editor"/>
     <Label fx:id="errorLabel"/>
 

@@ -90,7 +90,6 @@ public class EditorController implements Initializable {
             openFile(currentFile);
         }
 
-        errorLabel = new Label("errorLabel");
         assembler = new MARIEAssembler();
     }
 
@@ -166,13 +165,18 @@ public class EditorController implements Initializable {
                 out.close();
             } else {
                 //TODO implement error checking here
-                errorLabel.setText(assembler.p.lexer.errMsg);
+                if(assembler.p.lexer.errMsg.equals("")) {
+                    errorLabel.setText(assembler.p.primaryErr);
+                }
+                else {
+                    errorLabel.setText(assembler.p.lexer.errMsg);
+                }
             }
         } catch (FileNotFoundException e) {
             //TODO implement
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("STACKTRACE" + e.getMessage() + "STACKTRACE");
+            e.printStackTrace();
         }
     }
 

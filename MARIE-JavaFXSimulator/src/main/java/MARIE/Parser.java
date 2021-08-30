@@ -1,4 +1,5 @@
-package MARIE;//### Java capabilities added 7 Jan 97, Bob Jamison
+package MARIE;//### This file created by BYACC 1.8(/Java extension  1.15)
+//### Java capabilities added 7 Jan 97, Bob Jamison
 //### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
 //###           01 Jan 98  -- Bob Jamison -- fixed generic semantic constructor
 //###           01 Jun 99  -- Bob Jamison -- added Runnable support
@@ -356,7 +357,7 @@ final static String yyrule[] = {
 };
 
 //#line 99 "AssemblerParser.y"
-
+    String primaryErr = "";
 
     private int yylex () {
         int yyl_return = -1;
@@ -371,13 +372,17 @@ final static String yyrule[] = {
     }
 
     public void yyerror (String error) {
-        System.out.println ("Error at line " + lexer.lineno + ": " + error);
+    	if(primaryErr.equals(""))
+    	{
+    	    primaryErr = "Error at line " + lexer.lineno + ": " + error;
+    	}
+    	System.out.println("Error at line " + lexer.lineno + ": " + error);
     }
 
     public Parser(Reader r) {
     	this.lexer = new Lexer(r, this);
     }
-//#line 309 "Parser.java"
+//#line 313 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -720,7 +725,7 @@ case 47:
 //#line 96 "AssemblerParser.y"
 {yyval.obj = numOct_num(val_peek(0).obj);}
 break;
-//#line 646 "Parser.java"
+//#line 650 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
