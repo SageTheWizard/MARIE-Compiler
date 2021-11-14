@@ -51,7 +51,7 @@ public class EditorController implements Initializable {
         editorStage = new Stage();
         editorStage.setTitle("MARIE Editor");
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/editor_layout.fxml")));
-        editorStage.setScene(new Scene(root, 300, 275));
+        editorStage.setScene(new Scene(root));
         editorStage.show();
     }
 

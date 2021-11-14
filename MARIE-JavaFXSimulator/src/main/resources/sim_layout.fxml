@@ -40,21 +40,22 @@
     </MenuBar>
 
     <HBox HBox.hgrow="ALWAYS">
-        <TableView fx:id="hexCode">
+        <HBox fx:id="hexCodeHBox" HBox.hgrow="ALWAYS">
+            <TableView fx:id="hexCode">
+            </TableView>
+        </HBox>
+        <HBox fx:id="stackTableHBox" HBox.hgrow="ALWAYS">
+            <TableView fx:id="stackTableView">
 
-        </TableView>
+            </TableView>
+        </HBox>
 
-        <TableView fx:id="stackTableView">
-
-        </TableView>
-
-        <VBox VBox.vgrow="ALWAYS" >
+        <VBox VBox.vgrow="ALWAYS" fx:id="consoleVBox">
             <Label text="Console"/>
             <TextArea fx:id="console" editable="false">
             </TextArea>
             <HBox>
-                <ComboBox fx:id="inputType"
-                    />
+                <ComboBox fx:id="inputType"/>
                 <Label text="Input"/>
                 <TextField fx:id="userInput" onAction="#onInputEnter"/>
             </HBox>

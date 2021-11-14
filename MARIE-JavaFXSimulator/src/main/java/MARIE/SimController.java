@@ -4,10 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -23,6 +27,11 @@ public class SimController implements Initializable {
     private Menu reloadMenuItem, runMenuItem, stepMenuItem;
     @FXML
     private MenuItem newMenuItem, openMenuItem;
+
+    @FXML
+    private HBox hexCodeHBox, stackTableHBox;
+    @FXML
+    private VBox consoleVBox;
 
     @FXML
     private ComboBox inputType;
@@ -58,7 +67,8 @@ public class SimController implements Initializable {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("MARIE Simulator");
         Parent root = FXMLLoader.load(getClass().getResource("/sim_layout.fxml"));
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 
@@ -278,7 +288,7 @@ public class SimController implements Initializable {
 
 
         registers.getColumns().addAll(step, prgCtr, instrReg, ioReg, accumulator, stackPtr, memBufReg, memAddrReg);
-
+        registers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         registers.refresh();
     }
@@ -323,7 +333,7 @@ public class SimController implements Initializable {
         memory.getColumns().addAll(offsets);
 
         memory.setItems(FXCollections.observableArrayList(memRow));
-
+        memory.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         memory.refresh();
     }
 
