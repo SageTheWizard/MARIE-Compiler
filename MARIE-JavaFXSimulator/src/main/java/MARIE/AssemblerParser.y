@@ -19,8 +19,8 @@ import java.io.*;
 
 
 %token <obj>    JUMP LOAD STORE ADD SUBT CLEAR JNP STKINC STKDEC STKPSH STKPEK ADDI JUMPI STOREI LOADI
-%token <obj>    INPUT OUTPUT NOT HALT SKPLT SKPEQ SKPGT JMPRT
-%token <obj>    ORG DEC OCT END
+%token <obj>    INPUT OUTPUT NEGATE HALT SKPLT SKPEQ SKPGT JMPRT
+%token <obj>    ORG HEX DEC OCT END
 
 %token <obj>    OCT_NUM DEC_NUM HEX_NUM
 %token <obj> LABEL NEWLINE
@@ -29,15 +29,15 @@ import java.io.*;
 
 %%
 
-start                : ORG num prgm	        {$$ = startOrg($2, $3);}
-		             | prgm                 {$$ = start($1);}
+start                : ORG num NEWLINE prgm	        {$$ = startOrg($2, $4);}
+		             | prgm                     {$$ = start($1);}
 		             ;
 		
 prgm                 : line prgm            {$$ = prgmLinePrgm($1, $2);}
 		             | line END             {$$ = prgmLineEnd($1);}
 		             ;
 
-line                 : LABEL line_ NEWLINE         {$$ = lineLabelLine_($1, $2);}
+line                 : LABEL line_ NEWLINE         {$$ = lineLabelLine_((MARIELabel) $1, $2);}
 		             | line_ NEWLINE       {$$ = lineLine_($1);}
 		             | NEWLINE             {$$ = newLine($1);}
 		             ;
@@ -72,27 +72,31 @@ non_operand_instr    : INPUT                {$$ = padRight(Integer.toHexString(M
 					 | SKPGT                {$$ = padRight(Integer.toHexString(MARIEValues.SKPGT).toUpperCase());}
 					 | JMPRT                {$$ = padRight(Integer.toHexString(MARIEValues.JMPRT).toUpperCase());}
 					 | CLEAR                {$$ = padRight(Integer.toHexString(MARIEValues.CLEAR).toUpperCase());}
+					 | NEGATE               {$$ = padRight(Integer.toHexString(MARIEValues.NEGATE).toUpperCase());}
 					 ;
 
 operand              : num                  {$$ = $1;}
-		             | LABEL                {$$ = operandLabel($1);}
+		             | LABEL                {$$ = operandLabel((MARIELabel) $1);}
 		             ;
 		   
 num                  : HEX_NUM              {$$ = numHex_num($1);}
+		     | HEX HEX_NUM          {$$ = numHex_num($2);}
+		     | HEX DEC_NUM          {$$ = numHex_num($2);}
+		     | HEX OCT_NUM          {$$ = numHex_num($2);}
 		     | DEC_NUM		    {$$ = numHex_num($1);}
 		     | OCT_NUM              {$$ = numHex_num($1);}
                      | oct_or_dec_num       {$$ = $1;}
 		             ;
 
 oct_or_dec_num       : oct_num_state        {$$ = $1;}
-                     | DEC DEC_NUM          {$$ = numDec_num($1);}
-                     | DEC OCT_NUM          {$$ = numDec_num($1);}
+                     | DEC DEC_NUM          {$$ = numDec_num($2);}
+                     | DEC OCT_NUM          {$$ = numDec_num($2);}
 				     ;
 				  
-oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($1);}
+oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($2);}
                      ;
 %%
-
+    String primaryErr = "";
 
     private int yylex () {
         int yyl_return = -1;
@@ -107,7 +111,11 @@ oct_num_state        : OCT OCT_NUM          {$$ = numOct_num($1);}
     }
 
     public void yyerror (String error) {
-        System.out.println ("Error at line " + lexer.lineno + ": " + error);
+    	if(primaryErr.equals(""))
+    	{
+    	    primaryErr = "Error at line " + lexer.lineno + ": " + error;
+    	}
+    	System.out.println("Error at line " + lexer.lineno + ": " + error);
     }
 
     public Parser(Reader r) {
