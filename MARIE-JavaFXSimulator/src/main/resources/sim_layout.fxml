@@ -1,0 +1,75 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<VBox fx:controller="MARIE.SimController" xmlns:fx="http://javafx.com/fmxl">
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="File" fx:id="fileMenu">
+                <MenuItem text="New" fx:id="newMenuItem"/>
+                <MenuItem text="Open" fx:id="openMenuItem"/>
+            </Menu>
+            <Menu fx:id="reloadMenuItem"/>
+            <Menu fx:id="runMenuItem"/>
+            <Menu fx:id="stepMenuItem"/>
+            <Menu text="Step Mode">
+                <items>
+                    <RadioMenuItem text="By Line">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="stepMode"/>
+                        </toggleGroup>
+                    </RadioMenuItem>
+                    <RadioMenuItem text="By Clock Cycle">
+                        <toggleGroup>
+                            <fx:reference source="stepMode"/>
+                        </toggleGroup>
+                    </RadioMenuItem>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <HBox HBox.hgrow="ALWAYS">
+        <HBox fx:id="hexCodeHBox" HBox.hgrow="ALWAYS">
+            <TableView fx:id="hexCode">
+            </TableView>
+        </HBox>
+        <HBox fx:id="stackTableHBox" HBox.hgrow="ALWAYS">
+            <TableView fx:id="stackTableView">
+
+            </TableView>
+        </HBox>
+
+        <VBox VBox.vgrow="ALWAYS" fx:id="consoleVBox">
+            <Label text="Console"/>
+            <TextArea fx:id="console" editable="false">
+            </TextArea>
+            <HBox>
+                <ComboBox fx:id="inputType"/>
+                <Label text="Input"/>
+                <TextField fx:id="userInput" onAction="#onInputEnter"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+
+    <VBox VBox.vgrow="ALWAYS" alignment="BOTTOM_CENTER">
+        <TableView fx:id="registers">
+
+        </TableView>
+
+        <TableView fx:id="memory">
+
+        </TableView>
+    </VBox>
+</VBox>
