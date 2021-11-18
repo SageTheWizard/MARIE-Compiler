@@ -1,4 +1,4 @@
-package MARIE;
+package MARIEAssembler;
 
 import java.util.HashMap;
 

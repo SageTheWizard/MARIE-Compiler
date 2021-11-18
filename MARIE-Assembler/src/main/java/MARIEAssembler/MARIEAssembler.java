@@ -1,7 +1,6 @@
-package MARIE;
+package MARIEAssembler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class MARIEAssembler {
@@ -34,5 +33,13 @@ public class MARIEAssembler {
                 return p.outputArr;
             }
         return null;
+    }
+
+    public String getParserErr() {
+        return  p.primaryErr;
+    }
+
+    public String getLexerErr() {
+        return p.lexer.errMsg;
     }
 }

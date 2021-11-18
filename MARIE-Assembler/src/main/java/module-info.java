@@ -1,0 +1,3 @@
+module MARIEAssembler {
+    exports MARIEAssembler;
+}

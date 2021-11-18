@@ -1,5 +1,7 @@
 package MARIE;
 
+import MARIEAssembler.MARIEAssembler;
+import MARIEAssembler.MARIEValues;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,7 +58,6 @@ public class EditorController implements Initializable {
     }
 
     public EditorController(File toOpen) throws IOException {
-        this.parent = parent;
         this.currentFile = toOpen;
         editorStage = new Stage();
         editorStage.setTitle("MARIE Editor");
@@ -164,12 +165,11 @@ public class EditorController implements Initializable {
                 }
                 out.close();
             } else {
-                //TODO implement error checking here
-                if(assembler.p.lexer.errMsg.equals("")) {
-                    errorLabel.setText(assembler.p.primaryErr);
+                if(assembler.getLexerErr().equals("")) {
+                    errorLabel.setText(assembler.getParserErr());
                 }
                 else {
-                    errorLabel.setText(assembler.p.lexer.errMsg);
+                    errorLabel.setText(assembler.getLexerErr());
                 }
             }
         } catch (FileNotFoundException e) {
