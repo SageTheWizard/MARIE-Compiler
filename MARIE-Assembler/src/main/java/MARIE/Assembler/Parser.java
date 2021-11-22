@@ -1,4 +1,4 @@
-package MARIEAssembler;//### This file created by BYACC 1.8(/Java extension  1.15)
+package MARIE.Assembler;//### This file created by BYACC 1.8(/Java extension  1.15)
 //### Java capabilities added 7 Jan 97, Bob Jamison
 //### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
 //###           01 Jan 98  -- Bob Jamison -- fixed generic semantic constructor

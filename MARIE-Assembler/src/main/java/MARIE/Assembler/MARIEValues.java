@@ -1,4 +1,4 @@
-package MARIEAssembler;
+package MARIE.Assembler;
 
 public class MARIEValues {
     public static final int INT_MIN_VALUE = -32768;

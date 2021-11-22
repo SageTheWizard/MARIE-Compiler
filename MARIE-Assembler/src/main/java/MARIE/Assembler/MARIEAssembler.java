@@ -1,4 +1,4 @@
-package MARIEAssembler;
+package MARIE.Assembler;
 
 import java.io.File;
 import java.io.PrintWriter;

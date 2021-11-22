@@ -1,6 +1,6 @@
 package MARIE;
 
-import MARIEAssembler.MARIEValues;
+import MARIE.Assembler.MARIEValues;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

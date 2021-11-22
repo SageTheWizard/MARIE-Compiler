@@ -1,3 +1,3 @@
 module MARIEAssembler {
-    exports MARIEAssembler;
+    exports MARIE.Assembler;
 }

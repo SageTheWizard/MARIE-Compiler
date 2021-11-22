@@ -1,4 +1,4 @@
-package MARIEAssembler;
+package MARIE.Assembler;
 
 public class MARIELabel {
     public int lineno;

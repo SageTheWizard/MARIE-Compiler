@@ -1,7 +1,7 @@
 package MARIE;
 
-import MARIEAssembler.MARIEAssembler;
-import MARIEAssembler.MARIEValues;
+import MARIE.Assembler.MARIEAssembler;
+import MARIE.Assembler.MARIEValues;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
