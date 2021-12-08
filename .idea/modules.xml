@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MARIE-Assembler/MARIE-Assembler.iml" filepath="$PROJECT_DIR$/MARIE-Assembler/MARIE-Assembler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MARIE-Compiler.iml" filepath="$PROJECT_DIR$/.idea/MARIE-Compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MARIE-Compiler/MARIE-CompilerUI.iml" filepath="$PROJECT_DIR$/MARIE-Compiler/MARIE-CompilerUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MARIE-JavaFXSimulator/MARIE-JavaFXSimulator.iml" filepath="$PROJECT_DIR$/MARIE-JavaFXSimulator/MARIE-JavaFXSimulator.iml" />
+    </modules>
+  </component>
+</project>
