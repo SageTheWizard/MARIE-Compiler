@@ -7,14 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MARIE-CompilerUI" />
-        <module name="MARIE-Compiler" />
         <module name="MARIE-JavaFXSimulator" />
         <module name="MARIE-Assembler" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MARIE-Assembler" target="11" />
-      <module name="MARIE-Compiler" target="11" />
+      <module name="MARIE-Compiler" target="1.5" />
       <module name="MARIE-CompilerUI" target="11" />
       <module name="MARIE-JavaFXSimulator" target="11" />
     </bytecodeTargetLevel>
